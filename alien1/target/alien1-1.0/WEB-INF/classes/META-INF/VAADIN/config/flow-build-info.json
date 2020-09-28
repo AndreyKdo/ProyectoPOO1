@@ -1,0 +1,14 @@
+{
+  "productionMode": false,
+  "useDeprecatedV14Bootstrapping": false,
+  "eagerServerLoad": false,
+  "npmFolder": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1",
+  "generatedFolder": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1\\target\\frontend",
+  "frontendFolder": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1\\frontend",
+  "connect.javaSourceFolder": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1\\src\\main\\java",
+  "connect.applicationProperties": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1\\src\\main\\resources\\application.properties",
+  "connect.openApiFile": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1\\target\\generated-resources\\openapi.json",
+  "connect.generated": "d:\\OneDrive - Estudiantes ITCR\\2 SEMESTRE\\POO\\Proyectos\\proyecto1\\alien1\\frontend\\generated",
+  "pnpm.enable": true,
+  "require.home.node": false
+}

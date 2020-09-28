@@ -24,6 +24,5 @@ hs_err_pid*
 alien1/node_modules
 alien1/pnpm-lock.yaml
 alien1/pnpmfile.js
-alien1/.project
+*.gitignore
 alien1/src/main/java/pack/poo1/MainView.java
-alien1/.gitignore

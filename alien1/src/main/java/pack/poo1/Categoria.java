@@ -2,13 +2,13 @@ package pack.poo1;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 class Categoria {
     // Atributos
     private int valorCategoria = 0;// valor numérico de la categoría (este número define el multiplicador del precio)
     private ArrayList<Integer> preciosL;// Lista de los precios obtenidos
+    private ArrayList<String> productosL= new ArrayList<String>();
     // Métodos
     public void leerCategoria(String pcategoria) throws Exception {
         /*
@@ -21,19 +21,42 @@ class Categoria {
             valorCategoria = 3;
         if (pcategoria == "COMPLEMENTOS")
             valorCategoria = 2;
-        if (valorCategoria != 0) llamarApi();
+        switch(valorCategoria){
+            case 5:
+                productosL.add("Mini Jet");
+                productosL.add("Super Jet");
+                productosL.add("Ultra Jet");
+                llamarApi(3);
+                break;
+            case 3:
+                productosL.add("Andrómeda");
+                productosL.add("Orión");
+                productosL.add("Osa Mayor");
+                llamarApi(3);
+                break;
+            case 2:
+                productosL.add("Rayo Láser");
+                productosL.add("Manzana Estrella");
+                productosL.add("Cuerno de Taurus");
+                productosL.add("Leche de Vía Láctea");
+                llamarApi(4);
+                break;
+            default:
+                productosL.add("Sin productos para mostrar");             
+        }
     }
-
-    private void llamarApi() throws UnsupportedEncodingException, UnirestException {
+    private void llamarApi(Integer numeros) throws UnsupportedEncodingException, UnirestException {
         Api api = new Api();//NUEVA INSTANCIA
         //Obtener valores por el API
-        api.obtenerApi(valorCategoria);
+        api.obtenerApi(valorCategoria,numeros);
         //al atributo preciosL le asigna la lista de precios según los valores devueltos por el API
-        preciosL = api.obtenerValores(); 
+        preciosL = api.obtenerValores();
     }
     public ArrayList<Integer> obtenerPrecios(){
-        //Devuelve los precios registrados
-        return preciosL;
+        return preciosL;//Devuelve los precios registrados
+    }
+    public ArrayList<String> obtenerProductos(){       
+        return productosL;//Devuelve la lista de productos según la categoría
     }
 }
 

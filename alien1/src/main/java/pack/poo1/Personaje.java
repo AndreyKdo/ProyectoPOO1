@@ -1,30 +1,43 @@
 package pack.poo1;
+import java.util.ArrayList;
 
 public class Personaje {
-    private int velocidad=5;
-    private int fuerza=5;
-    private int agilidad=5;
-    private int ps=5;
-    private int ataque=5;
-    private int dinero=5;
+    private static int velocidad=3;
+    private static int fuerza=4;
+    private static int agilidad=2;
+    private static int ps=15;
+    private static int ataque=5;
+    private static int dinero=500;
 
-    public void modificarVelocidad(int multiplicador) {
-        this.velocidad = velocidad * multiplicador;        
+    protected void modificarVelocidad(int multiplicador) {
+        velocidad = velocidad * multiplicador;        
     }
-    public void modificarFuerza(int multiplicador) {
-        this.fuerza = fuerza * multiplicador; 
+    protected void modificarFuerza(int multiplicador) {
+        fuerza = fuerza * multiplicador; 
     }
-    public void modificarAgilidad(int multiplicador) {
-        this.agilidad = agilidad * multiplicador;
+    protected void modificarAgilidad(int multiplicador) {
+        agilidad = agilidad * multiplicador;
     }
-    public void modificarPS(int multiplicador) {
-        this.ps = ps * multiplicador;
+    protected void modificarPS(int multiplicador) {
+       ps = ps * multiplicador;
     }
-    public void modificarAtaque(int multiplicador) {
-        this.ataque = ataque * multiplicador;
+    protected void modificarAtaque(int multiplicador) {
+        ataque = ataque * multiplicador;
     }
-    public void modificarDinero(int diferencia) {
-        this.dinero = dinero + diferencia;
+    protected void modificarDinero(int diferencia) {
+        dinero = dinero + diferencia;
+    }
+    public static int devolverDinero(){
+    	return dinero;
+    }
+    public static ArrayList<Integer> devolverStats(){
+    	ArrayList<Integer> listaStats = new ArrayList<Integer>();
+    	listaStats.add(fuerza);
+    	listaStats.add(agilidad);
+    	listaStats.add(ps);
+    	listaStats.add(velocidad);
+    	listaStats.add(ataque);
+    	return listaStats;
     }
 
 }

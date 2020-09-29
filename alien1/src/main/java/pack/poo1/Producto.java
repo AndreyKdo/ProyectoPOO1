@@ -36,6 +36,21 @@ public class Producto {
             multiplicador = 1; //Skins
         }
     }
+    public String getNombre() {
+    	return nombre;
+    }
+    public Integer getPrecio() {
+    	return precio;
+    }
+    public Integer getMultiplicador() {
+    	return multiplicador;
+    }
+    public Boolean getEquipado() {
+    	return equipado;
+    }
+    public String getTipo() {
+    	return tipo;
+    }
     public void devolverAttr() {
         System.out.println("Nombre:"+nombre);
         System.out.println("Precio:"+precio);

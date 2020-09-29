@@ -10,11 +10,17 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Label;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextField;
+
+import pack.poo1.Personaje;
+import pack.poo1.Principal;
+import pack.poo1.Producto;
+
 import javax.swing.JRadioButton;
 import java.awt.Checkbox;
 
@@ -89,7 +95,11 @@ public class gui {
 			public void run() {
 				try {
 					gui window = new gui();
-					window.frame.setVisible(true);
+					window.frame.setVisible(true);		
+					/*Para conectar otro proyecto (el java maven) a este proyecto de window builder
+					 * basta con tener los dos proyectos en el directorio de trabajo
+					 * e inicializar la clase
+					 */
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -99,15 +109,22 @@ public class gui {
 
 	/**
 	 * Create the application.
+	 * @throws Exception 
 	 */
-	public gui() {
+	public gui() throws Exception {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws Exception 
 	 */
-	private void initialize() {
+	public ArrayList<Producto> llamarApi(String param) throws Exception{
+		//conectar al otro proyecto Java Maven
+		ArrayList<Producto> listaProductos = Principal.main(param);
+		return listaProductos;
+	}
+	private void initialize() throws Exception {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -146,21 +163,28 @@ public class gui {
 		final JPanel inventarioMundos = new JPanel();
 		inventarioMundos.setLayout(null);
 		frame.getContentPane().add(inventarioMundos, "name_937114439693000");
-		inventarioMundos.setVisible(false);
-		
-		JLabel lblFuerza = new JLabel("Fuerza:");
+		inventarioMundos.setVisible(false);		
+		/*
+		 * Vista de los stats #1
+		 */
+		ArrayList<Integer> stats = Personaje.devolverStats();
+		JLabel lblFuerza = new JLabel("Fuerza");
 		lblFuerza.setForeground(new Color(255, 250, 250));
 		lblFuerza.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblFuerza.setBounds(250, 23, 128, 42);
 		inicio.add(lblFuerza);
-		
-		JLabel lblAgilidad = new JLabel("Agilidad:");
+		System.out.println(stats);
+		/*Lista de los stats
+		 * [4, 2, 15, 3, 5]
+		 * [fuerza;agilidad;ps;velocidad;ataque]
+		 */
+		JLabel lblAgilidad = new JLabel("Agilidad");
 		lblAgilidad.setForeground(new Color(255, 250, 250));
 		lblAgilidad.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblAgilidad.setBounds(392, 23, 128, 42);
 		inicio.add(lblAgilidad);
 		
-		JLabel lblAtaque = new JLabel("Ataque:");
+		JLabel lblAtaque = new JLabel("Ataque");
 		lblAtaque.setForeground(new Color(255, 250, 250));
 		lblAtaque.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblAtaque.setBounds(876, 23, 150, 42);
@@ -202,50 +226,48 @@ public class gui {
 		btnTienda.setBounds(1033, 293, 186, 42);
 		inicio.add(btnTienda);
 		
-		textFieldFuerza = new JTextField();
+		textFieldFuerza = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textFieldFuerza.setFont(new Font("Chiller", Font.BOLD, 35));
 		textFieldFuerza.setBounds(243, 74, 102, 31);
 		inicio.add(textFieldFuerza);
 		textFieldFuerza.setColumns(10);
 		
-		textFieldAgilidad = new JTextField();
+		textFieldAgilidad = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textFieldAgilidad.setFont(new Font("Chiller", Font.BOLD, 35));
 		textFieldAgilidad.setColumns(10);
 		textFieldAgilidad.setBounds(391, 74, 102, 31);
 		inicio.add(textFieldAgilidad);
 		
-		textFieldAtaque = new JTextField();
+		textFieldAtaque = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textFieldAtaque.setFont(new Font("Chiller", Font.BOLD, 35));
 		textFieldAtaque.setColumns(10);
 		textFieldAtaque.setBounds(872, 74, 102, 31);
 		inicio.add(textFieldAtaque);
 		
-		textFieldVelocidad = new JTextField();
+		textFieldVelocidad = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textFieldVelocidad.setFont(new Font("Chiller", Font.BOLD, 35));
 		textFieldVelocidad.setColumns(10);
 		textFieldVelocidad.setBounds(733, 74, 102, 31);
 		inicio.add(textFieldVelocidad);
 		
-		textFieldPtosSalud = new JTextField();
+		textFieldPtosSalud = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textFieldPtosSalud.setFont(new Font("Chiller", Font.BOLD, 35));
 		textFieldPtosSalud.setColumns(10);
 		textFieldPtosSalud.setBounds(564, 74, 102, 31);
 		inicio.add(textFieldPtosSalud);
 		
-		dinero = new JTextField();
+		dinero = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		dinero.setForeground(new Color(0, 0, 128));
 		dinero.setFont(new Font("Chiller", Font.BOLD, 40));
 		dinero.setColumns(10);
 		dinero.setBounds(1033, 198, 186, 42);
 		inicio.add(dinero);
-		
+		/*FONDO DE PANTALLA DEL INICIO*/
 		JLabel lblBg = new JLabel("");
 		lblBg.setIcon(new ImageIcon(img));
 		lblBg.setBounds(0, 0, 1264, 681);
 		inicio.add(lblBg);
-		
-
-		
+			
 		JLabel lblNewLabel_3 = new JLabel("JETS");
 		lblNewLabel_3.setForeground(new Color(255, 250, 250));
 		lblNewLabel_3.setFont(new Font("Chiller", Font.BOLD, 99));
@@ -306,62 +328,65 @@ public class gui {
 		btnTienda_2.setBounds(651, 596, 227, 42);
 		tiendaJets.add(btnTienda_2);
 		
-		textField_5 = new JTextField();
+		textField_5 = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textField_5.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_5.setColumns(10);
 		textField_5.setBounds(243, 74, 102, 31);
 		tiendaJets.add(textField_5);
 		
-		textField_6 = new JTextField();
+		textField_6 = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textField_6.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_6.setColumns(10);
 		textField_6.setBounds(391, 74, 102, 31);
 		tiendaJets.add(textField_6);
 		
-		textField_7 = new JTextField();
+		textField_7 = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textField_7.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_7.setColumns(10);
 		textField_7.setBounds(872, 74, 102, 31);
 		tiendaJets.add(textField_7);
 		
-		textField_8 = new JTextField();
+		textField_8 = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textField_8.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_8.setColumns(10);
 		textField_8.setBounds(733, 74, 102, 31);
 		tiendaJets.add(textField_8);
 		
-		textField_9 = new JTextField();
+		textField_9 = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textField_9.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_9.setColumns(10);
 		textField_9.setBounds(564, 74, 102, 31);
 		tiendaJets.add(textField_9);
-		
+		//**************************Botones de los productos de jets***********************************
+		//Botón mini jet
+		ArrayList<Producto> listaJets = llamarApi("JETS");
 		JRadioButton rdbtnMj = new JRadioButton("   Mini Jet");
 		rdbtnMj.setForeground(new Color(75, 0, 130));
 		rdbtnMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnMj.setBounds(283, 330, 191, 58);
 		tiendaJets.add(rdbtnMj);
 		
-		dinero_1 = new JTextField();
+		dinero_1 = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		dinero_1.setForeground(new Color(0, 0, 128));
 		dinero_1.setFont(new Font("Chiller", Font.BOLD, 40));
 		dinero_1.setBounds(1033, 198, 186, 42);
 		tiendaJets.add(dinero_1);
 		dinero_1.setColumns(10);
 		
+		//Botón Super Jet
 		JRadioButton rdbtnMs = new JRadioButton("   S\u00FAper Jet");
 		rdbtnMs.setForeground(new Color(75, 0, 130));
 		rdbtnMs.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnMs.setBounds(283, 402, 191, 58);
 		tiendaJets.add(rdbtnMs);
-		
+		//Botón Ultra Jet
 		JRadioButton rdbtnUj = new JRadioButton("   Ultra Jet");
 		rdbtnUj.setForeground(new Color(75, 0, 130));
 		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnUj.setBounds(283, 476, 191, 58);
 		tiendaJets.add(rdbtnUj);
-		
-		JButton btnComprarMj = new JButton("$250");
+		//Botón precio mini jet
+		JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
 		btnComprarMj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -370,19 +395,19 @@ public class gui {
 		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarMj.setBounds(529, 338, 128, 42);
 		tiendaJets.add(btnComprarMj);
-		
-		JButton btnComprarSj = new JButton("$500");
+		//Botón precio super jet
+		JButton btnComprarSj = new JButton("$"+String.valueOf(listaJets.get(1).getPrecio()));
 		btnComprarSj.setForeground(new Color(75, 0, 130));
 		btnComprarSj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarSj.setBounds(529, 410, 125, 42);
 		tiendaJets.add(btnComprarSj);
-		
-		JButton btnComprarUj = new JButton("$1000");
+		//Botón ultra jet
+		JButton btnComprarUj = new JButton("$"+String.valueOf(listaJets.get(2).getPrecio()));
 		btnComprarUj.setForeground(new Color(75, 0, 130));
 		btnComprarUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarUj.setBounds(529, 487, 125, 42);
 		tiendaJets.add(btnComprarUj);
-		
+		/* ************ Textos de En inventario de la tienda de Jets ********** */
 		JLabel lblNewLabel = new JLabel(" En inventario:");
 		lblNewLabel.setBackground(new Color(255, 250, 250));
 		lblNewLabel.setForeground(new Color(255, 250, 250));
@@ -404,35 +429,29 @@ public class gui {
 		lblNewLabel_2.setBounds(708, 473, 170, 58);
 		tiendaJets.add(lblNewLabel_2);
 		
-		textField = new JTextField();
+		textField = new JTextField("-");//inventario en minijet
 		textField.setForeground(new Color(75, 0, 130));
 		textField.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField.setBounds(888, 331, 63, 58);
 		tiendaJets.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setForeground(new Color(75, 0, 130));
+		textField_1 = new JTextField("-");
+		textField_1.setForeground(new Color(75, 0, 130));//inventario en super jet
 		textField_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_1.setColumns(10);
 		textField_1.setBounds(888, 402, 63, 58);
 		tiendaJets.add(textField_1);
 		
-		JLabel lblBg_2_2 = new JLabel("");
-		lblBg_2_2.setForeground(new Color(75, 0, 130));
-		lblBg_2_2.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblBg_2_2.setBackground(new Color(255, 250, 250));
-		lblBg_2_2.setBounds(-45, 49, 1264, 681);
-		tiendaJets.add(lblBg_2_2);
 		
-		textField_3 = new JTextField();
+		textField_3 = new JTextField("-");//inventario ultra jet
 		textField_3.setForeground(new Color(75, 0, 130));
 		textField_3.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_3.setColumns(10);
 		textField_3.setBounds(888, 477, 63, 58);
 		tiendaJets.add(textField_3);
-		
-		JLabel lblBg_2 = new JLabel(" En inventario:");
+		/* Fondo de pantalla de tienda Jets */
+		JLabel lblBg_2 = new JLabel();
 		lblBg_2.setBackground(new Color(255, 250, 250));
 		lblBg_2.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblBg_2.setForeground(new Color(75, 0, 130));
@@ -440,8 +459,7 @@ public class gui {
 		lblBg_2.setBounds(0, 0, 1264, 681);
 		tiendaJets.add(lblBg_2);
 		
-		
-		textField_16 = new JTextField();
+		textField_16 = new JTextField("-");//en inventario  via lactea
 		textField_16.setForeground(new Color(75, 0, 130));
 		textField_16.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_16.setColumns(10);
@@ -450,7 +468,7 @@ public class gui {
 		
 		JLabel lblNewLabel_3_1 = new JLabel("COMPLEMENTOS");
 		lblNewLabel_3_1.setForeground(new Color(255, 250, 250));
-		lblNewLabel_3_1.setFont(new Font("Chiller", Font.BOLD, 99));
+		lblNewLabel_3_1.setFont(new Font("Chiller", Font.BOLD, 90));
 		lblNewLabel_3_1.setBounds(338, 180, 599, 84);
 		tiendaComplementos.add(lblNewLabel_3_1);
 		
@@ -508,43 +526,42 @@ public class gui {
 		btnTienda_2_1.setBounds(716, 596, 158, 42);
 		tiendaComplementos.add(btnTienda_2_1);
 		
-		textField_2 = new JTextField();
+		textField_2 = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textField_2.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_2.setColumns(10);
 		textField_2.setBounds(243, 74, 102, 31);
 		tiendaComplementos.add(textField_2);
 		
-		textField_4 = new JTextField();
+		textField_4 = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textField_4.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_4.setColumns(10);
 		textField_4.setBounds(391, 74, 102, 31);
 		tiendaComplementos.add(textField_4);
 		
-		textField_10 = new JTextField();
+		textField_10 = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textField_10.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_10.setColumns(10);
 		textField_10.setBounds(872, 74, 102, 31);
 		tiendaComplementos.add(textField_10);
 		
-		textField_11 = new JTextField();
+		textField_11 = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textField_11.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_11.setColumns(10);
 		textField_11.setBounds(733, 74, 102, 31);
 		tiendaComplementos.add(textField_11);
 		
-		textField_12 = new JTextField();
+		textField_12 = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textField_12.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_12.setColumns(10);
 		textField_12.setBounds(564, 74, 102, 31);
 		tiendaComplementos.add(textField_12);
-		
 		JRadioButton rdbtnMj_1 = new JRadioButton("  Rayo L\u00E1ser");
 		rdbtnMj_1.setForeground(new Color(75, 0, 130));
 		rdbtnMj_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnMj_1.setBounds(283, 330, 267, 58);
 		tiendaComplementos.add(rdbtnMj_1);
 		
-		textField_13 = new JTextField();
+		textField_13 = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		textField_13.setForeground(new Color(0, 0, 128));
 		textField_13.setFont(new Font("Chiller", Font.BOLD, 40));
 		textField_13.setColumns(10);
@@ -562,70 +579,71 @@ public class gui {
 		rdbtnUj_1.setFont(new Font("Chiller", Font.BOLD, 28));
 		rdbtnUj_1.setBounds(283, 476, 267, 58);
 		tiendaComplementos.add(rdbtnUj_1);
-		
-		JButton btnComprarMj_1 = new JButton("$400");
+		//********************BOTONES COMPLEMENTOS********************
+		ArrayList<Producto> listaComp = llamarApi("COMPLEMENTOS");
+		//Botón de rayo laser
+		JButton btnComprarMj_1 = new JButton("$"+String.valueOf(listaComp.get(0).getPrecio()));
 		btnComprarMj_1.setForeground(new Color(75, 0, 130));
 		btnComprarMj_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarMj_1.setBounds(572, 337, 128, 42);
 		tiendaComplementos.add(btnComprarMj_1);
 		
-		JButton btnComprarSj_1 = new JButton("$800");
+		JButton btnComprarSj_1 = new JButton("$"+String.valueOf(listaComp.get(1).getPrecio()));
 		btnComprarSj_1.setForeground(new Color(75, 0, 130));
 		btnComprarSj_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarSj_1.setBounds(572, 409, 125, 42);
 		tiendaComplementos.add(btnComprarSj_1);
 		
-		JButton btnComprarUj_1 = new JButton("$1200");
+		JButton btnComprarUj_1 = new JButton("$"+String.valueOf(listaComp.get(2).getPrecio()));
 		btnComprarUj_1.setForeground(new Color(75, 0, 130));
 		btnComprarUj_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarUj_1.setBounds(572, 486, 125, 42);
 		tiendaComplementos.add(btnComprarUj_1);
-		
-		JLabel lblNewLabel_4 = new JLabel(" En inventario:");
+		/* *************** Textos de En inventario de la tienda de Complementos**************** */
+		JLabel lblNewLabel_4 = new JLabel("En inventario:");
 		lblNewLabel_4.setForeground(new Color(255, 250, 250));
 		lblNewLabel_4.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_4.setBackground(new Color(255, 250, 250));
 		lblNewLabel_4.setBounds(751, 329, 170, 58);
 		tiendaComplementos.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_1_1 = new JLabel(" En inventario:");
+		JLabel lblNewLabel_1_1 = new JLabel("En inventario:");
 		lblNewLabel_1_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_1_1.setBackground(new Color(255, 250, 250));
 		lblNewLabel_1_1.setBounds(751, 398, 170, 58);
 		tiendaComplementos.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_2_1 = new JLabel(" En inventario:");
+		JLabel lblNewLabel_2_1 = new JLabel("En inventario:");
 		lblNewLabel_2_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_2_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_2_1.setBackground(new Color(255, 250, 250));
 		lblNewLabel_2_1.setBounds(751, 472, 170, 58);
 		tiendaComplementos.add(lblNewLabel_2_1);
 		
-		textField_14 = new JTextField();
+		textField_14 = new JTextField("-");//en inventario rayo láser
 		textField_14.setForeground(new Color(75, 0, 130));
 		textField_14.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_14.setColumns(10);
 		textField_14.setBounds(931, 330, 63, 58);
 		tiendaComplementos.add(textField_14);
 		
-		textField_15 = new JTextField();
+		textField_15 = new JTextField("-");//en inventario cuerno de taurus
 		textField_15.setForeground(new Color(75, 0, 130));
 		textField_15.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_15.setColumns(10);
 		textField_15.setBounds(931, 401, 63, 58);
 		tiendaComplementos.add(textField_15);
-		
-		JLabel lblBg_2_2_1 = new JLabel("");
+		/* *********************** Fondo de pantalla tienda complementos *********************** */
+		JLabel lblBg_2_2_1 = new JLabel();
 		lblBg_2_2_1.setIcon(new ImageIcon(img));
 		lblBg_2_2_1.setForeground(new Color(75, 0, 130));
 		lblBg_2_2_1.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblBg_2_2_1.setBackground(new Color(255, 250, 250));
-		lblBg_2_2_1.setBounds(39, 0, 1264, 681);
+		lblBg_2_2_1.setBackground(new Color(255, 250, 250));//posición del fondo
+		lblBg_2_2_1.setBounds(0, 0, 1264, 681);
 		tiendaComplementos.add(lblBg_2_2_1);
 		
-		
-		textField_17 = new JTextField();
+		textField_17 = new JTextField("-");//en inventario osa mayor
 		textField_17.setForeground(new Color(75, 0, 130));
 		textField_17.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_17.setColumns(10);
@@ -692,31 +710,31 @@ public class gui {
 		btnTienda_2_1_1.setBounds(716, 596, 158, 42);
 		tiendaMundos.add(btnTienda_2_1_1);
 		
-		textField_18 = new JTextField();
+		textField_18 = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textField_18.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_18.setColumns(10);
 		textField_18.setBounds(243, 74, 102, 31);
 		tiendaMundos.add(textField_18);
 		
-		textField_19 = new JTextField();
+		textField_19 = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textField_19.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_19.setColumns(10);
 		textField_19.setBounds(391, 74, 102, 31);
 		tiendaMundos.add(textField_19);
 		
-		textField_35 = new JTextField();
+		textField_35 = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textField_35.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_35.setColumns(10);
 		textField_35.setBounds(872, 74, 102, 31);
 		tiendaMundos.add(textField_35);
 		
-		textField_36 = new JTextField();
+		textField_36 = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textField_36.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_36.setColumns(10);
 		textField_36.setBounds(733, 74, 102, 31);
 		tiendaMundos.add(textField_36);
 		
-		textField_37 = new JTextField();
+		textField_37 = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textField_37.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_37.setColumns(10);
 		textField_37.setBounds(564, 74, 102, 31);
@@ -728,7 +746,7 @@ public class gui {
 		rdbtnMj_1_1.setBounds(283, 330, 179, 58);
 		tiendaMundos.add(rdbtnMj_1_1);
 		
-		textField_38 = new JTextField();
+		textField_38 = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		textField_38.setForeground(new Color(0, 0, 128));
 		textField_38.setFont(new Font("Chiller", Font.BOLD, 40));
 		textField_38.setColumns(10);
@@ -746,61 +764,63 @@ public class gui {
 		rdbtnUj_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnUj_1_1.setBounds(283, 476, 179, 58);
 		tiendaMundos.add(rdbtnUj_1_1);
-		
-		JButton btnComprarMj_1_1 = new JButton("$800");
+		//********************BOTONES MUNDOS********************
+				ArrayList<Producto> listaMundos = llamarApi("MUNDOS");
+		JButton btnComprarMj_1_1 = new JButton("$"+String.valueOf(listaMundos.get(0).getPrecio()));
 		btnComprarMj_1_1.setForeground(new Color(75, 0, 130));
 		btnComprarMj_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarMj_1_1.setBounds(515, 338, 128, 42);
 		tiendaMundos.add(btnComprarMj_1_1);
 		
-		JButton btnComprarSj_1_1 = new JButton("$900");
+		JButton btnComprarSj_1_1 = new JButton("$"+String.valueOf(listaMundos.get(1).getPrecio()));
 		btnComprarSj_1_1.setForeground(new Color(75, 0, 130));
 		btnComprarSj_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarSj_1_1.setBounds(515, 410, 125, 42);
 		tiendaMundos.add(btnComprarSj_1_1);
 		
-		JButton btnComprarUj_1_1 = new JButton("$1000");
+		JButton btnComprarUj_1_1 = new JButton("$"+String.valueOf(listaMundos.get(2).getPrecio()));
 		btnComprarUj_1_1.setForeground(new Color(75, 0, 130));
 		btnComprarUj_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarUj_1_1.setBounds(515, 487, 125, 42);
 		tiendaMundos.add(btnComprarUj_1_1);
 		
-		JLabel lblNewLabel_4_1 = new JLabel(" En inventario:");
+		//**** Textos de En inventario de la tienda de Mundos ****//
+		JLabel lblNewLabel_4_1 = new JLabel("En inventario:");
 		lblNewLabel_4_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_4_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_4_1.setBackground(new Color(255, 250, 250));
 		lblNewLabel_4_1.setBounds(694, 330, 170, 58);
 		tiendaMundos.add(lblNewLabel_4_1);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel(" En inventario:");
+		JLabel lblNewLabel_1_1_1 = new JLabel("En inventario:");
 		lblNewLabel_1_1_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_1_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_1_1_1.setBackground(new Color(255, 250, 250));
 		lblNewLabel_1_1_1.setBounds(694, 399, 170, 58);
 		tiendaMundos.add(lblNewLabel_1_1_1);
 		
-		JLabel lblNewLabel_2_1_1 = new JLabel(" En inventario:");
+		JLabel lblNewLabel_2_1_1 = new JLabel("En inventario:");
 		lblNewLabel_2_1_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_2_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_2_1_1.setBackground(new Color(255, 250, 250));
 		lblNewLabel_2_1_1.setBounds(694, 473, 170, 58);
 		tiendaMundos.add(lblNewLabel_2_1_1);
 		
-		textField_39 = new JTextField();
+		textField_39 = new JTextField("-");//en inventario andromeda
 		textField_39.setForeground(new Color(75, 0, 130));
 		textField_39.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_39.setColumns(10);
 		textField_39.setBounds(874, 331, 63, 58);
 		tiendaMundos.add(textField_39);
 		
-		textField_40 = new JTextField();
+		textField_40 = new JTextField("-");//en inventario orión
 		textField_40.setForeground(new Color(75, 0, 130));
 		textField_40.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_40.setColumns(10);
 		textField_40.setBounds(874, 402, 63, 58);
 		tiendaMundos.add(textField_40);
-		
-		JLabel lblBg_2_2_1_1 = new JLabel("");
+		/*Fondo de pantalla de tienda mundos*/
+		JLabel lblBg_2_2_1_1 = new JLabel();//
 		lblBg_2_2_1_1.setIcon(new ImageIcon(img));
 		lblBg_2_2_1_1.setForeground(new Color(75, 0, 130));
 		lblBg_2_2_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -869,31 +889,31 @@ public class gui {
 		btnTienda_2_2.setBounds(651, 596, 227, 42);
 		inventarioJets.add(btnTienda_2_2);
 		
-		textField_20 = new JTextField();
+		textField_20 = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textField_20.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_20.setColumns(10);
 		textField_20.setBounds(243, 74, 102, 31);
 		inventarioJets.add(textField_20);
 		
-		textField_21 = new JTextField();
+		textField_21 = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textField_21.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_21.setColumns(10);
 		textField_21.setBounds(391, 74, 102, 31);
 		inventarioJets.add(textField_21);
 		
-		textField_22 = new JTextField();
+		textField_22 = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textField_22.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_22.setColumns(10);
 		textField_22.setBounds(872, 74, 102, 31);
 		inventarioJets.add(textField_22);
 		
-		textField_23 = new JTextField();
+		textField_23 = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textField_23.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_23.setColumns(10);
 		textField_23.setBounds(733, 74, 102, 31);
 		inventarioJets.add(textField_23);
 		
-		textField_24 = new JTextField();
+		textField_24 = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textField_24.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_24.setColumns(10);
 		textField_24.setBounds(564, 74, 102, 31);
@@ -905,7 +925,7 @@ public class gui {
 		rdbtnMj_2.setBounds(378, 331, 191, 58);
 		inventarioJets.add(rdbtnMj_2);
 		
-		textField_25 = new JTextField();
+		textField_25 = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		textField_25.setForeground(new Color(0, 0, 128));
 		textField_25.setFont(new Font("Chiller", Font.BOLD, 40));
 		textField_25.setColumns(10);
@@ -942,14 +962,8 @@ public class gui {
 		btnComprarUj_2.setBounds(624, 488, 254, 42);
 		inventarioJets.add(btnComprarUj_2);
 		
-		JLabel lblBg_2_1 = new JLabel(" En inventario:");
-		lblBg_2_1.setForeground(new Color(75, 0, 130));
-		lblBg_2_1.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblBg_2_1.setBackground(new Color(255, 250, 250));
-		lblBg_2_1.setBounds(0, 0, 1264, 681);
-		inventarioJets.add(lblBg_2_1);
-		
-		JLabel lblBg_2_2_2 = new JLabel("");
+		/*Fondo de pantalla de inventario jets*/
+		JLabel lblBg_2_2_2 = new JLabel();
 		lblBg_2_2_2.setIcon(new ImageIcon(img));
 		lblBg_2_2_2.setForeground(new Color(75, 0, 130));
 		lblBg_2_2_2.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -1017,31 +1031,31 @@ public class gui {
 		btnTienda_2_1_2.setBounds(716, 596, 158, 42);
 		inventarioComplementos.add(btnTienda_2_1_2);
 		
-		textField_27 = new JTextField();
+		textField_27 = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textField_27.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_27.setColumns(10);
 		textField_27.setBounds(243, 74, 102, 31);
 		inventarioComplementos.add(textField_27);
 		
-		textField_29 = new JTextField();
+		textField_29 = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textField_29.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_29.setColumns(10);
 		textField_29.setBounds(391, 74, 102, 31);
 		inventarioComplementos.add(textField_29);
 		
-		textField_30 = new JTextField();
+		textField_30 = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textField_30.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_30.setColumns(10);
 		textField_30.setBounds(872, 74, 102, 31);
 		inventarioComplementos.add(textField_30);
 		
-		textField_31 = new JTextField();
+		textField_31 = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textField_31.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_31.setColumns(10);
 		textField_31.setBounds(733, 74, 102, 31);
 		inventarioComplementos.add(textField_31);
 		
-		textField_32 = new JTextField();
+		textField_32 = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textField_32.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_32.setColumns(10);
 		textField_32.setBounds(564, 74, 102, 31);
@@ -1053,7 +1067,7 @@ public class gui {
 		rdbtnMj_1_2.setBounds(378, 331, 267, 58);
 		inventarioComplementos.add(rdbtnMj_1_2);
 		
-		textField_33 = new JTextField();
+		textField_33 = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		textField_33.setForeground(new Color(0, 0, 128));
 		textField_33.setFont(new Font("Chiller", Font.BOLD, 40));
 		textField_33.setColumns(10);
@@ -1089,15 +1103,14 @@ public class gui {
 		btnComprarUj_1_2.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarUj_1_2.setBounds(685, 481, 248, 42);
 		inventarioComplementos.add(btnComprarUj_1_2);
-		
-		JLabel lblBg_2_2_1_2 = new JLabel("");
+		/*Fondo de pantalla de inventario de Complementos*/
+		JLabel lblBg_2_2_1_2 = new JLabel();//Fondo de pantalla #13
 		lblBg_2_2_1_2.setIcon(new ImageIcon(img));
 		lblBg_2_2_1_2.setForeground(new Color(75, 0, 130));
 		lblBg_2_2_1_2.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblBg_2_2_1_2.setBackground(new Color(255, 250, 250));
-		lblBg_2_2_1_2.setBounds(39, 0, 1264, 681);
+		lblBg_2_2_1_2.setBounds(0, 0, 1264, 681);
 		inventarioComplementos.add(lblBg_2_2_1_2);
-
 		
 		JLabel lblNewLabel_3_1_1_1 = new JLabel("Mundos");
 		lblNewLabel_3_1_1_1.setForeground(new Color(255, 250, 250));
@@ -1159,31 +1172,31 @@ public class gui {
 		btnTienda_2_1_1_1.setBounds(716, 596, 158, 42);
 		inventarioMundos.add(btnTienda_2_1_1_1);
 		
-		textField_34 = new JTextField();
+		textField_34 = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		textField_34.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_34.setColumns(10);
 		textField_34.setBounds(243, 74, 102, 31);
 		inventarioMundos.add(textField_34);
 		
-		textField_41 = new JTextField();
+		textField_41 = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
 		textField_41.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_41.setColumns(10);
 		textField_41.setBounds(391, 74, 102, 31);
 		inventarioMundos.add(textField_41);
 		
-		textField_42 = new JTextField();
+		textField_42 = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
 		textField_42.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_42.setColumns(10);
 		textField_42.setBounds(872, 74, 102, 31);
 		inventarioMundos.add(textField_42);
 		
-		textField_43 = new JTextField();
+		textField_43 = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
 		textField_43.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_43.setColumns(10);
 		textField_43.setBounds(733, 74, 102, 31);
 		inventarioMundos.add(textField_43);
 		
-		textField_44 = new JTextField();
+		textField_44 = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
 		textField_44.setFont(new Font("Chiller", Font.BOLD, 35));
 		textField_44.setColumns(10);
 		textField_44.setBounds(564, 74, 102, 31);
@@ -1195,7 +1208,7 @@ public class gui {
 		rdbtnMj_1_1_1.setBounds(378, 331, 191, 58);
 		inventarioMundos.add(rdbtnMj_1_1_1);
 		
-		textField_45 = new JTextField();
+		textField_45 = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
 		textField_45.setForeground(new Color(0, 0, 128));
 		textField_45.setFont(new Font("Chiller", Font.BOLD, 40));
 		textField_45.setColumns(10);
@@ -1231,8 +1244,8 @@ public class gui {
 		btnComprarUj_1_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarUj_1_1_1.setBounds(616, 482, 258, 42);
 		inventarioMundos.add(btnComprarUj_1_1_1);
-		
-		JLabel lblBg_2_2_1_1_1 = new JLabel("");
+		/* Fondo de inventario mundos */
+		JLabel lblBg_2_2_1_1_1 = new JLabel();//Fondo de pantalla #14
 		lblBg_2_2_1_1_1.setIcon(new ImageIcon(img));
 		lblBg_2_2_1_1_1.setForeground(new Color(75, 0, 130));
 		lblBg_2_2_1_1_1.setFont(new Font("Chiller", Font.BOLD, 35));

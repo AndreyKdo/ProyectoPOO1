@@ -9,22 +9,22 @@ public class Personaje {
     private static int ataque=5;
     private static int dinero=500;
 
-    protected void modificarVelocidad(int multiplicador) {
+    protected static void modificarVelocidad(int multiplicador) {
         velocidad = velocidad * multiplicador;        
     }
-    protected void modificarFuerza(int multiplicador) {
+    protected static void modificarFuerza(int multiplicador) {
         fuerza = fuerza * multiplicador; 
     }
-    protected void modificarAgilidad(int multiplicador) {
+    protected static void modificarAgilidad(int multiplicador) {
         agilidad = agilidad * multiplicador;
     }
-    protected void modificarPS(int multiplicador) {
+    protected static void modificarPS(int multiplicador) {
        ps = ps * multiplicador;
     }
-    protected void modificarAtaque(int multiplicador) {
+    protected static void modificarAtaque(int multiplicador) {
         ataque = ataque * multiplicador;
     }
-    protected void modificarDinero(int diferencia) {
+    protected static void modificarDinero(int diferencia) {
         dinero = dinero + diferencia;
     }
     public static int devolverDinero(){
@@ -38,6 +38,27 @@ public class Personaje {
     	listaStats.add(velocidad);
     	listaStats.add(ataque);
     	return listaStats;
+    }
+    public static ArrayList<Integer> previewStats(String pcategoria, int multiplicador){
+    	ArrayList<Integer> listaStats = new ArrayList<Integer>();
+    	if(pcategoria=="JETS") {
+    		listaStats.add(fuerza);
+    		listaStats.add(agilidad*multiplicador);
+        	listaStats.add(ps);
+        	listaStats.add(velocidad*multiplicador);
+        	listaStats.add(ataque);
+        	return listaStats;
+    	}else if (pcategoria=="COMPLEMENTOS") {
+    		listaStats.add(fuerza*multiplicador);
+    		listaStats.add(agilidad);
+        	listaStats.add(ps*multiplicador);
+        	listaStats.add(velocidad);
+        	listaStats.add(ataque*multiplicador);
+        	return listaStats;
+    	}else {
+    		listaStats = devolverStats();
+        	return listaStats;
+    	}		
     }
 
 }

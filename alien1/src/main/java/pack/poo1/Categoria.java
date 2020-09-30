@@ -26,29 +26,28 @@ class Categoria {
                 productosL.add("Mini Jet");
                 productosL.add("Super Jet");
                 productosL.add("Ultra Jet");
-                llamarApi(3);
+                llamarApi();
                 break;
             case 3:
                 productosL.add("Andrómeda");
                 productosL.add("Orión");
                 productosL.add("Osa Mayor");
-                llamarApi(3);
+                llamarApi();
                 break;
             case 2:
                 productosL.add("Rayo Láser");
-                productosL.add("Manzana Estrella");
                 productosL.add("Cuerno de Taurus");
                 productosL.add("Leche de Vía Láctea");
-                llamarApi(4);
+                llamarApi();
                 break;
             default:
                 productosL.add("Sin productos para mostrar");             
         }
     }
-    private void llamarApi(Integer numeros) throws UnsupportedEncodingException, UnirestException {
+    private void llamarApi() throws UnsupportedEncodingException, UnirestException {
         Api api = new Api();//NUEVA INSTANCIA
         //Obtener valores por el API
-        api.obtenerApi(valorCategoria,numeros);
+        api.obtenerApi(valorCategoria);
         //al atributo preciosL le asigna la lista de precios según los valores devueltos por el API
         preciosL = api.obtenerValores();
     }

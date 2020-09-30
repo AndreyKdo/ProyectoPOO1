@@ -15,7 +15,7 @@ import com.google.gson.JsonParser;
 // Se usó el Api https://rapidapi.com/accujazz/api/rawg-video-games-database?endpoint=apiendpoint_09fbc37a-91b6-49f8-9018-67627e8e670e
 class Api {
     private static ArrayList<Integer> valores;
-    public void obtenerApi(Integer valorCategoria,Integer numeros) throws UnirestException, UnsupportedEncodingException {
+    public void obtenerApi(Integer valorCategoria) throws UnirestException, UnsupportedEncodingException {
         HttpResponse<JsonNode> response = Unirest.get("https://rawg-video-games-database.p.rapidapi.com/tags")// host+"?"+query
                 .header("x-rapidapi-host", "rawg-video-games-database.p.rapidapi.com")
                 .header("x-rapidapi-key", "ea428cb084msh37dc4a6749f4694p14980cjsn04e376bb9b78")
@@ -45,7 +45,7 @@ class Api {
                     valor = "";//reinicia la variable valor como una cadena vacía
                 }
             }
-            if (lista.size() == numeros) break; //Termina el ciclo hasta que la lista alcance los numeros totales
+            if (lista.size() == 3) break; //Termina el ciclo hasta que la lista alcance los numeros totales
         }       
         valores = lista;
     }

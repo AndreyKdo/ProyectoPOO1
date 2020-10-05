@@ -84,8 +84,12 @@ public class gui {
 	private JPanel inventarioMundos;
 	private JLabel lblPtosSaludInvComp;
 	
-	
-
+	//atributos de la clase gui
+	ArrayList<Integer> stats = Personaje.devolverStats();
+	//Las listas de los productos obtenidas del proceso del API son estáticas ya que no cambian.
+	static ArrayList<Producto> listaJets = new ArrayList<Producto>();
+	static ArrayList<Producto> listaMundos = new ArrayList<Producto>();
+	static ArrayList<Producto> listaComp = new ArrayList<Producto>();
 	/**
 	 * Launch the application.
 	 */
@@ -118,26 +122,35 @@ public class gui {
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
-	public ArrayList<Producto> llamarApi(String pcategoria) throws Exception{
+	private void llamarApi() throws Exception{
 		//conectar al otro proyecto Java Maven
-		ArrayList<Producto> listaProductos = Principal.main(pcategoria);
-		return listaProductos;
+		/*
+		 * Se crearon instancias para cada uno de las listas de productos ya que sucedían conflictos con la obtención de cada producto de categorías diferentes,
+		 * como por ejemplo la lista de jets se sustituia por la lista de complementos si esta última se declaraba después de listaJets
+		 */
+		Principal llamadaJ = new Principal();
+		llamadaJ.main("JETS");
+		gui.listaJets = llamadaJ.devolverLista();
+
+		Principal llamadaC = new Principal();
+		llamadaC.main("COMPLEMENTOS");
+		gui.listaComp = llamadaC.devolverLista();
+		
+		Principal llamadaM = new Principal();
+		llamadaM.main("MUNDOS");
+		gui.listaMundos = llamadaM.devolverLista();		
 	}
 	private void initialize() throws Exception {
+		llamarApi();//llama al API al inicio *IMPORTANTE
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
-		
-	
-	
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*********************************************		PANELES		************************************************
 		//**************************************************************************************************************
 		//**************************************************************************************************************
-		
-		
 		// ****************	INICIO
 		final JPanel inicio = new JPanel();
 		frame.getContentPane().add(inicio, "name_907429623456800");
@@ -183,15 +196,11 @@ public class gui {
 		/*
 		 * Vista de los stats #1
 		 */
-		ArrayList<Integer> stats = Personaje.devolverStats();
-
 		
 		/*Lista de los stats
 		 * [4, 2, 15, 3, 5]
 		 * [fuerza;agilidad;ps;velocidad;ataque]
-		 */
-		
-		
+		 */		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INICIO ******************************************************
@@ -237,11 +246,6 @@ public class gui {
 	
 		/*FONDO DE PANTALLA DEL INICIO*/
 		
-		JLabel lblBgInicio = new JLabel("");
-		lblBgInicio.setIcon(new ImageIcon(img));
-		lblBgInicio.setBounds(0, 0, 1264, 681);
-		inicio.add(lblBgInicio);
-		
 		//*****************BOTONES
 		
 		//Botones para desplazarse entre paneles
@@ -256,8 +260,6 @@ public class gui {
 		btnInventarioInicio.setForeground(new Color(0, 0, 128));
 		btnInventarioInicio.setBounds(1033, 403, 186, 42);
 		inicio.add(btnInventarioInicio);
-		
-		
 		JButton btnTiendaInicio = new JButton("Tienda");
 		btnTiendaInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -316,14 +318,17 @@ public class gui {
 		txtfDineroInicio.setBounds(1033, 198, 186, 42);
 		inicio.add(txtfDineroInicio);
 		
-
+		JLabel lblBgInicio = new JLabel("");
+		lblBgInicio.setIcon(new ImageIcon(img));
+		lblBgInicio.setBounds(0, 0, 1264, 681);
+		inicio.add(lblBgInicio);
 		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE TIENDA JETS *************************************************
 		//**************************************************************************************************************
 		//**************************************************************************************************************
-		ArrayList<Producto> listaJets = llamarApi("JETS");
+		//
 		//**************ETIQUETAS 	
 
 		//TITULO
@@ -393,12 +398,7 @@ public class gui {
 		lblNewLabel_2.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_2.setBounds(708, 473, 170, 58);
 		tiendaJets.add(lblNewLabel_2);
-		
-		
-		//**************BOTONES
-		
-	
-		
+		//**************BOTONES	
 		JButton btnSalirTJets = new JButton("Salir");
 		btnSalirTJets.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -424,12 +424,17 @@ public class gui {
 		tiendaJets.add(btnCompTJets);
 		
 		/*Botón precio mini jet*/
+		
 		JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
 		btnComprarMj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {
+				if (listaJets.get(0).comprar()) {
+					//Comprar el miniJet
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
 			}
 		});
-		
 		btnComprarMj.setForeground(new Color(75, 0, 130));
 		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarMj.setBounds(529, 338, 128, 42);
@@ -437,14 +442,30 @@ public class gui {
 		
 		/*Botón precio super jet*/
 		JButton btnComprarSj = new JButton("$"+String.valueOf(listaJets.get(1).getPrecio()));
+		btnComprarSj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaJets.get(1).comprar()) {
+					//Comprar el súper jet
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarSj.setForeground(new Color(75, 0, 130));
 		btnComprarSj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarSj.setBounds(529, 410, 125, 42);
 		tiendaJets.add(btnComprarSj);
-		
-		
 		//Botón ultra jet
 		JButton btnComprarUj = new JButton("$"+String.valueOf(listaJets.get(2).getPrecio()));
+		btnComprarUj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaJets.get(2).comprar()) {
+					//Comprar el ultrajet
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarUj.setForeground(new Color(75, 0, 130));
 		btnComprarUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarUj.setBounds(529, 487, 125, 42);
@@ -553,7 +574,7 @@ public class gui {
 		
 		//*****************************************************************************************************************
 		//*****************************************************************************************************************
-		//*************************************** PANEL DE TIENDA COMPEMENTOS *********************************************
+		//*************************************** PANEL DE TIENDA COMPLEMENTOS *********************************************
 		//*****************************************************************************************************************
 		//*****************************************************************************************************************
 		
@@ -655,9 +676,6 @@ public class gui {
 		btnMunTComp.setFont(new Font("Chiller", Font.BOLD, 40));
 		btnMunTComp.setBounds(716, 596, 158, 42);
 		tiendaComplementos.add(btnMunTComp);
-		
-		
-		
 		//**********************CAJAS DE TEXTO
 		
 		//STATS
@@ -755,22 +773,47 @@ public class gui {
 		
 		//Botones de comprar
 		
-		ArrayList<Producto> listaComp = llamarApi("COMPLEMENTOS");
-		
 		//Botón de rayo laser
 		JButton btnComprarLaser = new JButton("$"+String.valueOf(listaComp.get(0).getPrecio()));
+		btnComprarLaser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaComp.get(0).comprar()) {
+					//Comprar el rayo láser
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarLaser.setForeground(new Color(75, 0, 130));
 		btnComprarLaser.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarLaser.setBounds(572, 337, 128, 42);
 		tiendaComplementos.add(btnComprarLaser);
 		
 		JButton btnComprarCuerno = new JButton("$"+String.valueOf(listaComp.get(1).getPrecio()));
+		btnComprarCuerno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaComp.get(1).comprar()) {
+					//Comprar el cuerno de taurus
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarCuerno.setForeground(new Color(75, 0, 130));
 		btnComprarCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarCuerno.setBounds(572, 409, 125, 42);
 		tiendaComplementos.add(btnComprarCuerno);
 		
 		JButton btnComprarLeche = new JButton("$"+String.valueOf(listaComp.get(2).getPrecio()));
+		btnComprarLeche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaComp.get(2).comprar()) {
+					//Comprar la leche de la vía láctea
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarLeche.setForeground(new Color(75, 0, 130));
 		btnComprarLeche.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarLeche.setBounds(572, 486, 125, 42);
@@ -782,17 +825,12 @@ public class gui {
 		lblBgTComp.setBackground(new Color(255, 250, 250));//posición del fondo
 		lblBgTComp.setBounds(0, 0, 1264, 681);
 		tiendaComplementos.add(lblBgTComp);
-
-	
-		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE TIENDA MUNDOS ***********************************************
 		//**************************************************************************************************************
 		//**************************************************************************************************************
-		
 		//**************ETIQUETAS
-		
 		//TITULO		
 		JLabel lblTituTMun = new JLabel("Mundos");
 		lblTituTMun.setForeground(new Color(255, 250, 250));
@@ -954,22 +992,48 @@ public class gui {
 		tiendaMundos.add(rdbtnOsa);
 		
 		//********************BOTONES 
-		ArrayList<Producto> listaMundos = llamarApi("MUNDOS");
 		
 		//BOTONES COMPRAR
 		JButton btnComprarAndro = new JButton("$"+String.valueOf(listaMundos.get(0).getPrecio()));
+		btnComprarAndro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaMundos.get(0).comprar()) {
+					//Comprar Andrómeda
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarAndro.setForeground(new Color(75, 0, 130));
 		btnComprarAndro.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarAndro.setBounds(515, 338, 128, 42);
 		tiendaMundos.add(btnComprarAndro);
 		
 		JButton btnComprarOrion = new JButton("$"+String.valueOf(listaMundos.get(1).getPrecio()));
+		btnComprarOrion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaMundos.get(1).comprar()) {
+					//Comprar Orión
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarOrion.setForeground(new Color(75, 0, 130));
 		btnComprarOrion.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarOrion.setBounds(515, 410, 125, 42);
 		tiendaMundos.add(btnComprarOrion);
 		
 		JButton btnComprarOsa = new JButton("$"+String.valueOf(listaMundos.get(2).getPrecio()));
+		btnComprarOsa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaMundos.get(2).comprar()) {
+					//Comprar Osa Mayor
+					actualizarTXTDinero();
+					System.out.println(Personaje.devolverDinero());
+				}
+			}
+		});
 		btnComprarOsa.setForeground(new Color(75, 0, 130));
 		btnComprarOsa.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarOsa.setBounds(515, 487, 125, 42);
@@ -1006,9 +1070,6 @@ public class gui {
 		lblBgTMun.setBackground(new Color(255, 250, 250));
 		lblBgTMun.setBounds(0, 0, 1264, 681);
 		tiendaMundos.add(lblBgTMun);
-		
-		
-		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INVENTARIO JETS *********************************************
@@ -1548,6 +1609,16 @@ public class gui {
 		lblBgInvMun.setBackground(new Color(255, 250, 250));
 		lblBgInvMun.setBounds(0, 0, 1264, 681);
 		inventarioMundos.add(lblBgInvMun);
-		
+	}
+//método para actualizar el dinero
+	private void actualizarTXTDinero() {
+		// TODO Auto-generated method stub
+		txtfDineroTJets.setText(String.valueOf(Personaje.devolverDinero()));
+		txtfDineroTComp.setText(String.valueOf(Personaje.devolverDinero()));
+		txtfDineroTMun.setText(String.valueOf(Personaje.devolverDinero()));
+		txtfDineroInvJets.setText(String.valueOf(Personaje.devolverDinero()));
+		txtfDineroInvComp.setText(String.valueOf(Personaje.devolverDinero()));
+		txtfDineroInvJMun.setText(String.valueOf(Personaje.devolverDinero()));
+		txtfDineroInicio.setText(String.valueOf(Personaje.devolverDinero()));
 	}
 }

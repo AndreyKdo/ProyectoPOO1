@@ -7,7 +7,7 @@ public class Personaje {
     private static int agilidad=2;
     private static int ps=15;
     private static int ataque=5;
-    private static int dinero=500;
+    private static int dinero=5500;
 
     protected static void modificarVelocidad(int multiplicador) {
         velocidad = velocidad * multiplicador;        

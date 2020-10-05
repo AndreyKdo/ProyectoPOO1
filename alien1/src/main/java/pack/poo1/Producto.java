@@ -73,7 +73,6 @@ public class Producto {
     			Personaje.modificarAtaque(multiplicador);
     		}else;
     		Personaje.modificarDinero(precio*-1);
-    		precio/=2;//rebaja el precio ya que se compró
     		return true;
     	}else return false;
     }

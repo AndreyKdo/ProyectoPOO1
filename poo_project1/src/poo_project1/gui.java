@@ -159,9 +159,12 @@ public class gui {
 	private void initialize() throws Exception {
 		llamarApi();//llama al API al inicio *IMPORTANTE
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*********************************************		PANELES		************************************************
@@ -190,25 +193,256 @@ public class gui {
 		tiendaMundos.setLayout(null);
 		frame.getContentPane().add(tiendaMundos, "name_927194566434100");
 		tiendaMundos.setVisible(false);
-		
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 		// ****************	INVENTARIO JETS
 		final JPanel inventarioJets = new JPanel();
 		inventarioJets.setLayout(null);
 		frame.getContentPane().add(inventarioJets, "name_927931963284500");
 		inventarioJets.setVisible(false);
+
+		//RADIO BUTTONS
+		final JRadioButton rdbtnMjInv = new JRadioButton("   Mini Jet"); //Radio mini jet
+		rdbtnMjInv.setEnabled(false);
+		rdbtnMjInv.setForeground(new Color(75, 0, 130));
+		rdbtnMjInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnMjInv.setBounds(300, 299, 191, 58);
+		inventarioJets.add(rdbtnMjInv);
 		
+		final JRadioButton rdbtnSjInv = new JRadioButton("   S\u00FAper Jet"); //Radio super jet
+		rdbtnSjInv.setEnabled(false);
+		rdbtnSjInv.setForeground(new Color(75, 0, 130));
+		rdbtnSjInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnSjInv.setBounds(300, 373, 191, 58);
+		inventarioJets.add(rdbtnSjInv);
+			
+		final JRadioButton rdbtnUjInv = new JRadioButton("   Ultra Jet"); //Radio ultra jet
+		rdbtnUjInv.setEnabled(false);
+		rdbtnUjInv.setForeground(new Color(75, 0, 130));
+		rdbtnUjInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnUjInv.setBounds(300, 448, 191, 58);
+		inventarioJets.add(rdbtnUjInv);
+
+		//Botones de equipar
+		final JButton btnEquiparMj = new JButton("Equipar"); //Botón equipar jet
+		btnEquiparMj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnMjInv.isSelected()==false) {
+					equiparObjeto(btnEquiparMj, rdbtnMjInv);
+					aumentarStats("JETS", 2);
+				}else {
+					desequiparObjeto(btnEquiparMj, rdbtnMjInv);
+				}
+			}
+		});
+		btnEquiparMj.setEnabled(false);
+		btnEquiparMj.setForeground(new Color(75, 0, 130));
+		btnEquiparMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparMj.setBounds(522, 307, 153, 42);
+		inventarioJets.add(btnEquiparMj);
+		
+		final JButton btnEquiparSj = new JButton("Equipar"); //Botón equipar súper jet
+		btnEquiparSj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnSjInv.isSelected()==false) {
+					equiparObjeto(btnEquiparSj, rdbtnSjInv);	
+					aumentarStats("JETS", 4);
+				}else {
+					desequiparObjeto(btnEquiparSj, rdbtnSjInv);
+				}
+			}
+		});
+		btnEquiparSj.setEnabled(false);
+		btnEquiparSj.setForeground(new Color(75, 0, 130));
+		btnEquiparSj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparSj.setBounds(522, 382, 153, 42);
+		inventarioJets.add(btnEquiparSj);
+		
+		final JButton btnEquiparUj = new JButton("Equipar"); //Botón equipar ultra jet
+		btnEquiparUj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnUjInv.isSelected()==false) {
+					equiparObjeto(btnEquiparUj, rdbtnUjInv);	
+					aumentarStats("JETS", 8);
+				}else {
+					desequiparObjeto(btnEquiparUj, rdbtnUjInv);
+				}
+			}
+		});
+		btnEquiparUj.setEnabled(false);
+		btnEquiparUj.setForeground(new Color(75, 0, 130));
+		btnEquiparUj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparUj.setBounds(522, 456, 153, 42);
+		inventarioJets.add(btnEquiparUj);
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////	
 		// ****************	INVENTARIO COMPLEMENTOS
 		final JPanel inventarioComplementos = new JPanel();
 		inventarioComplementos.setLayout(null);
 		frame.getContentPane().add(inventarioComplementos, "name_928546021998800");
 		inventarioComplementos.setVisible(false);
 	
+		//RADIO BUTTONS
+		final JRadioButton rdbtnLaserInv = new JRadioButton("    Rayo L\u00E1ser "); //Radio rayo láser
+		rdbtnLaserInv.setEnabled(false);
+		rdbtnLaserInv.setForeground(new Color(75, 0, 130));
+		rdbtnLaserInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnLaserInv.setBounds(299, 299, 243, 58);
+		inventarioComplementos.add(rdbtnLaserInv);
+				
+		final JRadioButton rdbtnCuernoInv = new JRadioButton(" Cuerno de Taurus"); //Radio cuerno de taurus
+		rdbtnCuernoInv.setEnabled(false);
+		rdbtnCuernoInv.setForeground(new Color(75, 0, 130));
+		rdbtnCuernoInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnCuernoInv.setBounds(299, 373, 243, 58);
+		inventarioComplementos.add(rdbtnCuernoInv);
+			
+		final JRadioButton rdbtnLecheInv = new JRadioButton("Leche de la V\u00EDa L\u00E1ctea"); //Radio leche de la vía láctea
+		rdbtnLecheInv.setEnabled(false);
+		rdbtnLecheInv.setForeground(new Color(75, 0, 130));
+		rdbtnLecheInv.setFont(new Font("Chiller", Font.BOLD, 28));
+		rdbtnLecheInv.setBounds(299, 448, 243, 58);
+		inventarioComplementos.add(rdbtnLecheInv);
+		
+		//Botones de equipar 
+		final JButton btnEquiparLaser = new JButton("Equipar"); //Botón equipar rayo laser
+		btnEquiparLaser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnLaserInv.isSelected()==false) {
+					equiparObjeto(btnEquiparLaser, rdbtnLaserInv);
+					aumentarStats("COMPLEMENTOS", 2);
+				}else {
+					desequiparObjeto(btnEquiparLaser, rdbtnLaserInv);
+				}
+			}
+		});
+		btnEquiparLaser.setEnabled(false);
+		btnEquiparLaser.setForeground(new Color(75, 0, 130));
+		btnEquiparLaser.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparLaser.setBounds(575, 307, 153, 42);
+		inventarioComplementos.add(btnEquiparLaser);
+		
+		final JButton btnEquiparCuerno = new JButton("Equipar"); //Botón equipar cuerno de taurus
+		btnEquiparCuerno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnCuernoInv.isSelected()==false) {
+					equiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);	
+					aumentarStats("COMPLEMENTOS", 5);
+				}else {
+					desequiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);
+				}
+			}
+		});
+		btnEquiparCuerno.setEnabled(false);
+		btnEquiparCuerno.setForeground(new Color(75, 0, 130));
+		btnEquiparCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparCuerno.setBounds(575, 382, 153, 42);
+		inventarioComplementos.add(btnEquiparCuerno);
+		
+		final JButton btnEquiparLeche = new JButton("Equipar"); //Botón equipar leche de la vía láctea
+		btnEquiparLeche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnLecheInv.isSelected()==false) {
+					equiparObjeto(btnEquiparLeche, rdbtnLecheInv);	
+					aumentarStats("COMPLEMENTOS", 10);
+				}else {
+					desequiparObjeto(btnEquiparLeche, rdbtnLecheInv);
+				}
+			}
+		});
+		btnEquiparLeche.setEnabled(false);
+		btnEquiparLeche.setForeground(new Color(75, 0, 130));
+		btnEquiparLeche.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparLeche.setBounds(575, 456, 153, 42);
+		inventarioComplementos.add(btnEquiparLeche);
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////
 		// ****************	INVENTARIO MUNDOS
 		final JPanel inventarioMundos = new JPanel();
 		inventarioMundos.setLayout(null);
 		frame.getContentPane().add(inventarioMundos, "name_937114439693000");
-		inventarioMundos.setVisible(false);		
+		inventarioMundos.setVisible(false);	
 
+		//RADIO BUTTONS
+		final JRadioButton rdbtnAndroInv = new JRadioButton("  Andr\u00F3meda"); //Radio Andrómeda
+		rdbtnAndroInv.setSelected(true);
+		rdbtnAndroInv.setEnabled(false);
+		rdbtnAndroInv.setForeground(new Color(75, 0, 130));
+		rdbtnAndroInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnAndroInv.setBounds(299, 299, 195, 58);
+		inventarioMundos.add(rdbtnAndroInv);
+		
+		final JRadioButton rdbtnOrionInv = new JRadioButton("   Ori\u00F3n"); //Radio orión
+		rdbtnOrionInv.setEnabled(false);
+		rdbtnOrionInv.setForeground(new Color(75, 0, 130));
+		rdbtnOrionInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnOrionInv.setBounds(299, 373, 195, 58);
+		inventarioMundos.add(rdbtnOrionInv);
+		
+		final JRadioButton rdbtnOsaInv = new JRadioButton("   Osa Mayor"); //Radio osa mayor
+		rdbtnOsaInv.setEnabled(false);
+		rdbtnOsaInv.setForeground(new Color(75, 0, 130));
+		rdbtnOsaInv.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnOsaInv.setBounds(299, 448, 195, 58);
+		inventarioMundos.add(rdbtnOsaInv);
+		
+		
+		//Botones de equipar
+		final JButton btnEquiparAndro = new JButton("Equipar"); //Botón equipar andrómeda
+		btnEquiparAndro.setEnabled(false);
+		btnEquiparAndro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnAndroInv.isSelected()==false) {
+					equiparObjeto(btnEquiparAndro, rdbtnAndroInv);			
+				}else {
+					desequiparObjeto(btnEquiparAndro, rdbtnAndroInv);
+				}
+			}
+		});
+		btnEquiparAndro.setForeground(new Color(75, 0, 130));
+		btnEquiparAndro.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparAndro.setBounds(523, 307, 153, 42);
+		inventarioMundos.add(btnEquiparAndro);
+		
+		final JButton btnEquiparOsa = new JButton("Equipar"); //Botón equipar osa mayor
+		btnEquiparOsa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnOsaInv.isSelected()==false) {
+					equiparObjeto(btnEquiparOsa, rdbtnOsaInv);			
+				}else {
+					desequiparObjeto(btnEquiparOsa, rdbtnOsaInv);
+				}
+			}
+		});
+		btnEquiparOsa.setEnabled(false);
+		btnEquiparOsa.setForeground(new Color(75, 0, 130));
+		btnEquiparOsa.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparOsa.setBounds(523, 456, 153, 42);
+		inventarioMundos.add(btnEquiparOsa);
+		
+		final JButton btnEquiparOrion = new JButton("Equipar"); //Botón equipar orión
+		btnEquiparOrion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnOrionInv.isSelected()==false) {
+					equiparObjeto(btnEquiparOrion, rdbtnOrionInv);			
+				}else {
+					desequiparObjeto(btnEquiparOrion, rdbtnOrionInv);
+				}				
+			}
+		});
+		btnEquiparOrion.setEnabled(false);
+		btnEquiparOrion.setForeground(new Color(75, 0, 130));
+		btnEquiparOrion.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparOrion.setBounds(523, 382, 153, 42);
+		inventarioMundos.add(btnEquiparOrion);
+	
+				
+		
+		
+		
+		
+
+		
 		/*Lista de los stats
 		 * [4, 2, 15, 3, 5]
 		 * [fuerza;agilidad;ps;velocidad;ataque]
@@ -287,6 +521,7 @@ public class gui {
 		
 		//****************Text Fields, valores de los stats
 		txtfFuerzaInicio = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaInicio.setEditable(false);
 		txtfFuerzaInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaInicio.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaInicio.setBounds(243, 74, 102, 31);
@@ -294,6 +529,7 @@ public class gui {
 		txtfFuerzaInicio.setColumns(10);
 		
 		txtfAgilidadInicio = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadInicio.setEditable(false);
 		txtfAgilidadInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadInicio.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadInicio.setColumns(10);
@@ -301,6 +537,7 @@ public class gui {
 		inicio.add(txtfAgilidadInicio);
 		
 		txtfAtaqueInicio = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaqueInicio.setEditable(false);
 		txtfAtaqueInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaqueInicio.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaqueInicio.setColumns(10);
@@ -308,6 +545,7 @@ public class gui {
 		inicio.add(txtfAtaqueInicio);
 		
 		txtfVelocidadInicio = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadInicio.setEditable(false);
 		txtfVelocidadInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadInicio.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadInicio.setColumns(10);
@@ -315,6 +553,7 @@ public class gui {
 		inicio.add(txtfVelocidadInicio);
 		
 		txtfPtosSaludInicio = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludInicio.setEditable(false);
 		txtfPtosSaludInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludInicio.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludInicio.setColumns(10);
@@ -389,26 +628,48 @@ public class gui {
 		
 		/* Fondo de pantalla de tienda Jets */
 		
+		//*********************RADIOS		
+		//Botón mini jet
+		final JRadioButton rdbtnMj = new JRadioButton("   Mini Jet");
+		rdbtnMj.setForeground(new Color(75, 0, 130));
+		rdbtnMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnMj.setBounds(283, 299, 191, 58);
+		tiendaJets.add(rdbtnMj);
+		
+		//Botón Super Jet
+		JRadioButton rdbtnMs = new JRadioButton("   S\u00FAper Jet");
+		rdbtnMs.setForeground(new Color(75, 0, 130));
+		rdbtnMs.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnMs.setBounds(283, 372, 191, 58);
+		tiendaJets.add(rdbtnMs);
+		
+		//Botón Ultra Jet
+		JRadioButton rdbtnUj = new JRadioButton("   Ultra Jet");
+		rdbtnUj.setForeground(new Color(75, 0, 130));
+		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnUj.setBounds(283, 445, 191, 58);
+		tiendaJets.add(rdbtnUj);
+		
 		// Textos de En inventario de la tienda de Jets 
 		JLabel lblNewLabel = new JLabel(" En inventario:");
 		lblNewLabel.setBackground(new Color(255, 250, 250));
 		lblNewLabel.setForeground(new Color(255, 250, 250));
 		lblNewLabel.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblNewLabel.setBounds(708, 330, 170, 58);
+		lblNewLabel.setBounds(708, 299, 170, 58);
 		tiendaJets.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel(" En inventario:");
 		lblNewLabel_1.setBackground(new Color(255, 250, 250));
 		lblNewLabel_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_1.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblNewLabel_1.setBounds(708, 399, 170, 58);
+		lblNewLabel_1.setBounds(708, 372, 170, 58);
 		tiendaJets.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel(" En inventario:");
 		lblNewLabel_2.setBackground(new Color(255, 250, 250));
 		lblNewLabel_2.setForeground(new Color(255, 250, 250));
 		lblNewLabel_2.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblNewLabel_2.setBounds(708, 473, 170, 58);
+		lblNewLabel_2.setBounds(708, 445, 170, 58);
 		tiendaJets.add(lblNewLabel_2);
 		//**************BOTONES	
 		JButton btnSalirTJets = new JButton("Salir");
@@ -433,9 +694,7 @@ public class gui {
 		btnCompTJets.setForeground(new Color(0, 0, 128));
 		btnCompTJets.setFont(new Font("Chiller", Font.BOLD, 40));
 		btnCompTJets.setBounds(651, 596, 227, 42);
-		tiendaJets.add(btnCompTJets);
-		
-		/*Botón precio mini jet*/
+		tiendaJets.add(btnCompTJets);		
 		
 		JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
 		btnComprarMj.addActionListener(new ActionListener() {
@@ -445,6 +704,8 @@ public class gui {
 					Inventario.agregarProducto(listaJets.get(0));//agrega en inventario el mini jet
 					actualizarTXTDinero();
 					actualizarTXTInvJets();
+					btnEquiparMj.setEnabled(true);
+										
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -453,7 +714,7 @@ public class gui {
 		});
 		btnComprarMj.setForeground(new Color(75, 0, 130));
 		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarMj.setBounds(529, 338, 128, 42);
+		btnComprarMj.setBounds(529, 307, 128, 42);
 		tiendaJets.add(btnComprarMj);
 		btnComprarMj.setToolTipText("Hola");
 		
@@ -466,6 +727,7 @@ public class gui {
 					Inventario.agregarProducto(listaJets.get(1));//agrega en inventario el super jet
 					actualizarTXTDinero();
 					actualizarTXTInvJets();
+					btnEquiparSj.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -474,7 +736,7 @@ public class gui {
 		});
 		btnComprarSj.setForeground(new Color(75, 0, 130));
 		btnComprarSj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarSj.setBounds(529, 410, 125, 42);
+		btnComprarSj.setBounds(529, 380, 125, 42);
 		tiendaJets.add(btnComprarSj);
 		//Botón ultra jet
 		JButton btnComprarUj = new JButton("$"+String.valueOf(listaJets.get(2).getPrecio()));
@@ -485,6 +747,7 @@ public class gui {
 					Inventario.agregarProducto(listaJets.get(2));//agrega en inventario el ultra jet
 					actualizarTXTDinero();
 					actualizarTXTInvJets();
+					btnEquiparUj.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -493,12 +756,13 @@ public class gui {
 		});
 		btnComprarUj.setForeground(new Color(75, 0, 130));
 		btnComprarUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarUj.setBounds(529, 487, 125, 42);
+		btnComprarUj.setBounds(529, 453, 125, 42);
 		tiendaJets.add(btnComprarUj);
 		
 		
 		//**************CAJAS DE TEXTO
 		txtfFuerzaTJets = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaTJets.setEditable(false);
 		txtfFuerzaTJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaTJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaTJets.setColumns(10);
@@ -506,6 +770,7 @@ public class gui {
 		tiendaJets.add(txtfFuerzaTJets);
 		
 		txtfAgilidadTJets = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadTJets.setEditable(false);
 		txtfAgilidadTJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadTJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadTJets.setColumns(10);
@@ -513,6 +778,7 @@ public class gui {
 		tiendaJets.add(txtfAgilidadTJets);
 		
 		txtfAtaqueTJets = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaqueTJets.setEditable(false);
 		txtfAtaqueTJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaqueTJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaqueTJets.setColumns(10);
@@ -520,6 +786,7 @@ public class gui {
 		tiendaJets.add(txtfAtaqueTJets);
 		
 		txtfVelocidadTJets = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadTJets.setEditable(false);
 		txtfVelocidadTJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadTJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadTJets.setColumns(10);
@@ -527,6 +794,7 @@ public class gui {
 		tiendaJets.add(txtfVelocidadTJets);
 		
 		txtfPtosSaludTJets = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludTJets.setEditable(false);
 		txtfPtosSaludTJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludTJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludTJets.setColumns(10);
@@ -543,52 +811,29 @@ public class gui {
 		txtfDineroTJets.setColumns(10);
 		
 		txtfInventarioMj = new JTextField(String.valueOf(listaJets.get(0).enInventario()));//inventario en minijet
+		txtfInventarioMj.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioMj.setForeground(new Color(75, 0, 130));
 		txtfInventarioMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		txtfInventarioMj.setBounds(888, 331, 63, 58);
+		txtfInventarioMj.setBounds(888, 299, 63, 58);
 		tiendaJets.add(txtfInventarioMj);
 		txtfInventarioMj.setColumns(10);
 		
 		txtfInventarioSj = new JTextField(String.valueOf(listaJets.get(1).enInventario()));
+		txtfInventarioSj.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioSj.setForeground(new Color(75, 0, 130));//inventario en super jet
 		txtfInventarioSj.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioSj.setColumns(10);
-		txtfInventarioSj.setBounds(888, 402, 63, 58);
+		txtfInventarioSj.setBounds(888, 372, 63, 58);
 		tiendaJets.add(txtfInventarioSj);
 		
 		
 		txtfInventarioUj = new JTextField(String.valueOf(listaJets.get(2).enInventario()));//inventario ultra jet
+		txtfInventarioUj.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioUj.setForeground(new Color(75, 0, 130));
 		txtfInventarioUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioUj.setColumns(10);
-		txtfInventarioUj.setBounds(888, 477, 63, 58);
+		txtfInventarioUj.setBounds(888, 445, 63, 58);
 		tiendaJets.add(txtfInventarioUj);
-				
-		//**************RADIOS
-		//Botón mini jet
-				JRadioButton rdbtnMj = new JRadioButton("   Mini Jet");
-				rdbtnMj.setEnabled(false);
-		rdbtnMj.setForeground(new Color(75, 0, 130));
-		rdbtnMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnMj.setBounds(283, 330, 191, 58);
-		tiendaJets.add(rdbtnMj);
-		
-		
-		//Botón Super Jet
-		JRadioButton rdbtnMs = new JRadioButton("   S\u00FAper Jet");
-		rdbtnMs.setEnabled(false);
-		rdbtnMs.setForeground(new Color(75, 0, 130));
-		rdbtnMs.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnMs.setBounds(283, 402, 191, 58);
-		tiendaJets.add(rdbtnMs);
-		
-		//Botón Ultra Jet
-		JRadioButton rdbtnUj = new JRadioButton("   Ultra Jet");
-		rdbtnUj.setEnabled(false);
-		rdbtnUj.setForeground(new Color(75, 0, 130));
-		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnUj.setBounds(283, 476, 191, 58);
-		tiendaJets.add(rdbtnUj);
 		JLabel lblBgTJets = new JLabel();
 		lblBgTJets.setBackground(new Color(255, 250, 250));
 		lblBgTJets.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -596,8 +841,7 @@ public class gui {
 		lblBgTJets.setIcon(new ImageIcon(img));
 		lblBgTJets.setBounds(0, 0, 1264, 681);
 		tiendaJets.add(lblBgTJets);
-		
-		
+				
 		//*****************************************************************************************************************
 		//*****************************************************************************************************************
 		//*************************************** PANEL DE TIENDA COMPLEMENTOS *********************************************
@@ -658,21 +902,21 @@ public class gui {
 		lblNewLabel_4.setForeground(new Color(255, 250, 250));
 		lblNewLabel_4.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_4.setBackground(new Color(255, 250, 250));
-		lblNewLabel_4.setBounds(751, 329, 170, 58);
+		lblNewLabel_4.setBounds(751, 299, 170, 58);
 		tiendaComplementos.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("En inventario:");
 		lblNewLabel_1_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_1_1.setBackground(new Color(255, 250, 250));
-		lblNewLabel_1_1.setBounds(751, 398, 170, 58);
+		lblNewLabel_1_1.setBounds(751, 372, 170, 58);
 		tiendaComplementos.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("En inventario:");
 		lblNewLabel_2_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_2_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_2_1.setBackground(new Color(255, 250, 250));
-		lblNewLabel_2_1.setBounds(751, 472, 170, 58);
+		lblNewLabel_2_1.setBounds(751, 445, 170, 58);
 		tiendaComplementos.add(lblNewLabel_2_1);
 		
 		//****************BOTONES
@@ -706,6 +950,7 @@ public class gui {
 		
 		//STATS
 		txtfFuerzaTComp = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaTComp.setEditable(false);
 		txtfFuerzaTComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaTComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaTComp.setColumns(10);
@@ -713,6 +958,7 @@ public class gui {
 		tiendaComplementos.add(txtfFuerzaTComp);
 		
 		txtfAgilidadTComp = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadTComp.setEditable(false);
 		txtfAgilidadTComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadTComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadTComp.setColumns(10);
@@ -720,6 +966,7 @@ public class gui {
 		tiendaComplementos.add(txtfAgilidadTComp);
 		
 		txtfAtaqueTComp = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaqueTComp.setEditable(false);
 		txtfAtaqueTComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaqueTComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaqueTComp.setColumns(10);
@@ -727,6 +974,7 @@ public class gui {
 		tiendaComplementos.add(txtfAtaqueTComp);
 		
 		txtfVelocidadTComp = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadTComp.setEditable(false);
 		txtfVelocidadTComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadTComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadTComp.setColumns(10);
@@ -734,6 +982,7 @@ public class gui {
 		tiendaComplementos.add(txtfVelocidadTComp);
 		
 		txtfPtosSaludTComp = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludTComp.setEditable(false);
 		txtfPtosSaludTComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludTComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludTComp.setColumns(10);
@@ -753,47 +1002,47 @@ public class gui {
 		
 		//DATOS EN INVENTARIO
 		txtfInventarioLaser = new JTextField(String.valueOf(listaComp.get(0).enInventario()));//en inventario rayo láser
+		txtfInventarioLaser.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioLaser.setForeground(new Color(75, 0, 130));
 		txtfInventarioLaser.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioLaser.setColumns(10);
-		txtfInventarioLaser.setBounds(931, 330, 63, 58);
+		txtfInventarioLaser.setBounds(931, 299, 63, 58);
 		tiendaComplementos.add(txtfInventarioLaser);
 		
 		txtfInventarioCuerno = new JTextField(String.valueOf(listaComp.get(1).enInventario()));//en inventario cuerno de taurus
+		txtfInventarioCuerno.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioCuerno.setForeground(new Color(75, 0, 130));
 		txtfInventarioCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioCuerno.setColumns(10);
-		txtfInventarioCuerno.setBounds(931, 401, 63, 58);
+		txtfInventarioCuerno.setBounds(931, 372, 63, 58);
 		tiendaComplementos.add(txtfInventarioCuerno);
 		
 		txtfInventarioLeche = new JTextField(String.valueOf(listaComp.get(2).enInventario()));//en inventario  via lactea
+		txtfInventarioLeche.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioLeche.setForeground(new Color(75, 0, 130));
 		txtfInventarioLeche.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioLeche.setColumns(10);
-		txtfInventarioLeche.setBounds(931, 476, 63, 58);
+		txtfInventarioLeche.setBounds(931, 445, 63, 58);
 		tiendaComplementos.add(txtfInventarioLeche);
 		
 		
 		//**************RADIOS
-		JRadioButton rdbtnLaser = new JRadioButton("  Rayo L\u00E1ser");
-		rdbtnLaser.setEnabled(false);
+		JRadioButton rdbtnLaser = new JRadioButton("    Rayo L\u00E1ser");
 		rdbtnLaser.setForeground(new Color(75, 0, 130));
 		rdbtnLaser.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnLaser.setBounds(283, 330, 267, 58);
+		rdbtnLaser.setBounds(283, 299, 247, 58);
 		tiendaComplementos.add(rdbtnLaser);
 		
-		JRadioButton rdbtnCuerno = new JRadioButton("   Cuerno de Taurus");
-		rdbtnCuerno.setEnabled(false);
+		JRadioButton rdbtnCuerno = new JRadioButton(" Cuerno de Taurus");
 		rdbtnCuerno.setForeground(new Color(75, 0, 130));
 		rdbtnCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnCuerno.setBounds(283, 402, 267, 58);
+		rdbtnCuerno.setBounds(283, 372, 247, 58);
 		tiendaComplementos.add(rdbtnCuerno);
 		
-		JRadioButton rdbtnLeche = new JRadioButton("   Leche de la V\u00EDa L\u00E1ctea");
-		rdbtnLeche.setEnabled(false);
+		JRadioButton rdbtnLeche = new JRadioButton(" Leche de la V\u00EDa L\u00E1ctea");
 		rdbtnLeche.setForeground(new Color(75, 0, 130));
 		rdbtnLeche.setFont(new Font("Chiller", Font.BOLD, 28));
-		rdbtnLeche.setBounds(283, 476, 267, 58);
+		rdbtnLeche.setBounds(283, 445, 247, 58);
 		tiendaComplementos.add(rdbtnLeche);
 		
 		
@@ -808,6 +1057,7 @@ public class gui {
 					actualizarTXTDinero();
 					Inventario.agregarProducto(listaComp.get(0));//agrega en inventario el rayo láser
 					actualizarTXTInvComp();
+					btnEquiparLaser.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -816,7 +1066,7 @@ public class gui {
 		});
 		btnComprarLaser.setForeground(new Color(75, 0, 130));
 		btnComprarLaser.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarLaser.setBounds(572, 337, 128, 42);
+		btnComprarLaser.setBounds(572, 307, 128, 42);
 		tiendaComplementos.add(btnComprarLaser);
 		
 		JButton btnComprarCuerno = new JButton("$"+String.valueOf(listaComp.get(1).getPrecio()));
@@ -827,6 +1077,7 @@ public class gui {
 					actualizarTXTDinero();
 					Inventario.agregarProducto(listaComp.get(1));//agrega en inventario el cuerno de taurus
 					actualizarTXTInvComp();
+					btnEquiparCuerno.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -835,7 +1086,7 @@ public class gui {
 		});
 		btnComprarCuerno.setForeground(new Color(75, 0, 130));
 		btnComprarCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarCuerno.setBounds(572, 409, 125, 42);
+		btnComprarCuerno.setBounds(572, 380, 125, 42);
 		tiendaComplementos.add(btnComprarCuerno);
 		
 		JButton btnComprarLeche = new JButton("$"+String.valueOf(listaComp.get(2).getPrecio()));
@@ -846,6 +1097,7 @@ public class gui {
 					actualizarTXTDinero();
 					Inventario.agregarProducto(listaComp.get(2));//agrega en inventario la leche de la vía láctea
 					actualizarTXTInvComp();
+					btnEquiparLeche.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -854,7 +1106,7 @@ public class gui {
 		});
 		btnComprarLeche.setForeground(new Color(75, 0, 130));
 		btnComprarLeche.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarLeche.setBounds(572, 486, 125, 42);
+		btnComprarLeche.setBounds(572, 453, 125, 42);
 		tiendaComplementos.add(btnComprarLeche);
 		JLabel lblBgTComp = new JLabel();
 		lblBgTComp.setIcon(new ImageIcon(img));
@@ -870,7 +1122,7 @@ public class gui {
 		//**************************************************************************************************************
 		//**************ETIQUETAS
 		//TITULO		
-		JLabel lblTituTMun = new JLabel("Mundos");
+		JLabel lblTituTMun = new JLabel("MUNDOS");
 		lblTituTMun.setForeground(new Color(255, 250, 250));
 		lblTituTMun.setFont(new Font("Chiller", Font.BOLD, 99));
 		lblTituTMun.setBounds(497, 180, 440, 99);
@@ -918,21 +1170,21 @@ public class gui {
 		lblNewLabel_4_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_4_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_4_1.setBackground(new Color(255, 250, 250));
-		lblNewLabel_4_1.setBounds(694, 330, 170, 58);
+		lblNewLabel_4_1.setBounds(694, 299, 170, 58);
 		tiendaMundos.add(lblNewLabel_4_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("En inventario:");
 		lblNewLabel_1_1_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_1_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_1_1_1.setBackground(new Color(255, 250, 250));
-		lblNewLabel_1_1_1.setBounds(694, 399, 170, 58);
+		lblNewLabel_1_1_1.setBounds(694, 372, 170, 58);
 		tiendaMundos.add(lblNewLabel_1_1_1);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("En inventario:");
 		lblNewLabel_2_1_1.setForeground(new Color(255, 250, 250));
 		lblNewLabel_2_1_1.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_2_1_1.setBackground(new Color(255, 250, 250));
-		lblNewLabel_2_1_1.setBounds(694, 473, 170, 58);
+		lblNewLabel_2_1_1.setBounds(694, 445, 170, 58);
 		tiendaMundos.add(lblNewLabel_2_1_1);
 		
 		/*Fondo de pantalla de tienda mundos*/
@@ -941,6 +1193,7 @@ public class gui {
 		
 		//CAJAS DE TEXTO DE LOS STATS
 		txtfFuerzaTMun = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaTMun.setEditable(false);
 		txtfFuerzaTMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaTMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaTMun.setColumns(10);
@@ -948,6 +1201,7 @@ public class gui {
 		tiendaMundos.add(txtfFuerzaTMun);
 		
 		txtfAgilidadTMun = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadTMun.setEditable(false);
 		txtfAgilidadTMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadTMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadTMun.setColumns(10);
@@ -955,6 +1209,7 @@ public class gui {
 		tiendaMundos.add(txtfAgilidadTMun);
 		
 		txtfAtaqueTMun = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaqueTMun.setEditable(false);
 		txtfAtaqueTMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaqueTMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaqueTMun.setColumns(10);
@@ -962,6 +1217,7 @@ public class gui {
 		tiendaMundos.add(txtfAtaqueTMun);
 		
 		txtfVelocidadTMun = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadTMun.setEditable(false);
 		txtfVelocidadTMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadTMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadTMun.setColumns(10);
@@ -969,6 +1225,7 @@ public class gui {
 		tiendaMundos.add(txtfVelocidadTMun);
 		
 		txtfPtosSaludTMun = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludTMun.setEditable(false);
 		txtfPtosSaludTMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludTMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludTMun.setColumns(10);
@@ -988,46 +1245,46 @@ public class gui {
 		//CAJA DE TEXTO QUE MUESTRA LO QUE HAY EN INVENTARIOS
 		
 		txtfInventarioAndro = new JTextField(String.valueOf(listaMundos.get(0).enInventario()));//en inventario andromeda
+		txtfInventarioAndro.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioAndro.setForeground(new Color(75, 0, 130));
 		txtfInventarioAndro.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioAndro.setColumns(10);
-		txtfInventarioAndro.setBounds(874, 331, 63, 58);
+		txtfInventarioAndro.setBounds(874, 299, 63, 58);
 		tiendaMundos.add(txtfInventarioAndro);
 		
 		txtfInventarioOrion = new JTextField(String.valueOf(listaMundos.get(1).enInventario()));//en inventario orión
+		txtfInventarioOrion.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioOrion.setForeground(new Color(75, 0, 130));
 		txtfInventarioOrion.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioOrion.setColumns(10);
-		txtfInventarioOrion.setBounds(874, 402, 63, 58);
+		txtfInventarioOrion.setBounds(874, 372, 63, 58);
 		tiendaMundos.add(txtfInventarioOrion);
 		
 		txtfInventarioOsa = new JTextField(String.valueOf(listaMundos.get(2).enInventario()));//en inventario osa mayor
+		txtfInventarioOsa.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfInventarioOsa.setForeground(new Color(75, 0, 130));
 		txtfInventarioOsa.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioOsa.setColumns(10);
-		txtfInventarioOsa.setBounds(874, 477, 63, 58);
+		txtfInventarioOsa.setBounds(874, 445, 63, 58);
 		tiendaMundos.add(txtfInventarioOsa);
 		
 		//**************RADIOS
 		JRadioButton rdbtnAndro = new JRadioButton("  Andr\u00F3meda");
-		rdbtnAndro.setEnabled(false);
 		rdbtnAndro.setForeground(new Color(75, 0, 130));
 		rdbtnAndro.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnAndro.setBounds(283, 330, 179, 58);
+		rdbtnAndro.setBounds(283, 299, 179, 58);
 		tiendaMundos.add(rdbtnAndro);
 		
 		JRadioButton rdbtnOrion = new JRadioButton("   Ori\u00F3n");
-		rdbtnOrion.setEnabled(false);
 		rdbtnOrion.setForeground(new Color(75, 0, 130));
 		rdbtnOrion.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnOrion.setBounds(283, 402, 179, 58);
+		rdbtnOrion.setBounds(283, 372, 179, 58);
 		tiendaMundos.add(rdbtnOrion);
 		
 		JRadioButton rdbtnOsa = new JRadioButton("   Osa Mayor");
-		rdbtnOsa.setEnabled(false);
 		rdbtnOsa.setForeground(new Color(75, 0, 130));
 		rdbtnOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnOsa.setBounds(283, 476, 179, 58);
+		rdbtnOsa.setBounds(283, 445, 179, 58);
 		tiendaMundos.add(rdbtnOsa);
 		
 		//********************BOTONES 
@@ -1041,6 +1298,7 @@ public class gui {
 					actualizarTXTDinero();
 					Inventario.agregarProducto(listaMundos.get(0));//agrega en inventario el mundo andrómeda
 					actualizarTXTInvMun();
+					btnEquiparAndro.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -1049,7 +1307,7 @@ public class gui {
 		});
 		btnComprarAndro.setForeground(new Color(75, 0, 130));
 		btnComprarAndro.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarAndro.setBounds(515, 338, 128, 42);
+		btnComprarAndro.setBounds(515, 307, 128, 42);
 		tiendaMundos.add(btnComprarAndro);
 		
 		JButton btnComprarOrion = new JButton("$"+String.valueOf(listaMundos.get(1).getPrecio()));
@@ -1060,6 +1318,7 @@ public class gui {
 					actualizarTXTDinero();
 					Inventario.agregarProducto(listaMundos.get(1));//agrega en inventario el mundo orión
 					actualizarTXTInvMun();
+					btnEquiparOrion.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -1068,7 +1327,7 @@ public class gui {
 		});
 		btnComprarOrion.setForeground(new Color(75, 0, 130));
 		btnComprarOrion.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarOrion.setBounds(515, 410, 125, 42);
+		btnComprarOrion.setBounds(515, 380, 125, 42);
 		tiendaMundos.add(btnComprarOrion);
 		
 		JButton btnComprarOsa = new JButton("$"+String.valueOf(listaMundos.get(2).getPrecio()));
@@ -1079,6 +1338,7 @@ public class gui {
 					actualizarTXTDinero();
 					Inventario.agregarProducto(listaMundos.get(2));//agrega en inventario el mundo Osa Mayor
 					actualizarTXTInvMun();
+					btnEquiparOsa.setEnabled(true);
 				}else { 
 					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
@@ -1087,7 +1347,7 @@ public class gui {
 		});
 		btnComprarOsa.setForeground(new Color(75, 0, 130));
 		btnComprarOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarOsa.setBounds(515, 487, 125, 42);
+		btnComprarOsa.setBounds(515, 453, 125, 42);
 		tiendaMundos.add(btnComprarOsa);
 		
 		//BOTONES PARA DESPLAZARSE ENTRE PANELES
@@ -1121,6 +1381,8 @@ public class gui {
 		lblBgTMun.setBackground(new Color(255, 250, 250));
 		lblBgTMun.setBounds(0, 0, 1264, 681);
 		tiendaMundos.add(lblBgTMun);
+	
+
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INVENTARIO JETS *********************************************
@@ -1208,55 +1470,60 @@ public class gui {
 		JButton btnVenderMj = new JButton("Vender por $125");
 		btnVenderMj.setForeground(new Color(75, 0, 130));
 		btnVenderMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderMj.setBounds(624, 339, 254, 42);
+		btnVenderMj.setBounds(708, 307, 243, 42);
 		inventarioJets.add(btnVenderMj);
 		
 		//SUPER JET
 		JButton btnVenderSj = new JButton("Vender por $250");
 		btnVenderSj.setForeground(new Color(75, 0, 130));
 		btnVenderSj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderSj.setBounds(624, 411, 254, 42);
+		btnVenderSj.setBounds(708, 382, 243, 42);
 		inventarioJets.add(btnVenderSj);
 		
 		//ULTRA JET
 		JButton btnVenderUj = new JButton("Vender por $500");
 		btnVenderUj.setForeground(new Color(75, 0, 130));
 		btnVenderUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderUj.setBounds(624, 488, 254, 42);
+		btnVenderUj.setBounds(708, 456, 243, 42);
 		inventarioJets.add(btnVenderUj);
 		
 		//******************************CAJAS DE TEXTO
 		
 		//STATS
-		txtfFuerzaInvJets = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaInvJets = new JTextField(String.valueOf(stats.get(0)));
+		txtfFuerzaInvJets.setEditable(false);
 		txtfFuerzaInvJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaInvJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaInvJets.setColumns(10);
 		txtfFuerzaInvJets.setBounds(243, 74, 102, 31);
 		inventarioJets.add(txtfFuerzaInvJets);
 		
-		txtfAgilidadInvJets = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadInvJets = new JTextField(String.valueOf(stats.get(1)));
+		txtfAgilidadInvJets.setEditable(false);
 		txtfAgilidadInvJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadInvJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadInvJets.setColumns(10);
 		txtfAgilidadInvJets.setBounds(391, 74, 102, 31);
 		inventarioJets.add(txtfAgilidadInvJets);
 		
-		txtfAtaqueInvJets = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaqueInvJets = new JTextField(String.valueOf(stats.get(4)));
+		txtfAtaqueInvJets.setEditable(false);
 		txtfAtaqueInvJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaqueInvJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaqueInvJets.setColumns(10);
 		txtfAtaqueInvJets.setBounds(872, 74, 102, 31);
 		inventarioJets.add(txtfAtaqueInvJets);
 		
-		txtfVelocidadInvJets = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadInvJets = new JTextField(String.valueOf(stats.get(3)));
+		txtfVelocidadInvJets.setEditable(false);
 		txtfVelocidadInvJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadInvJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadInvJets.setColumns(10);
 		txtfVelocidadInvJets.setBounds(733, 74, 102, 31);
 		inventarioJets.add(txtfVelocidadInvJets);
 		
-		txtfPtosSaludInvJets = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludInvJets = new JTextField(String.valueOf(stats.get(2)));
+		txtfPtosSaludInvJets.setEditable(false);
 		txtfPtosSaludInvJets.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludInvJets.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludInvJets.setColumns(10);
@@ -1272,28 +1539,6 @@ public class gui {
 		txtfDineroInvJets.setColumns(10);
 		txtfDineroInvJets.setBounds(1033, 198, 186, 42);
 		inventarioJets.add(txtfDineroInvJets);
-		
-		//**************RADIOS
-		JRadioButton rdbtnMjInv = new JRadioButton("   Mini Jet");
-		rdbtnMjInv.setEnabled(false);
-		rdbtnMjInv.setForeground(new Color(75, 0, 130));
-		rdbtnMjInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnMjInv.setBounds(378, 331, 191, 58);
-		inventarioJets.add(rdbtnMjInv);
-		
-		JRadioButton rdbtnSjInv = new JRadioButton("   S\u00FAper Jet");
-		rdbtnSjInv.setEnabled(false);
-		rdbtnSjInv.setForeground(new Color(75, 0, 130));
-		rdbtnSjInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnSjInv.setBounds(378, 403, 191, 58);
-		inventarioJets.add(rdbtnSjInv);
-		
-		JRadioButton rdbtnUjInv = new JRadioButton("   Ultra Jet");
-		rdbtnUjInv.setEnabled(false);
-		rdbtnUjInv.setForeground(new Color(75, 0, 130));
-		rdbtnUjInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnUjInv.setBounds(378, 477, 191, 58);
-		inventarioJets.add(rdbtnUjInv);
 		JLabel lblBgInvJets = new JLabel();
 		lblBgInvJets.setIcon(new ImageIcon(img));
 		lblBgInvJets.setForeground(new Color(75, 0, 130));
@@ -1301,6 +1546,7 @@ public class gui {
 		lblBgInvJets.setBackground(new Color(255, 250, 250));
 		lblBgInvJets.setBounds(0, 0, 1264, 681);
 		inventarioJets.add(lblBgInvJets);
+		
 		
 		
 		//**********************************************************************************************************************
@@ -1367,19 +1613,19 @@ public class gui {
 		});
 		btnVenderRayo.setForeground(new Color(75, 0, 130));
 		btnVenderRayo.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderRayo.setBounds(683, 338, 254, 42);
+		btnVenderRayo.setBounds(760, 307, 243, 42);
 		inventarioComplementos.add(btnVenderRayo);
 		
 		JButton btnVenderCuerno = new JButton("Vender por $400");
 		btnVenderCuerno.setForeground(new Color(75, 0, 130));
 		btnVenderCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderCuerno.setBounds(685, 409, 248, 42);
+		btnVenderCuerno.setBounds(760, 382, 243, 42);
 		inventarioComplementos.add(btnVenderCuerno);
 		
 		JButton btnVenderLeche = new JButton("Vender por $600");
 		btnVenderLeche.setForeground(new Color(75, 0, 130));
 		btnVenderLeche.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderLeche.setBounds(685, 481, 248, 42);
+		btnVenderLeche.setBounds(760, 456, 243, 42);
 		inventarioComplementos.add(btnVenderLeche);
 		
 		//BOTONES PARA DESPLAZARSE ENTRE PANELES
@@ -1411,6 +1657,7 @@ public class gui {
 		//**************CAJAS DE TEXTO
 		// CAJAS DE TEXTO DE LOS STATS
 		txtfFuerzaInvComp = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaInvComp.setEditable(false);
 		txtfFuerzaInvComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaInvComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaInvComp.setColumns(10);
@@ -1418,6 +1665,7 @@ public class gui {
 		inventarioComplementos.add(txtfFuerzaInvComp);
 		
 		txtfAgilidadInvComp = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadInvComp.setEditable(false);
 		txtfAgilidadInvComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadInvComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadInvComp.setColumns(10);
@@ -1425,6 +1673,7 @@ public class gui {
 		inventarioComplementos.add(txtfAgilidadInvComp);
 		
 		txtfAtaqueInvComp = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaqueInvComp.setEditable(false);
 		txtfAtaqueInvComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaqueInvComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaqueInvComp.setColumns(10);
@@ -1432,6 +1681,7 @@ public class gui {
 		inventarioComplementos.add(txtfAtaqueInvComp);
 		
 		txtfVelocidadInvComp = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadInvComp.setEditable(false);
 		txtfVelocidadInvComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadInvComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadInvComp.setColumns(10);
@@ -1439,6 +1689,7 @@ public class gui {
 		inventarioComplementos.add(txtfVelocidadInvComp);
 		
 		txtfPtosSaludInvComp = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludInvComp.setEditable(false);
 		txtfPtosSaludInvComp.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludInvComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludInvComp.setColumns(10);
@@ -1454,28 +1705,6 @@ public class gui {
 		txtfDineroInvComp.setColumns(10);
 		txtfDineroInvComp.setBounds(1033, 198, 186, 42);
 		inventarioComplementos.add(txtfDineroInvComp);
-		
-		//**************RADIOS
-		JRadioButton rdbtnLaserInv = new JRadioButton("  Rayo L\u00E1ser");
-		rdbtnLaserInv.setEnabled(false);
-		rdbtnLaserInv.setForeground(new Color(75, 0, 130));
-		rdbtnLaserInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnLaserInv.setBounds(378, 331, 267, 58);
-		inventarioComplementos.add(rdbtnLaserInv);
-		
-		JRadioButton rdbtnCuernoInv = new JRadioButton("   Cuerno de Taurus");
-		rdbtnCuernoInv.setEnabled(false);
-		rdbtnCuernoInv.setForeground(new Color(75, 0, 130));
-		rdbtnCuernoInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnCuernoInv.setBounds(378, 402, 267, 58);
-		inventarioComplementos.add(rdbtnCuernoInv);
-		
-		JRadioButton rdbtnLecheInv = new JRadioButton("   Leche de la V\u00EDa L\u00E1ctea");
-		rdbtnLecheInv.setEnabled(false);
-		rdbtnLecheInv.setForeground(new Color(75, 0, 130));
-		rdbtnLecheInv.setFont(new Font("Chiller", Font.BOLD, 28));
-		rdbtnLecheInv.setBounds(378, 476, 267, 58);
-		inventarioComplementos.add(rdbtnLecheInv);
 		JLabel lblBgInvComp = new JLabel();//Fondo de pantalla #13
 		lblBgInvComp.setIcon(new ImageIcon(img));
 		lblBgInvComp.setForeground(new Color(75, 0, 130));
@@ -1484,6 +1713,7 @@ public class gui {
 		lblBgInvComp.setBounds(0, 0, 1264, 681);
 		inventarioComplementos.add(lblBgInvComp);
 		
+				
 		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
@@ -1494,7 +1724,7 @@ public class gui {
 		//**************ETIQUETAS 	
 
 		//TITULO
-		JLabel lblTituInvMun = new JLabel("Mundos");
+		JLabel lblTituInvMun = new JLabel("MUNDOS");
 		lblTituInvMun.setForeground(new Color(255, 250, 250));
 		lblTituInvMun.setFont(new Font("Chiller", Font.BOLD, 99));
 		lblTituInvMun.setBounds(509, 180, 428, 84);
@@ -1569,25 +1799,28 @@ public class gui {
 		JButton btnVenderAndro = new JButton("Vender por $400");
 		btnVenderAndro.setForeground(new Color(75, 0, 130));
 		btnVenderAndro.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderAndro.setBounds(624, 339, 254, 42);
+		btnVenderAndro.setBounds(707, 307, 243, 42);
 		inventarioMundos.add(btnVenderAndro);
 		
 		JButton btnVenderOrion = new JButton("Vender por $450");
 		btnVenderOrion.setForeground(new Color(75, 0, 130));
 		btnVenderOrion.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderOrion.setBounds(616, 410, 258, 42);
+		btnVenderOrion.setBounds(707, 382, 243, 42);
 		inventarioMundos.add(btnVenderOrion);
 		
 		JButton btnVenderOsa = new JButton("Vender por $500");
 		btnVenderOsa.setForeground(new Color(75, 0, 130));
 		btnVenderOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderOsa.setBounds(616, 482, 258, 42);
+		btnVenderOsa.setBounds(707, 456, 243, 42);
 		inventarioMundos.add(btnVenderOsa);
+	
+
 		
 		//**************CAJAS DE TEXTO
 		
 		//CAJAS DE TEXTO DE LOS STATS
 		txtfFuerzaInvMun = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
+		txtfFuerzaInvMun.setEditable(false);
 		txtfFuerzaInvMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaInvMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfFuerzaInvMun.setColumns(10);
@@ -1595,6 +1828,7 @@ public class gui {
 		inventarioMundos.add(txtfFuerzaInvMun);
 		
 		txtfAgilidadInvMun = new JTextField(String.valueOf(stats.get(1)));//campo de texto agilidad
+		txtfAgilidadInvMun.setEditable(false);
 		txtfAgilidadInvMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAgilidadInvMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAgilidadInvMun.setColumns(10);
@@ -1602,6 +1836,7 @@ public class gui {
 		inventarioMundos.add(txtfAgilidadInvMun);
 		
 		txtfAtaquesInvMun = new JTextField(String.valueOf(stats.get(4)));//campo de texto ataque
+		txtfAtaquesInvMun.setEditable(false);
 		txtfAtaquesInvMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfAtaquesInvMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfAtaquesInvMun.setColumns(10);
@@ -1609,6 +1844,7 @@ public class gui {
 		inventarioMundos.add(txtfAtaquesInvMun);
 		
 		txtfVelocidadInvMun = new JTextField(String.valueOf(stats.get(3)));//campo de texto velocidad
+		txtfVelocidadInvMun.setEditable(false);
 		txtfVelocidadInvMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfVelocidadInvMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfVelocidadInvMun.setColumns(10);
@@ -1616,6 +1852,7 @@ public class gui {
 		inventarioMundos.add(txtfVelocidadInvMun);
 		
 		txtfPtosSaludInvMun = new JTextField(String.valueOf(stats.get(2)));//campo de texto ps
+		txtfPtosSaludInvMun.setEditable(false);
 		txtfPtosSaludInvMun.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfPtosSaludInvMun.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfPtosSaludInvMun.setColumns(10);
@@ -1631,28 +1868,6 @@ public class gui {
 		txtfDineroInvJMun.setColumns(10);
 		txtfDineroInvJMun.setBounds(1033, 198, 186, 42);
 		inventarioMundos.add(txtfDineroInvJMun);
-		
-		//**************RADIOS
-		JRadioButton rdbtnAndroInv = new JRadioButton("  Andr\u00F3meda");
-		rdbtnAndroInv.setEnabled(false);
-		rdbtnAndroInv.setForeground(new Color(75, 0, 130));
-		rdbtnAndroInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnAndroInv.setBounds(378, 331, 191, 58);
-		inventarioMundos.add(rdbtnAndroInv);
-		
-		JRadioButton rdbtnOrionInv = new JRadioButton("   Ori\u00F3n");
-		rdbtnOrionInv.setEnabled(false);
-		rdbtnOrionInv.setForeground(new Color(75, 0, 130));
-		rdbtnOrionInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnOrionInv.setBounds(374, 402, 195, 58);
-		inventarioMundos.add(rdbtnOrionInv);
-		
-		JRadioButton rdbtnOsaInv = new JRadioButton("   Osa Mayor");
-		rdbtnOsaInv.setEnabled(false);
-		rdbtnOsaInv.setForeground(new Color(75, 0, 130));
-		rdbtnOsaInv.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnOsaInv.setBounds(374, 476, 195, 58);
-		inventarioMundos.add(rdbtnOsaInv);
 		JLabel lblBgInvMun = new JLabel();//Fondo de pantalla #14
 		lblBgInvMun.setIcon(new ImageIcon(img));
 		lblBgInvMun.setForeground(new Color(75, 0, 130));
@@ -1660,6 +1875,7 @@ public class gui {
 		lblBgInvMun.setBackground(new Color(255, 250, 250));
 		lblBgInvMun.setBounds(0, 0, 1264, 681);
 		inventarioMundos.add(lblBgInvMun);
+		
 	}
 
 //método para actualizar el dinero
@@ -1688,7 +1904,7 @@ public class gui {
 		txtfInventarioOsa.setText(String.valueOf(listaMundos.get(2).enInventario()));//Poner el texto de cuantos Osa Mayor hay en inventario
 	}
 	private void actualizarTXTStats() {
-
+		
 		stats = Personaje.devolverStats();
 		
 		txtfFuerzaInicio.setText(String.valueOf(stats.get(0)));
@@ -1733,4 +1949,65 @@ public class gui {
 		txtfVelocidadInvMun.setText(String.valueOf(String.valueOf(stats.get(3))));
 		txtfPtosSaludInvMun.setText(String.valueOf(String.valueOf(stats.get(2))));
 	}
+	
+    public static void equiparObjeto(JButton btn, JRadioButton rdbtn) {
+    	rdbtn.setSelected(true);
+		btn.setText("Desequipar");
+		//Cambiar stats	++
+    }
+    
+    public static void desequiparObjeto(JButton btn, JRadioButton rdbtn) {
+    	rdbtn.setSelected(false);
+		btn.setText("Equipar");
+		//Cambiar stats	--
+    }
+	private void aumentarStats(String categoria, int multiplicador) {
+		
+		stats = Personaje.previewStats(categoria, multiplicador);
+		
+		txtfFuerzaInicio.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInicio.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueInicio.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInicio.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInicio.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaTJets.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTJets.setText(String.valueOf(stats.get(1)));;
+		txtfAtaqueTJets.setText(String.valueOf(String.valueOf(stats.get(4))));;
+		txtfVelocidadTJets.setText(String.valueOf(String.valueOf(stats.get(3))));;
+		txtfPtosSaludTJets.setText(String.valueOf(String.valueOf(stats.get(2))));;
+		
+		txtfFuerzaTComp.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTComp.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueTComp.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadTComp.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludTComp.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaTMun.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTMun.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueTMun.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadTMun.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludTMun.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaInvJets.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInvJets.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueInvJets.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInvJets.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInvJets.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaInvComp.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInvComp.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueInvComp.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInvComp.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInvComp.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaInvMun.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInvMun.setText(String.valueOf(stats.get(1)));
+		txtfAtaquesInvMun.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInvMun.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInvMun.setText(String.valueOf(String.valueOf(stats.get(2))));
+	}
+    
+    
+    
 }

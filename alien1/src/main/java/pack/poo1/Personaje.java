@@ -54,17 +54,17 @@ public class Personaje {
     	ArrayList<Integer> listaStats = new ArrayList<Integer>();
     	if(pcategoria=="JETS") {
     		listaStats.add(fuerza);
-    		listaStats.add(agilidad*multiplicador);
+    		listaStats.add(agilidad+multiplicador);
         	listaStats.add(ps);
-        	listaStats.add(velocidad*multiplicador);
+        	listaStats.add(velocidad+multiplicador);
         	listaStats.add(ataque);
         	return listaStats;
     	}else if (pcategoria=="COMPLEMENTOS") {
-    		listaStats.add(fuerza*multiplicador);
+    		listaStats.add(fuerza+multiplicador);
     		listaStats.add(agilidad);
-        	listaStats.add(ps*multiplicador);
+        	listaStats.add(ps+multiplicador);
         	listaStats.add(velocidad);
-        	listaStats.add(ataque*multiplicador);
+        	listaStats.add(ataque+multiplicador);
         	return listaStats;
     	}else {
     		listaStats = devolverStats();

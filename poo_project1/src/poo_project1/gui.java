@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JOptionPane;
 
 import pack.poo1.Personaje;
 import pack.poo1.Principal;
@@ -83,6 +84,7 @@ public class gui {
 	private JPanel inventarioComplementos;
 	private JPanel inventarioMundos;
 	private JLabel lblPtosSaludInvComp;
+	private JOptionPane msgNoCompra;
 	
 	//atributos de la clase gui
 	ArrayList<Integer> stats = Personaje.devolverStats();
@@ -117,11 +119,27 @@ public class gui {
 	public gui() throws Exception {
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
+	private void mostrarMensajeSinDinero(){
+		//Etiqueta con el texto del JOptionPane
+		JLabel lblSinDinero = new JLabel("Dinero Insuficiente");
+		lblSinDinero.setFont(new Font("Chiller", Font.BOLD, 30)); 
+			
+		//Etiqueta con la imagen del JOptionPane
+		JLabel lblImgSinDinero = new JLabel();
+			
+		Image alienTriste = new ImageIcon(this.getClass().getResource("/alienTriste.jpg")).getImage();
+		lblImgSinDinero.setIcon(new ImageIcon(alienTriste));
+			
+		//Arreglo que tiene las dos etiquetas: texto + imagen
+		JLabel[] imagenesAviso = {lblSinDinero, lblImgSinDinero};
+		JOptionPane.showMessageDialog(null, imagenesAviso);
+	}
+	
 	private void llamarApi() throws Exception{
 		//conectar al otro proyecto Java Maven
 		/*
@@ -146,6 +164,8 @@ public class gui {
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*********************************************		PANELES		************************************************
@@ -201,6 +221,7 @@ public class gui {
 		 * [4, 2, 15, 3, 5]
 		 * [fuerza;agilidad;ps;velocidad;ataque]
 		 */		
+				
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INICIO ******************************************************
@@ -426,12 +447,17 @@ public class gui {
 		/*Botón precio mini jet*/
 		
 		JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
+		btnComprarMj.setToolTipText("Fuerza +3     Agilidad  +5     Puntos de salud +1     Velocidad +15     Ataque +7\r\n\r\n\t");
 		btnComprarMj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaJets.get(0).comprar()) {
 					//Comprar el miniJet
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+					
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();						
 				}
 			}
 		});
@@ -448,6 +474,9 @@ public class gui {
 					//Comprar el súper jet
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -463,6 +492,9 @@ public class gui {
 					//Comprar el ultrajet
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -563,6 +595,7 @@ public class gui {
 		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnUj.setBounds(283, 476, 191, 58);
 		tiendaJets.add(rdbtnUj);
+		
 		JLabel lblBgTJets = new JLabel();
 		lblBgTJets.setBackground(new Color(255, 250, 250));
 		lblBgTJets.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -781,6 +814,9 @@ public class gui {
 					//Comprar el rayo láser
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -796,6 +832,9 @@ public class gui {
 					//Comprar el cuerno de taurus
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -811,6 +850,9 @@ public class gui {
 					//Comprar la leche de la vía láctea
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -818,6 +860,8 @@ public class gui {
 		btnComprarLeche.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarLeche.setBounds(572, 486, 125, 42);
 		tiendaComplementos.add(btnComprarLeche);
+		
+		
 		JLabel lblBgTComp = new JLabel();
 		lblBgTComp.setIcon(new ImageIcon(img));
 		lblBgTComp.setForeground(new Color(75, 0, 130));
@@ -1001,6 +1045,9 @@ public class gui {
 					//Comprar Andrómeda
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -1016,6 +1063,9 @@ public class gui {
 					//Comprar Orión
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -1031,6 +1081,9 @@ public class gui {
 					//Comprar Osa Mayor
 					actualizarTXTDinero();
 					System.out.println(Personaje.devolverDinero());
+				} else {
+					//Mostrar mensaje "Dinero Insuficiente"
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -1621,4 +1674,7 @@ public class gui {
 		txtfDineroInvJMun.setText(String.valueOf(Personaje.devolverDinero()));
 		txtfDineroInicio.setText(String.valueOf(Personaje.devolverDinero()));
 	}
+	
+	//método para actualizar los stats
+	
 }

@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JOptionPane;
-
+import pack.poo1.Inventario;
 import pack.poo1.Personaje;
 import pack.poo1.Principal;
 import pack.poo1.Producto;
@@ -84,7 +84,6 @@ public class gui {
 	private JPanel inventarioComplementos;
 	private JPanel inventarioMundos;
 	private JLabel lblPtosSaludInvComp;
-	private JOptionPane msgNoCompra;
 	
 	//atributos de la clase gui
 	ArrayList<Integer> stats = Personaje.devolverStats();
@@ -119,7 +118,7 @@ public class gui {
 	public gui() throws Exception {
 		initialize();
 	}
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
@@ -139,7 +138,6 @@ public class gui {
 		JLabel[] imagenesAviso = {lblSinDinero, lblImgSinDinero};
 		JOptionPane.showMessageDialog(null, imagenesAviso);
 	}
-	
 	private void llamarApi() throws Exception{
 		//conectar al otro proyecto Java Maven
 		/*
@@ -164,8 +162,6 @@ public class gui {
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
-		
-		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*********************************************		PANELES		************************************************
@@ -212,16 +208,11 @@ public class gui {
 		inventarioMundos.setLayout(null);
 		frame.getContentPane().add(inventarioMundos, "name_937114439693000");
 		inventarioMundos.setVisible(false);		
-		
-		/*
-		 * Vista de los stats #1
-		 */
-		
+
 		/*Lista de los stats
 		 * [4, 2, 15, 3, 5]
 		 * [fuerza;agilidad;ps;velocidad;ataque]
 		 */		
-				
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INICIO ******************************************************
@@ -294,7 +285,7 @@ public class gui {
 		inicio.add(btnTiendaInicio);
 		
 		
-		//****************Text Fields
+		//****************Text Fields, valores de los stats
 		txtfFuerzaInicio = new JTextField(String.valueOf(stats.get(0)));//campo de texto fuerza
 		txtfFuerzaInicio.setHorizontalAlignment(SwingConstants.CENTER);
 		txtfFuerzaInicio.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -447,17 +438,16 @@ public class gui {
 		/*Botón precio mini jet*/
 		
 		JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
-		btnComprarMj.setToolTipText("Fuerza +3     Agilidad  +5     Puntos de salud +1     Velocidad +15     Ataque +7\r\n\r\n\t");
 		btnComprarMj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listaJets.get(0).comprar()) {
 					//Comprar el miniJet
+					Inventario.agregarProducto(listaJets.get(0));//agrega en inventario el mini jet
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-					
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
-					mostrarMensajeSinDinero();						
+					actualizarTXTInvJets();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
 				}
 			}
 		});
@@ -465,6 +455,7 @@ public class gui {
 		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarMj.setBounds(529, 338, 128, 42);
 		tiendaJets.add(btnComprarMj);
+		btnComprarMj.setToolTipText("Hola");
 		
 		/*Botón precio super jet*/
 		JButton btnComprarSj = new JButton("$"+String.valueOf(listaJets.get(1).getPrecio()));
@@ -472,10 +463,11 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				if (listaJets.get(1).comprar()) {
 					//Comprar el súper jet
+					Inventario.agregarProducto(listaJets.get(1));//agrega en inventario el super jet
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					actualizarTXTInvJets();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -490,10 +482,11 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				if (listaJets.get(2).comprar()) {
 					//Comprar el ultrajet
+					Inventario.agregarProducto(listaJets.get(2));//agrega en inventario el ultra jet
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					actualizarTXTInvJets();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -549,14 +542,14 @@ public class gui {
 		tiendaJets.add(txtfDineroTJets);
 		txtfDineroTJets.setColumns(10);
 		
-		txtfInventarioMj = new JTextField("-");//inventario en minijet
+		txtfInventarioMj = new JTextField(String.valueOf(listaJets.get(0).enInventario()));//inventario en minijet
 		txtfInventarioMj.setForeground(new Color(75, 0, 130));
 		txtfInventarioMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioMj.setBounds(888, 331, 63, 58);
 		tiendaJets.add(txtfInventarioMj);
 		txtfInventarioMj.setColumns(10);
 		
-		txtfInventarioSj = new JTextField("-");
+		txtfInventarioSj = new JTextField(String.valueOf(listaJets.get(1).enInventario()));
 		txtfInventarioSj.setForeground(new Color(75, 0, 130));//inventario en super jet
 		txtfInventarioSj.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioSj.setColumns(10);
@@ -564,7 +557,7 @@ public class gui {
 		tiendaJets.add(txtfInventarioSj);
 		
 		
-		txtfInventarioUj = new JTextField("-");//inventario ultra jet
+		txtfInventarioUj = new JTextField(String.valueOf(listaJets.get(2).enInventario()));//inventario ultra jet
 		txtfInventarioUj.setForeground(new Color(75, 0, 130));
 		txtfInventarioUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioUj.setColumns(10);
@@ -579,6 +572,7 @@ public class gui {
 		rdbtnMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnMj.setBounds(283, 330, 191, 58);
 		tiendaJets.add(rdbtnMj);
+		
 		
 		//Botón Super Jet
 		JRadioButton rdbtnMs = new JRadioButton("   S\u00FAper Jet");
@@ -595,7 +589,6 @@ public class gui {
 		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnUj.setBounds(283, 476, 191, 58);
 		tiendaJets.add(rdbtnUj);
-		
 		JLabel lblBgTJets = new JLabel();
 		lblBgTJets.setBackground(new Color(255, 250, 250));
 		lblBgTJets.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -759,21 +752,21 @@ public class gui {
 		tiendaComplementos.add(txtfDineroTComp);
 		
 		//DATOS EN INVENTARIO
-		txtfInventarioLaser = new JTextField("-");//en inventario rayo láser
+		txtfInventarioLaser = new JTextField(String.valueOf(listaComp.get(0).enInventario()));//en inventario rayo láser
 		txtfInventarioLaser.setForeground(new Color(75, 0, 130));
 		txtfInventarioLaser.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioLaser.setColumns(10);
 		txtfInventarioLaser.setBounds(931, 330, 63, 58);
 		tiendaComplementos.add(txtfInventarioLaser);
 		
-		txtfInventarioCuerno = new JTextField("-");//en inventario cuerno de taurus
+		txtfInventarioCuerno = new JTextField(String.valueOf(listaComp.get(1).enInventario()));//en inventario cuerno de taurus
 		txtfInventarioCuerno.setForeground(new Color(75, 0, 130));
 		txtfInventarioCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioCuerno.setColumns(10);
 		txtfInventarioCuerno.setBounds(931, 401, 63, 58);
 		tiendaComplementos.add(txtfInventarioCuerno);
 		
-		txtfInventarioLeche = new JTextField("-");//en inventario  via lactea
+		txtfInventarioLeche = new JTextField(String.valueOf(listaComp.get(2).enInventario()));//en inventario  via lactea
 		txtfInventarioLeche.setForeground(new Color(75, 0, 130));
 		txtfInventarioLeche.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioLeche.setColumns(10);
@@ -813,9 +806,10 @@ public class gui {
 				if (listaComp.get(0).comprar()) {
 					//Comprar el rayo láser
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					Inventario.agregarProducto(listaComp.get(0));//agrega en inventario el rayo láser
+					actualizarTXTInvComp();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -831,9 +825,10 @@ public class gui {
 				if (listaComp.get(1).comprar()) {
 					//Comprar el cuerno de taurus
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					Inventario.agregarProducto(listaComp.get(1));//agrega en inventario el cuerno de taurus
+					actualizarTXTInvComp();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -849,9 +844,10 @@ public class gui {
 				if (listaComp.get(2).comprar()) {
 					//Comprar la leche de la vía láctea
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					Inventario.agregarProducto(listaComp.get(2));//agrega en inventario la leche de la vía láctea
+					actualizarTXTInvComp();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -860,8 +856,6 @@ public class gui {
 		btnComprarLeche.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarLeche.setBounds(572, 486, 125, 42);
 		tiendaComplementos.add(btnComprarLeche);
-		
-		
 		JLabel lblBgTComp = new JLabel();
 		lblBgTComp.setIcon(new ImageIcon(img));
 		lblBgTComp.setForeground(new Color(75, 0, 130));
@@ -992,26 +986,27 @@ public class gui {
 		tiendaMundos.add(txtfDineroTMun);
 				
 		//CAJA DE TEXTO QUE MUESTRA LO QUE HAY EN INVENTARIOS
-		txtfInventarioOsa = new JTextField("-");//en inventario osa mayor
-		txtfInventarioOsa.setForeground(new Color(75, 0, 130));
-		txtfInventarioOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		txtfInventarioOsa.setColumns(10);
-		txtfInventarioOsa.setBounds(874, 477, 63, 58);
-		tiendaMundos.add(txtfInventarioOsa);
 		
-		txtfInventarioAndro = new JTextField("-");//en inventario andromeda
+		txtfInventarioAndro = new JTextField(String.valueOf(listaMundos.get(0).enInventario()));//en inventario andromeda
 		txtfInventarioAndro.setForeground(new Color(75, 0, 130));
 		txtfInventarioAndro.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioAndro.setColumns(10);
 		txtfInventarioAndro.setBounds(874, 331, 63, 58);
 		tiendaMundos.add(txtfInventarioAndro);
 		
-		txtfInventarioOrion = new JTextField("-");//en inventario orión
+		txtfInventarioOrion = new JTextField(String.valueOf(listaMundos.get(1).enInventario()));//en inventario orión
 		txtfInventarioOrion.setForeground(new Color(75, 0, 130));
 		txtfInventarioOrion.setFont(new Font("Chiller", Font.BOLD, 35));
 		txtfInventarioOrion.setColumns(10);
 		txtfInventarioOrion.setBounds(874, 402, 63, 58);
 		tiendaMundos.add(txtfInventarioOrion);
+		
+		txtfInventarioOsa = new JTextField(String.valueOf(listaMundos.get(2).enInventario()));//en inventario osa mayor
+		txtfInventarioOsa.setForeground(new Color(75, 0, 130));
+		txtfInventarioOsa.setFont(new Font("Chiller", Font.BOLD, 35));
+		txtfInventarioOsa.setColumns(10);
+		txtfInventarioOsa.setBounds(874, 477, 63, 58);
+		tiendaMundos.add(txtfInventarioOsa);
 		
 		//**************RADIOS
 		JRadioButton rdbtnAndro = new JRadioButton("  Andr\u00F3meda");
@@ -1044,9 +1039,10 @@ public class gui {
 				if (listaMundos.get(0).comprar()) {
 					//Comprar Andrómeda
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					Inventario.agregarProducto(listaMundos.get(0));//agrega en inventario el mundo andrómeda
+					actualizarTXTInvMun();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -1062,9 +1058,10 @@ public class gui {
 				if (listaMundos.get(1).comprar()) {
 					//Comprar Orión
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					Inventario.agregarProducto(listaMundos.get(1));//agrega en inventario el mundo orión
+					actualizarTXTInvMun();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -1080,9 +1077,10 @@ public class gui {
 				if (listaMundos.get(2).comprar()) {
 					//Comprar Osa Mayor
 					actualizarTXTDinero();
-					System.out.println(Personaje.devolverDinero());
-				} else {
-					//Mostrar mensaje "Dinero Insuficiente"
+					Inventario.agregarProducto(listaMundos.get(2));//agrega en inventario el mundo Osa Mayor
+					actualizarTXTInvMun();
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
 					mostrarMensajeSinDinero();
 				}
 			}
@@ -1663,9 +1661,9 @@ public class gui {
 		lblBgInvMun.setBounds(0, 0, 1264, 681);
 		inventarioMundos.add(lblBgInvMun);
 	}
+
 //método para actualizar el dinero
 	private void actualizarTXTDinero() {
-		// TODO Auto-generated method stub
 		txtfDineroTJets.setText(String.valueOf(Personaje.devolverDinero()));
 		txtfDineroTComp.setText(String.valueOf(Personaje.devolverDinero()));
 		txtfDineroTMun.setText(String.valueOf(Personaje.devolverDinero()));
@@ -1674,7 +1672,65 @@ public class gui {
 		txtfDineroInvJMun.setText(String.valueOf(Personaje.devolverDinero()));
 		txtfDineroInicio.setText(String.valueOf(Personaje.devolverDinero()));
 	}
-	
-	//método para actualizar los stats
-	
+	private void actualizarTXTInvJets() {
+		txtfInventarioMj.setText(String.valueOf(listaJets.get(0).enInventario()));//Poner el texto de cuantos minijets hay en inventario
+		txtfInventarioSj.setText(String.valueOf(listaJets.get(1).enInventario()));//Poner el texto de cuantos superjets hay en inventario
+		txtfInventarioUj.setText(String.valueOf(listaJets.get(2).enInventario()));//Poner el texto de cuantos ultrajets hay en inventario
+	}
+	private void actualizarTXTInvComp() {
+		txtfInventarioLaser.setText(String.valueOf(listaComp.get(0).enInventario()));//Poner el texto de cuantos rayo láser hay en inventario
+		txtfInventarioCuerno.setText(String.valueOf(listaComp.get(1).enInventario()));//Poner el texto de cuantos cuerno de taurus hay en inventario
+		txtfInventarioLeche.setText(String.valueOf(listaComp.get(2).enInventario()));//Poner el texto de cuantas leches de via lactea hay en inventario
+	}
+	private void actualizarTXTInvMun() {
+		txtfInventarioAndro.setText(String.valueOf(listaMundos.get(0).enInventario()));//Poner el texto de cuantos Andromeda hay en inventario
+		txtfInventarioOrion.setText(String.valueOf(listaMundos.get(1).enInventario()));//Poner el texto de cuantos Orion hay en inventario
+		txtfInventarioOsa.setText(String.valueOf(listaMundos.get(2).enInventario()));//Poner el texto de cuantos Osa Mayor hay en inventario
+	}
+	private void actualizarTXTStats() {
+
+		stats = Personaje.devolverStats();
+		
+		txtfFuerzaInicio.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInicio.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueInicio.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInicio.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInicio.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaTJets.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTJets.setText(String.valueOf(stats.get(1)));;
+		txtfAtaqueTJets.setText(String.valueOf(String.valueOf(stats.get(4))));;
+		txtfVelocidadTJets.setText(String.valueOf(String.valueOf(stats.get(3))));;
+		txtfPtosSaludTJets.setText(String.valueOf(String.valueOf(stats.get(2))));;
+		
+		txtfFuerzaTComp.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTComp.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueTComp.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadTComp.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludTComp.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaTMun.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTMun.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueTMun.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadTMun.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludTMun.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaInvJets.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInvJets.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueInvJets.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInvJets.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInvJets.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaInvComp.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInvComp.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueInvComp.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInvComp.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInvComp.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaInvMun.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadInvMun.setText(String.valueOf(stats.get(1)));
+		txtfAtaquesInvMun.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadInvMun.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludInvMun.setText(String.valueOf(String.valueOf(stats.get(2))));
+	}
 }

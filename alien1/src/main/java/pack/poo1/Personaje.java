@@ -8,21 +8,32 @@ public class Personaje {
     private static int ps=15;
     private static int ataque=5;
     private static int dinero=5500;
-
+/*
+ * Multiplicadores:
+ \+/ "JETS": 
+ * 		"Mini Jet" : 2;
+ *      "Super Jet" : 4;
+ *      "Ultra Jet" : 8;
+ \+/	"COMPLEMENTOS":
+ *      "Rayo Láser" : 2;
+ *      "Cuerno de Taurus" : 5;
+ *      "Leche de Vía Láctea" : 10;
+ \+/    "MUNDOS": 1; 
+ */
     protected static void modificarVelocidad(int multiplicador) {
-        velocidad = velocidad * multiplicador;        
+        velocidad = velocidad + multiplicador;        
     }
     protected static void modificarFuerza(int multiplicador) {
-        fuerza = fuerza * multiplicador; 
+        fuerza = fuerza + multiplicador; 
     }
     protected static void modificarAgilidad(int multiplicador) {
-        agilidad = agilidad * multiplicador;
+        agilidad = agilidad + multiplicador;
     }
     protected static void modificarPS(int multiplicador) {
-       ps = ps * multiplicador;
+       ps = ps + multiplicador;
     }
     protected static void modificarAtaque(int multiplicador) {
-        ataque = ataque * multiplicador;
+        ataque = ataque + multiplicador;
     }
     protected static void modificarDinero(int diferencia) {
         dinero = dinero + diferencia;

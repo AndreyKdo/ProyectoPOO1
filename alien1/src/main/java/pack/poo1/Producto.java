@@ -25,20 +25,14 @@ public class Producto {
         }else if (tipo == "COMPLEMENTOS") {
             if (nombre == "Rayo Láser") {
                 multiplicador = 2;
-            } else if (nombre == "Manzana Estrella") {
-                multiplicador = 3;
             } else if (nombre == "Cuerno de Taurus") {
                 multiplicador = 5;
             } else {
                 multiplicador = 10;//Leche de Vía Láctea
             }
         } else {
-            multiplicador = 1; //Skins
+            multiplicador = 1; //Mundos
         }
-    }
-    public void equipar() {
-    	if(equipado==false) equipado=true;
-    	else equipado=false;
     }
     public String getNombre() {
     	return nombre;
@@ -61,10 +55,9 @@ public class Producto {
         System.out.println("Tipo:"+tipo);
         System.out.println("Multiplicador:"+multiplicador+"\n");
     }
-    public boolean comprar() {
-    	int dinero = Personaje.devolverDinero();
-    	if (dinero>=precio) {
-    		if (tipo=="JETS") {
+    public void equipar() {
+    	if(equipado==false) {
+        	if (tipo=="JETS") {
     			Personaje.modificarVelocidad(multiplicador);
     			Personaje.modificarAgilidad(multiplicador);
     		}else if (tipo=="COMPLEMENTOS") {
@@ -72,11 +65,26 @@ public class Producto {
     			Personaje.modificarPS(multiplicador);
     			Personaje.modificarAtaque(multiplicador);
     		}else;
+        	equipado=true;
+    	} else equipado=false;
+    }
+    public boolean comprar() {
+    	int dinero = Personaje.devolverDinero();
+    	if (dinero>=precio) {
     		Personaje.modificarDinero(precio*-1);
     		return true;
     	}else return false;
     }
-
+    public int enInventario() {
+    	int contador = Inventario.contarProductos(nombre);
+    	return contador;
+    }
+    /*
+    public boolean vender() {
+    	int dinero = Personaje.devolverDinero();
+    	return true;
+    }
+*/
 
 }
 

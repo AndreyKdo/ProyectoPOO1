@@ -37,5 +37,13 @@ public class Inventario {
 			 }
 		 }return false;
 	 }
+	 public static boolean eliminarProducto(String nombre) {
+		 for (int i = 0; i < productosInv.size(); i = i + 1) {
+			 if (productosInv.get(i).getNombre() == nombre) {
+				 productosInv.remove(i);
+				 return true;
+			 }
+		 }return false;
+	 }
 }
 

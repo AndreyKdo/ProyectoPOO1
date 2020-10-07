@@ -6,12 +6,14 @@ public class Producto {
     private int multiplicador;
     private String nombre;
     private String tipo;
+    private int precioVender;
 
     public void crearProducto(int pprecio, String pnombre, String ptipo) {
         precio = pprecio;
         nombre = pnombre;
         tipo = ptipo;
         definirMultiplicador();
+        precioVender = (precio - multiplicador) / multiplicador * 2 ;
     }
     private void definirMultiplicador() {
         if (tipo == "JETS"){
@@ -49,6 +51,9 @@ public class Producto {
     public String getTipo() {
     	return tipo;
     }
+    public Integer getPrecioVender() {
+    	return precioVender;
+    }
     public void devolverAttr() {
         System.out.println("Nombre:"+nombre);
         System.out.println("Precio:"+precio);
@@ -66,7 +71,17 @@ public class Producto {
     			Personaje.modificarAtaque(multiplicador);
     		}else;
         	equipado=true;
-    	} else equipado=false;
+    	} else {
+    		if (tipo=="JETS") {
+    			Personaje.modificarVelocidad(-multiplicador);
+    			Personaje.modificarAgilidad(-multiplicador);
+    		}else if (tipo=="COMPLEMENTOS") {
+    			Personaje.modificarFuerza(-multiplicador);
+    			Personaje.modificarPS(-multiplicador);
+    			Personaje.modificarAtaque(-multiplicador);
+    		}else;
+    		equipado=false;
+    	}
     }
     public boolean comprar() {
     	int dinero = Personaje.devolverDinero();
@@ -79,12 +94,13 @@ public class Producto {
     	int contador = Inventario.contarProductos(nombre);
     	return contador;
     }
-    /*
     public boolean vender() {
-    	int dinero = Personaje.devolverDinero();
-    	return true;
+    	if (Inventario.eliminarProducto(nombre)) {
+    		if (equipado)equipar();
+    		Personaje.modificarDinero(precioVender);
+    		return true;
+    	}else return false;
     }
-*/
 
 }
 

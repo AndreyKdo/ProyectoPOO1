@@ -85,6 +85,31 @@ public class gui {
 	private JPanel inventarioMundos;
 	private JLabel lblPtosSaludInvComp;
 	
+	/*
+	 * Declaración de botones que cambian el estado durante la ejecución
+	 */
+	//Botones de vender en el inventario
+	JButton btnVenderMj = new JButton();
+	JButton btnVenderSj = new JButton();
+	JButton btnVenderUj = new JButton();
+	JButton btnVenderRayo = new JButton();
+	JButton btnVenderCuerno = new JButton();
+	JButton btnVenderLeche = new JButton();
+	JButton btnVenderAndro = new JButton();
+	JButton btnVenderOrion = new JButton();
+	JButton btnVenderOsa = new JButton();
+	//Botones de Equipar en el inventario
+	JButton btnEquiparMj = new JButton("Equipar");
+	JButton btnEquiparSj = new JButton("Equipar");
+	JButton btnEquiparUj = new JButton("Equipar");
+	JButton btnEquiparLaser = new JButton("Equipar");
+	JButton btnEquiparCuerno = new JButton("Equipar");
+	JButton btnEquiparLeche = new JButton("Equipar");
+	JButton btnEquiparAndro = new JButton("Equipar");
+	JButton btnEquiparOsa = new JButton("Equipar");
+	JButton btnEquiparOrion = new JButton("Equipar");
+	
+	
 	//atributos de la clase gui
 	ArrayList<Integer> stats = Personaje.devolverStats();
 	//Las listas de los productos obtenidas del proceso del API son estáticas ya que no cambian.
@@ -162,9 +187,7 @@ public class gui {
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new CardLayout(0, 0));
-		
-		
+		frame.getContentPane().setLayout(new CardLayout(0, 0));	
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*********************************************		PANELES		************************************************
@@ -200,7 +223,77 @@ public class gui {
 		inventarioJets.setLayout(null);
 		frame.getContentPane().add(inventarioJets, "name_927931963284500");
 		inventarioJets.setVisible(false);
-
+		//BOTONES DE VENDER
+		//MINI JET
+		btnVenderMj.setText("Vender por $"+String.valueOf(listaJets.get(0).getPrecioVender()));
+		btnVenderMj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaJets.get(0).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvJets();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderMj.setForeground(new Color(75, 0, 130));
+		btnVenderMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderMj.setBounds(720, 307, 254, 42);
+		btnVenderMj.setEnabled(Inventario.buscarObjeto(listaJets.get(0).getNombre()));
+		btnVenderMj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(0).getNombre()))+" de Mini Jet.");//mostrar la cantidad de minijets que hay al colocar arriba el cursor
+		inventarioJets.add(btnVenderMj);
+		//SUPER JET
+		btnVenderSj.setText("Vender por $"+String.valueOf(listaJets.get(1).getPrecioVender()));
+		btnVenderSj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaJets.get(1).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvJets();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderSj.setForeground(new Color(75, 0, 130));
+		btnVenderSj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderSj.setBounds(720, 381, 254, 42);
+		btnVenderSj.setEnabled(Inventario.buscarObjeto(listaJets.get(1).getNombre())); 
+		btnVenderSj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(1).getNombre()))+" de Súper Jet.");//mostrar la cantidad de superjets que hay al colocar arriba el cursor
+		inventarioJets.add(btnVenderSj);
+		//ULTRA JET
+		btnVenderUj.setText("Vender por $"+String.valueOf(listaJets.get(2).getPrecioVender()));
+		btnVenderUj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaJets.get(2).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvJets();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderUj.setForeground(new Color(75, 0, 130));
+		btnVenderUj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderUj.setBounds(720, 456, 254, 42);
+		btnVenderUj.setEnabled(Inventario.buscarObjeto(listaJets.get(2).getNombre()));
+		btnVenderUj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(2).getNombre()))+" de Ultra Jet.");//mostrar la cantidad de minijets que hay al colocar arriba el cursor
+		inventarioJets.add(btnVenderUj);
+		
 		//RADIO BUTTONS
 		final JRadioButton rdbtnMjInv = new JRadioButton("   Mini Jet"); //Radio mini jet
 		rdbtnMjInv.setEnabled(false);
@@ -222,16 +315,17 @@ public class gui {
 		rdbtnUjInv.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnUjInv.setBounds(300, 448, 191, 58);
 		inventarioJets.add(rdbtnUjInv);
-
+		
 		//Botones de equipar
-		final JButton btnEquiparMj = new JButton("Equipar"); //Botón equipar jet
 		btnEquiparMj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaJets.get(0).equipar();
 				if (rdbtnMjInv.isSelected()==false) {
 					equiparObjeto(btnEquiparMj, rdbtnMjInv);
-					aumentarStats("JETS", 2);
+					btnVenderMj.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparMj, rdbtnMjInv);
+					btnVenderMj.setEnabled(true);
 				}
 			}
 		});
@@ -240,15 +334,16 @@ public class gui {
 		btnEquiparMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnEquiparMj.setBounds(522, 307, 153, 42);
 		inventarioJets.add(btnEquiparMj);
-		
-		final JButton btnEquiparSj = new JButton("Equipar"); //Botón equipar súper jet
+
 		btnEquiparSj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaJets.get(1).equipar();
 				if (rdbtnSjInv.isSelected()==false) {
-					equiparObjeto(btnEquiparSj, rdbtnSjInv);	
-					aumentarStats("JETS", 4);
+					equiparObjeto(btnEquiparSj, rdbtnSjInv);
+					btnVenderSj.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparSj, rdbtnSjInv);
+					btnVenderSj.setEnabled(true);
 				}
 			}
 		});
@@ -258,14 +353,15 @@ public class gui {
 		btnEquiparSj.setBounds(522, 382, 153, 42);
 		inventarioJets.add(btnEquiparSj);
 		
-		final JButton btnEquiparUj = new JButton("Equipar"); //Botón equipar ultra jet
-		btnEquiparUj.addActionListener(new ActionListener() {
+		btnEquiparUj.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
+				listaJets.get(2).equipar();
 				if (rdbtnUjInv.isSelected()==false) {
-					equiparObjeto(btnEquiparUj, rdbtnUjInv);	
-					aumentarStats("JETS", 8);
+					equiparObjeto(btnEquiparUj, rdbtnUjInv);
+					btnVenderUj.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparUj, rdbtnUjInv);
+					btnVenderUj.setEnabled(true);
 				}
 			}
 		});
@@ -303,16 +399,87 @@ public class gui {
 		rdbtnLecheInv.setFont(new Font("Chiller", Font.BOLD, 28));
 		rdbtnLecheInv.setBounds(299, 448, 243, 58);
 		inventarioComplementos.add(rdbtnLecheInv);
+		btnVenderRayo.setEnabled(false);
+
+		//BOTONES VENDER
+		btnVenderRayo.setText("Vender por $"+String.valueOf(listaComp.get(0).getPrecioVender()));
+		btnVenderRayo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaComp.get(0).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTDinero();
+				actualizarTXTInvComp();
+			}
+		});
+		btnVenderRayo.setForeground(new Color(75, 0, 130));
+		btnVenderRayo.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderRayo.setBounds(761, 307, 254, 42);
+		inventarioComplementos.add(btnVenderRayo);
+		btnVenderRayo.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(0).getNombre()))+" de Rayo Láser.");//mostrar la cantidad de rayos laser que hay al colocar arriba el cursor
+		btnVenderCuerno.setEnabled(false);
 		
+		btnVenderCuerno.setText("Vender por $"+String.valueOf(listaComp.get(1).getPrecioVender()));
+		btnVenderCuerno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaComp.get(1).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvComp();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderCuerno.setForeground(new Color(75, 0, 130));
+		btnVenderCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderCuerno.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(1).getNombre()))+" de Cuerno de Taurus.");//mostrar la cantidad de cuernos de taurus que hay al colocar arriba el cursor
+		btnVenderCuerno.setBounds(761, 381, 254, 42);
+		inventarioComplementos.add(btnVenderCuerno);
+		btnVenderLeche.setEnabled(false);
+		
+		btnVenderLeche.setText("Vender por $"+String.valueOf(listaComp.get(2).getPrecioVender()));
+		btnVenderLeche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaComp.get(2).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvComp();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderLeche.setForeground(new Color(75, 0, 130));
+		btnVenderLeche.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderLeche.setBounds(761, 456, 254, 42);
+		btnVenderLeche.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(2).getNombre()))+" de Leche de Vía Láctea.");//mostrar la cantidad de leche de via lactea que hay al colocar arriba el cursor
+		inventarioComplementos.add(btnVenderLeche);
 		//Botones de equipar 
-		final JButton btnEquiparLaser = new JButton("Equipar"); //Botón equipar rayo laser
+		//Botón equipar rayo laser
 		btnEquiparLaser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaComp.get(0).equipar();
 				if (rdbtnLaserInv.isSelected()==false) {
 					equiparObjeto(btnEquiparLaser, rdbtnLaserInv);
-					aumentarStats("COMPLEMENTOS", 2);
+					btnVenderRayo.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparLaser, rdbtnLaserInv);
+					btnVenderRayo.setEnabled(true);
 				}
 			}
 		});
@@ -322,14 +489,16 @@ public class gui {
 		btnEquiparLaser.setBounds(575, 307, 153, 42);
 		inventarioComplementos.add(btnEquiparLaser);
 		
-		final JButton btnEquiparCuerno = new JButton("Equipar"); //Botón equipar cuerno de taurus
+		//Botón equipar cuerno de taurus
 		btnEquiparCuerno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaComp.get(1).equipar();
 				if (rdbtnCuernoInv.isSelected()==false) {
-					equiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);	
-					aumentarStats("COMPLEMENTOS", 5);
+					equiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);
+					btnVenderCuerno.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);
+					btnVenderCuerno.setEnabled(true);
 				}
 			}
 		});
@@ -339,14 +508,16 @@ public class gui {
 		btnEquiparCuerno.setBounds(575, 382, 153, 42);
 		inventarioComplementos.add(btnEquiparCuerno);
 		
-		final JButton btnEquiparLeche = new JButton("Equipar"); //Botón equipar leche de la vía láctea
+		//Botón equipar leche de la vía láctea
 		btnEquiparLeche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaComp.get(2).equipar();
 				if (rdbtnLecheInv.isSelected()==false) {
-					equiparObjeto(btnEquiparLeche, rdbtnLecheInv);	
-					aumentarStats("COMPLEMENTOS", 10);
+					equiparObjeto(btnEquiparLeche, rdbtnLecheInv);
+					btnVenderLeche.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparLeche, rdbtnLecheInv);
+					btnVenderLeche.setEnabled(true);
 				}
 			}
 		});
@@ -364,8 +535,7 @@ public class gui {
 		inventarioMundos.setVisible(false);	
 
 		//RADIO BUTTONS
-		final JRadioButton rdbtnAndroInv = new JRadioButton("  Andr\u00F3meda"); //Radio Andrómeda
-		rdbtnAndroInv.setSelected(true);
+		final JRadioButton rdbtnAndroInv = new JRadioButton("  Andr\u00F3meda");
 		rdbtnAndroInv.setEnabled(false);
 		rdbtnAndroInv.setForeground(new Color(75, 0, 130));
 		rdbtnAndroInv.setFont(new Font("Chiller", Font.BOLD, 35));
@@ -385,17 +555,114 @@ public class gui {
 		rdbtnOsaInv.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnOsaInv.setBounds(299, 448, 195, 58);
 		inventarioMundos.add(rdbtnOsaInv);
+		//**************BOTONES
+		//BOTONES PARA DESPLAZARSE ENTRE PANELES
+		JButton btnCompInvMun = new JButton("Complementos");
+		btnCompInvMun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				inventarioMundos.setVisible(false);
+				inventarioComplementos.setVisible(true);
+			}
+		});
+		btnCompInvMun.setForeground(new Color(0, 0, 128));
+		btnCompInvMun.setFont(new Font("Chiller", Font.BOLD, 40));
+		btnCompInvMun.setBounds(374, 597, 228, 42);
+		inventarioMundos.add(btnCompInvMun);
 		
+		JButton btnSalirInvMun = new JButton("Salir");
+		btnSalirInvMun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				inventarioMundos.setVisible(false);
+				inicio.setVisible(true);
+			}
+		});
+		btnSalirInvMun.setForeground(new Color(0, 0, 128));
+		btnSalirInvMun.setFont(new Font("Chiller", Font.BOLD, 40));
+		btnSalirInvMun.setBounds(716, 596, 158, 42);
+		inventarioMundos.add(btnSalirInvMun);
+		btnVenderAndro.setEnabled(false);
 		
-		//Botones de equipar
-		final JButton btnEquiparAndro = new JButton("Equipar"); //Botón equipar andrómeda
-		btnEquiparAndro.setEnabled(false);
+		//BOTONES VENDER		
+		btnVenderAndro.setText("Vender por $"+String.valueOf(listaMundos.get(0).getPrecioVender()));
+		btnVenderAndro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaMundos.get(0).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvMun();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderAndro.setForeground(new Color(75, 0, 130));
+		btnVenderAndro.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderAndro.setBounds(716, 307, 254, 42);
+		btnVenderAndro.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(0).getNombre()))+" de Andrómeda.");//mostrar la cantidad de andromeda que hay al colocar arriba el cursor
+		inventarioMundos.add(btnVenderAndro);
+		
+		btnVenderOrion.setEnabled(false);		
+		btnVenderOrion.setText("Vender por $"+String.valueOf(listaMundos.get(1).getPrecioVender()));
+		btnVenderOrion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaMundos.get(1).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvMun();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderOrion.setForeground(new Color(75, 0, 130));
+		btnVenderOrion.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderOrion.setBounds(716, 381, 254, 42);
+		btnVenderOrion.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(1).getNombre()))+" de Orión.");//mostrar la cantidad de orion que hay al colocar arriba el cursor
+		inventarioMundos.add(btnVenderOrion);
+		btnVenderOsa.setEnabled(false);
+		
+		btnVenderOsa.setText("Vender por $"+String.valueOf(listaMundos.get(2).getPrecioVender()));
+		btnVenderOsa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Inventario antes");
+				Inventario.verInventario();
+				if (listaMundos.get(2).vender()) {
+					System.out.println("vendido");
+				}else {
+					System.out.println("no vendido");
+				}
+				System.out.println("Inventario ahora");
+				Inventario.verInventario();
+				actualizarTXTInvMun();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderOsa.setForeground(new Color(75, 0, 130));
+		btnVenderOsa.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderOsa.setBounds(716, 456, 254, 42);
+		btnVenderOsa.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(2).getNombre()))+" de Osa Mayor." );//mostrar la cantidad de osa mayor que hay al colocar arriba el cursor
+		inventarioMundos.add(btnVenderOsa);
+			
+		//************Botones de equipar Mundos
+		//Botón equipar andrómeda
+		btnEquiparAndro.setEnabled(false);//se activa cuando está en inventario
 		btnEquiparAndro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaMundos.get(0).equipar();
 				if (rdbtnAndroInv.isSelected()==false) {
-					equiparObjeto(btnEquiparAndro, rdbtnAndroInv);			
+					equiparObjeto(btnEquiparAndro, rdbtnAndroInv);
+					btnVenderAndro.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparAndro, rdbtnAndroInv);
+					btnVenderAndro.setEnabled(true);
 				}
 			}
 		});
@@ -404,29 +671,16 @@ public class gui {
 		btnEquiparAndro.setBounds(523, 307, 153, 42);
 		inventarioMundos.add(btnEquiparAndro);
 		
-		final JButton btnEquiparOsa = new JButton("Equipar"); //Botón equipar osa mayor
-		btnEquiparOsa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (rdbtnOsaInv.isSelected()==false) {
-					equiparObjeto(btnEquiparOsa, rdbtnOsaInv);			
-				}else {
-					desequiparObjeto(btnEquiparOsa, rdbtnOsaInv);
-				}
-			}
-		});
-		btnEquiparOsa.setEnabled(false);
-		btnEquiparOsa.setForeground(new Color(75, 0, 130));
-		btnEquiparOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnEquiparOsa.setBounds(523, 456, 153, 42);
-		inventarioMundos.add(btnEquiparOsa);
-		
-		final JButton btnEquiparOrion = new JButton("Equipar"); //Botón equipar orión
+		//Botón equipar orión
 		btnEquiparOrion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listaMundos.get(1).equipar();
 				if (rdbtnOrionInv.isSelected()==false) {
-					equiparObjeto(btnEquiparOrion, rdbtnOrionInv);			
+					equiparObjeto(btnEquiparOrion, rdbtnOrionInv);	
+					btnVenderOrion.setEnabled(false);
 				}else {
 					desequiparObjeto(btnEquiparOrion, rdbtnOrionInv);
+					btnVenderOrion.setEnabled(true);
 				}				
 			}
 		});
@@ -435,14 +689,26 @@ public class gui {
 		btnEquiparOrion.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnEquiparOrion.setBounds(523, 382, 153, 42);
 		inventarioMundos.add(btnEquiparOrion);
-	
-				
 		
-		
-		
-		
+		//Botón equipar osa mayor
+		btnEquiparOsa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listaMundos.get(2).equipar();
+				if (rdbtnOsaInv.isSelected()==false) {
+					equiparObjeto(btnEquiparOsa, rdbtnOsaInv);
+					btnVenderOsa.setEnabled(false);		
+				}else {
+					desequiparObjeto(btnEquiparOsa, rdbtnOsaInv);
+					btnVenderOsa.setEnabled(true);
+				}
+			}
+		});
+		btnEquiparOsa.setEnabled(false);
+		btnEquiparOsa.setForeground(new Color(75, 0, 130));
+		btnEquiparOsa.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnEquiparOsa.setBounds(523, 456, 153, 42);
+		inventarioMundos.add(btnEquiparOsa);
 
-		
 		/*Lista de los stats
 		 * [4, 2, 15, 3, 5]
 		 * [fuerza;agilidad;ps;velocidad;ataque]
@@ -1465,28 +1731,6 @@ public class gui {
 		inventarioJets.add(btnCompInvJets);
 		
 		
-		//BOTONES DE VENDER
-		//MINI JET
-		JButton btnVenderMj = new JButton("Vender por $125");
-		btnVenderMj.setForeground(new Color(75, 0, 130));
-		btnVenderMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderMj.setBounds(708, 307, 243, 42);
-		inventarioJets.add(btnVenderMj);
-		
-		//SUPER JET
-		JButton btnVenderSj = new JButton("Vender por $250");
-		btnVenderSj.setForeground(new Color(75, 0, 130));
-		btnVenderSj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderSj.setBounds(708, 382, 243, 42);
-		inventarioJets.add(btnVenderSj);
-		
-		//ULTRA JET
-		JButton btnVenderUj = new JButton("Vender por $500");
-		btnVenderUj.setForeground(new Color(75, 0, 130));
-		btnVenderUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderUj.setBounds(708, 456, 243, 42);
-		inventarioJets.add(btnVenderUj);
-		
 		//******************************CAJAS DE TEXTO
 		
 		//STATS
@@ -1605,28 +1849,6 @@ public class gui {
 				
 		//**************BOTONES
 		
-		//BOTONES VENDER
-		JButton btnVenderRayo = new JButton("Vender por $200");
-		btnVenderRayo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVenderRayo.setForeground(new Color(75, 0, 130));
-		btnVenderRayo.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderRayo.setBounds(760, 307, 243, 42);
-		inventarioComplementos.add(btnVenderRayo);
-		
-		JButton btnVenderCuerno = new JButton("Vender por $400");
-		btnVenderCuerno.setForeground(new Color(75, 0, 130));
-		btnVenderCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderCuerno.setBounds(760, 382, 243, 42);
-		inventarioComplementos.add(btnVenderCuerno);
-		
-		JButton btnVenderLeche = new JButton("Vender por $600");
-		btnVenderLeche.setForeground(new Color(75, 0, 130));
-		btnVenderLeche.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderLeche.setBounds(760, 456, 243, 42);
-		inventarioComplementos.add(btnVenderLeche);
 		
 		//BOTONES PARA DESPLAZARSE ENTRE PANELES
 		JButton btnJetsInvComp = new JButton("Jets");
@@ -1652,7 +1874,6 @@ public class gui {
 		btnMunInvComp.setFont(new Font("Chiller", Font.BOLD, 40));
 		btnMunInvComp.setBounds(716, 596, 158, 42);
 		inventarioComplementos.add(btnMunInvComp);		
-		
 		
 		//**************CAJAS DE TEXTO
 		// CAJAS DE TEXTO DE LOS STATS
@@ -1711,10 +1932,7 @@ public class gui {
 		lblBgInvComp.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblBgInvComp.setBackground(new Color(255, 250, 250));
 		lblBgInvComp.setBounds(0, 0, 1264, 681);
-		inventarioComplementos.add(lblBgInvComp);
-		
-				
-		
+		inventarioComplementos.add(lblBgInvComp);	
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INVENTARIO JETS *********************************************
@@ -1768,53 +1986,6 @@ public class gui {
 		inventarioMundos.add(lblPtosSaludInvMun);
 		
 		/* Fondo de inventario mundos */
-		
-		//**************BOTONES
-		//BOTONES PARA DESPLAZARSE ENTRE PANELES
-		JButton btnCompInvMun = new JButton("Complementos");
-		btnCompInvMun.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				inventarioMundos.setVisible(false);
-				inventarioComplementos.setVisible(true);
-			}
-		});
-		btnCompInvMun.setForeground(new Color(0, 0, 128));
-		btnCompInvMun.setFont(new Font("Chiller", Font.BOLD, 40));
-		btnCompInvMun.setBounds(374, 597, 228, 42);
-		inventarioMundos.add(btnCompInvMun);
-		
-		JButton btnSalirInvMun = new JButton("Salir");
-		btnSalirInvMun.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				inventarioMundos.setVisible(false);
-				inicio.setVisible(true);
-			}
-		});
-		btnSalirInvMun.setForeground(new Color(0, 0, 128));
-		btnSalirInvMun.setFont(new Font("Chiller", Font.BOLD, 40));
-		btnSalirInvMun.setBounds(716, 596, 158, 42);
-		inventarioMundos.add(btnSalirInvMun);
-		
-		//BOTONES VENDER		
-		JButton btnVenderAndro = new JButton("Vender por $400");
-		btnVenderAndro.setForeground(new Color(75, 0, 130));
-		btnVenderAndro.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderAndro.setBounds(707, 307, 243, 42);
-		inventarioMundos.add(btnVenderAndro);
-		
-		JButton btnVenderOrion = new JButton("Vender por $450");
-		btnVenderOrion.setForeground(new Color(75, 0, 130));
-		btnVenderOrion.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderOrion.setBounds(707, 382, 243, 42);
-		inventarioMundos.add(btnVenderOrion);
-		
-		JButton btnVenderOsa = new JButton("Vender por $500");
-		btnVenderOsa.setForeground(new Color(75, 0, 130));
-		btnVenderOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderOsa.setBounds(707, 456, 243, 42);
-		inventarioMundos.add(btnVenderOsa);
-	
-
 		
 		//**************CAJAS DE TEXTO
 		
@@ -1878,32 +2049,65 @@ public class gui {
 		
 	}
 
-//método para actualizar el dinero
-	private void actualizarTXTDinero() {
-		txtfDineroTJets.setText(String.valueOf(Personaje.devolverDinero()));
-		txtfDineroTComp.setText(String.valueOf(Personaje.devolverDinero()));
-		txtfDineroTMun.setText(String.valueOf(Personaje.devolverDinero()));
-		txtfDineroInvJets.setText(String.valueOf(Personaje.devolverDinero()));
-		txtfDineroInvComp.setText(String.valueOf(Personaje.devolverDinero()));
-		txtfDineroInvJMun.setText(String.valueOf(Personaje.devolverDinero()));
-		txtfDineroInicio.setText(String.valueOf(Personaje.devolverDinero()));
-	}
-	private void actualizarTXTInvJets() {
-		txtfInventarioMj.setText(String.valueOf(listaJets.get(0).enInventario()));//Poner el texto de cuantos minijets hay en inventario
-		txtfInventarioSj.setText(String.valueOf(listaJets.get(1).enInventario()));//Poner el texto de cuantos superjets hay en inventario
-		txtfInventarioUj.setText(String.valueOf(listaJets.get(2).enInventario()));//Poner el texto de cuantos ultrajets hay en inventario
-	}
-	private void actualizarTXTInvComp() {
-		txtfInventarioLaser.setText(String.valueOf(listaComp.get(0).enInventario()));//Poner el texto de cuantos rayo láser hay en inventario
-		txtfInventarioCuerno.setText(String.valueOf(listaComp.get(1).enInventario()));//Poner el texto de cuantos cuerno de taurus hay en inventario
-		txtfInventarioLeche.setText(String.valueOf(listaComp.get(2).enInventario()));//Poner el texto de cuantas leches de via lactea hay en inventario
-	}
-	private void actualizarTXTInvMun() {
-		txtfInventarioAndro.setText(String.valueOf(listaMundos.get(0).enInventario()));//Poner el texto de cuantos Andromeda hay en inventario
-		txtfInventarioOrion.setText(String.valueOf(listaMundos.get(1).enInventario()));//Poner el texto de cuantos Orion hay en inventario
-		txtfInventarioOsa.setText(String.valueOf(listaMundos.get(2).enInventario()));//Poner el texto de cuantos Osa Mayor hay en inventario
-	}
-	private void actualizarTXTStats() {
+	//método para actualizar el dinero
+		private void actualizarTXTDinero() {
+			txtfDineroTJets.setText(String.valueOf(Personaje.devolverDinero()));
+			txtfDineroTComp.setText(String.valueOf(Personaje.devolverDinero()));
+			txtfDineroTMun.setText(String.valueOf(Personaje.devolverDinero()));
+			txtfDineroInvJets.setText(String.valueOf(Personaje.devolverDinero()));
+			txtfDineroInvComp.setText(String.valueOf(Personaje.devolverDinero()));
+			txtfDineroInvJMun.setText(String.valueOf(Personaje.devolverDinero()));
+			txtfDineroInicio.setText(String.valueOf(Personaje.devolverDinero()));
+		}
+		private void actualizarTXTInvJets() {
+			txtfInventarioMj.setText(String.valueOf(listaJets.get(0).enInventario()));//Poner el texto de cuantos minijets hay en inventario		
+			txtfInventarioSj.setText(String.valueOf(listaJets.get(1).enInventario()));//Poner el texto de cuantos superjets hay en inventario		
+			txtfInventarioUj.setText(String.valueOf(listaJets.get(2).enInventario()));//Poner el texto de cuantos ultrajets hay en inventario
+			btnVenderMj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(0).getNombre()))+" de Mini Jet.");
+			btnVenderSj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(1).getNombre()))+" de Súper Jet.");
+			btnVenderUj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(2).getNombre()))+" de Ultra Jet.");
+			//activa los botones de equipar el objeto en el inventario si tal objeto está en inventario
+			btnEquiparMj.setEnabled(Inventario.buscarObjeto(listaJets.get(0).getNombre())); 
+			btnEquiparSj.setEnabled(Inventario.buscarObjeto(listaJets.get(1).getNombre())); 
+			btnEquiparUj.setEnabled(Inventario.buscarObjeto(listaJets.get(2).getNombre()));
+			//activa los botones de vender del objeto si tal objeto está en el inventario y no está equipado
+			btnVenderMj.setEnabled(Inventario.buscarObjeto(listaJets.get(0).getNombre()) && !(listaJets.get(0).getEquipado())); 
+			btnVenderSj.setEnabled(Inventario.buscarObjeto(listaJets.get(1).getNombre()) && !(listaJets.get(1).getEquipado())); 
+			btnVenderUj.setEnabled(Inventario.buscarObjeto(listaJets.get(2).getNombre()) && !(listaJets.get(2).getEquipado()));
+		}
+		private void actualizarTXTInvComp() {
+			txtfInventarioLaser.setText(String.valueOf(listaComp.get(0).enInventario()));//Poner el texto de cuantos rayo láser hay en inventario
+			txtfInventarioCuerno.setText(String.valueOf(listaComp.get(1).enInventario()));//Poner el texto de cuantos cuerno de taurus hay en inventario
+			txtfInventarioLeche.setText(String.valueOf(listaComp.get(2).enInventario()));//Poner el texto de cuantas leches de via lactea hay en inventario
+			btnVenderRayo.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(0).getNombre()))+" de Rayo Láser.");
+			btnVenderCuerno.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(1).getNombre()))+" de Cuerno de Taurus.");
+			btnVenderLeche.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(2).getNombre()))+" de Leche de Vía Láctea.");
+			//activa los botones de equipar el objeto en el inventario si tal objeto está en inventario
+			btnEquiparLaser.setEnabled(Inventario.buscarObjeto(listaComp.get(0).getNombre())); 
+			btnEquiparCuerno.setEnabled(Inventario.buscarObjeto(listaComp.get(1).getNombre())); 
+			btnEquiparLeche.setEnabled(Inventario.buscarObjeto(listaComp.get(2).getNombre()));
+			//activa los botones de vender del objeto si tal objeto está en el inventario y no está equipado
+			btnVenderRayo.setEnabled(Inventario.buscarObjeto(listaComp.get(0).getNombre()) && !(listaComp.get(0).getEquipado())); 
+			btnVenderCuerno.setEnabled(Inventario.buscarObjeto(listaComp.get(1).getNombre()) && !(listaComp.get(1).getEquipado())); 
+			btnVenderLeche.setEnabled(Inventario.buscarObjeto(listaComp.get(2).getNombre()) && !(listaComp.get(2).getEquipado()));
+		}
+		private void actualizarTXTInvMun() {
+			txtfInventarioAndro.setText(String.valueOf(listaMundos.get(0).enInventario()));//Poner el texto de cuantos Andromeda hay en inventario
+			txtfInventarioOrion.setText(String.valueOf(listaMundos.get(1).enInventario()));//Poner el texto de cuantos Orion hay en inventario
+			txtfInventarioOsa.setText(String.valueOf(listaMundos.get(2).enInventario()));//Poner el texto de cuantos Osa Mayor hay en inventario
+			btnVenderAndro.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(0).getNombre()))+" de Andrómeda.");
+			btnVenderOrion.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(1).getNombre()))+" de Orión.");
+			btnVenderOsa.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(2).getNombre()))+" de Osa Mayor." );
+			//activa los botones de equipar el objeto en el inventario si tal objeto está en inventario
+			btnEquiparAndro.setEnabled(Inventario.buscarObjeto(listaMundos.get(0).getNombre()));
+			btnEquiparOrion.setEnabled(Inventario.buscarObjeto(listaMundos.get(1).getNombre())); 
+			btnEquiparOsa.setEnabled(Inventario.buscarObjeto(listaMundos.get(2).getNombre())); 
+			//activa los botones de vender del objeto si tal objeto está en el inventario y no está equipado
+			btnVenderAndro.setEnabled(Inventario.buscarObjeto(listaMundos.get(0).getNombre()) && !(listaMundos.get(0).getEquipado())); 
+			btnVenderOrion.setEnabled(Inventario.buscarObjeto(listaMundos.get(1).getNombre()) && !(listaMundos.get(1).getEquipado()));
+			btnVenderOsa.setEnabled(Inventario.buscarObjeto(listaMundos.get(2).getNombre()) && !(listaMundos.get(2).getEquipado())); 
+		}
+	public void actualizarTXTStats() {
 		
 		stats = Personaje.devolverStats();
 		
@@ -1950,64 +2154,18 @@ public class gui {
 		txtfPtosSaludInvMun.setText(String.valueOf(String.valueOf(stats.get(2))));
 	}
 	
-    public static void equiparObjeto(JButton btn, JRadioButton rdbtn) {
+    public void equiparObjeto(JButton btn, JRadioButton rdbtn) {
     	rdbtn.setSelected(true);
 		btn.setText("Desequipar");
+		actualizarTXTStats();
 		//Cambiar stats	++
     }
     
-    public static void desequiparObjeto(JButton btn, JRadioButton rdbtn) {
+    public void desequiparObjeto(JButton btn, JRadioButton rdbtn) {
     	rdbtn.setSelected(false);
 		btn.setText("Equipar");
+		actualizarTXTStats();
 		//Cambiar stats	--
     }
-	private void aumentarStats(String categoria, int multiplicador) {
-		
-		stats = Personaje.previewStats(categoria, multiplicador);
-		
-		txtfFuerzaInicio.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadInicio.setText(String.valueOf(stats.get(1)));
-		txtfAtaqueInicio.setText(String.valueOf(String.valueOf(stats.get(4))));
-		txtfVelocidadInicio.setText(String.valueOf(String.valueOf(stats.get(3))));
-		txtfPtosSaludInicio.setText(String.valueOf(String.valueOf(stats.get(2))));
-		
-		txtfFuerzaTJets.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadTJets.setText(String.valueOf(stats.get(1)));;
-		txtfAtaqueTJets.setText(String.valueOf(String.valueOf(stats.get(4))));;
-		txtfVelocidadTJets.setText(String.valueOf(String.valueOf(stats.get(3))));;
-		txtfPtosSaludTJets.setText(String.valueOf(String.valueOf(stats.get(2))));;
-		
-		txtfFuerzaTComp.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadTComp.setText(String.valueOf(stats.get(1)));
-		txtfAtaqueTComp.setText(String.valueOf(String.valueOf(stats.get(4))));
-		txtfVelocidadTComp.setText(String.valueOf(String.valueOf(stats.get(3))));
-		txtfPtosSaludTComp.setText(String.valueOf(String.valueOf(stats.get(2))));
-		
-		txtfFuerzaTMun.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadTMun.setText(String.valueOf(stats.get(1)));
-		txtfAtaqueTMun.setText(String.valueOf(String.valueOf(stats.get(4))));
-		txtfVelocidadTMun.setText(String.valueOf(String.valueOf(stats.get(3))));
-		txtfPtosSaludTMun.setText(String.valueOf(String.valueOf(stats.get(2))));
-		
-		txtfFuerzaInvJets.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadInvJets.setText(String.valueOf(stats.get(1)));
-		txtfAtaqueInvJets.setText(String.valueOf(String.valueOf(stats.get(4))));
-		txtfVelocidadInvJets.setText(String.valueOf(String.valueOf(stats.get(3))));
-		txtfPtosSaludInvJets.setText(String.valueOf(String.valueOf(stats.get(2))));
-		
-		txtfFuerzaInvComp.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadInvComp.setText(String.valueOf(stats.get(1)));
-		txtfAtaqueInvComp.setText(String.valueOf(String.valueOf(stats.get(4))));
-		txtfVelocidadInvComp.setText(String.valueOf(String.valueOf(stats.get(3))));
-		txtfPtosSaludInvComp.setText(String.valueOf(String.valueOf(stats.get(2))));
-		
-		txtfFuerzaInvMun.setText(String.valueOf(stats.get(0)));
-		txtfAgilidadInvMun.setText(String.valueOf(stats.get(1)));
-		txtfAtaquesInvMun.setText(String.valueOf(String.valueOf(stats.get(4))));
-		txtfVelocidadInvMun.setText(String.valueOf(String.valueOf(stats.get(3))));
-		txtfPtosSaludInvMun.setText(String.valueOf(String.valueOf(stats.get(2))));
-	}
-    
-    
     
 }

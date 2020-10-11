@@ -204,7 +204,14 @@ public class gui {
 		gui.listaMundos = llamadaM.devolverLista();		
 	}
 	
-	
+	private static boolean esNumero(String n) {
+		try {
+			Integer.parseInt(n);
+			return true;
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+	}	
 
 	private void initialize() throws Exception {
 		llamarApi();//llama al API al inicio *IMPORTANTE
@@ -225,7 +232,7 @@ public class gui {
 		//*********************************************		PANELES		************************************************
 		//**************************************************************************************************************
 		//**************************************************************************************************************
-		
+
 		
 		// ****************	INICIO
 		final JPanel inicio = new JPanel();
@@ -233,10 +240,15 @@ public class gui {
 		inicio.setLayout(null);
 		Image img = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
 		inicio.setVisible(true);
+		
 		String dineroInput = JOptionPane.showInputDialog(frame, "Introduzca la cantidad de dinero que desea: ");
-		// OJO que sólo acepta string, luego hay que hacer cast
 		
-		
+		if (esNumero(dineroInput))Personaje.modificarDinero(Integer.parseInt(dineroInput));// OJO que sólo acepta string, luego hay que hacer cast
+		else{
+			JOptionPane.showMessageDialog(null, "No ingresó el dinero, se pone el dinero por defecto.");
+			Personaje.modificarDinero(1000);
+		}
+
 		// ****************	TIENDA JETS		
 		final JPanel tiendaJets = new JPanel();
 		tiendaJets.setLayout(null);

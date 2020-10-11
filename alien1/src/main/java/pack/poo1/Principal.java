@@ -25,15 +25,11 @@ public class Principal {
         listaPrecios = categoria.obtenerPrecios();
         listaProductos = categoria.obtenerProductos();
         
-        //System.out.println("***********\n" + "Lista de precios para " + opcion + " :\n" + listaPrecios + "\n*************");
-        //System.out.println("Lista de productos:\n" + listaProductos);
-        //productos.clear();//para que no se sumen más elementos con todas las llamadas
         for (int i = 0; i < listaPrecios.size(); i = i + 1) {
             Producto producto = new Producto();//Nuevas instancias de productos
             producto.crearProducto(listaPrecios.get(i), listaProductos.get(i), opcion);// int pprecio, String pnombre,String ptipo
             productos.add(producto);
         }
-        //verProductos();
     }
     public ArrayList<Producto> devolverLista() {
     	return productos;

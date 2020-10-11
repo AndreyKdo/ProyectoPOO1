@@ -171,8 +171,6 @@ public class gui {
 		});
 	}
 	
-	
-
 	/**
 	 * Create the application.
 	 * @throws Exception 
@@ -242,8 +240,8 @@ public class gui {
 		inicio.setVisible(true);
 		
 		String dineroInput = JOptionPane.showInputDialog(frame, "Introduzca la cantidad de dinero que desea: ");
-		
-		if (esNumero(dineroInput))Personaje.modificarDinero(Integer.parseInt(dineroInput));// OJO que sólo acepta string, luego hay que hacer cast
+		if (dineroInput == null) System.exit(0);
+		else if (esNumero(dineroInput)) Personaje.modificarDinero(Integer.parseInt(dineroInput));// OJO que sólo acepta string, luego hay que hacer cast
 		else{
 			JOptionPane.showMessageDialog(null, "No ingresó el dinero, se pone el dinero por defecto.");
 			Personaje.modificarDinero(1000);
@@ -324,7 +322,6 @@ public class gui {
 		btnVenderMj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaJets.get(0).vender();
-				Inventario.verInventario();
 				actualizarTXTInvJets();
 				actualizarTXTDinero();
 			}
@@ -341,7 +338,6 @@ public class gui {
 		btnVenderSj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaJets.get(1).vender();
-				Inventario.verInventario();
 				actualizarTXTInvJets();
 				actualizarTXTDinero();
 			}
@@ -357,7 +353,6 @@ public class gui {
 		btnVenderUj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaJets.get(2).vender();
-				Inventario.verInventario();
 				actualizarTXTInvJets();
 				actualizarTXTDinero();
 			}
@@ -386,7 +381,6 @@ public class gui {
 		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
 		btnComprarMj.setBounds(529, 307, 128, 42);
 		tiendaJets.add(btnComprarMj);
-		btnComprarMj.setToolTipText("");
 		
 		/*Botón precio super jet*/
 		final JButton btnComprarSj = new JButton("$"+String.valueOf(listaJets.get(1).getPrecio()));
@@ -541,7 +535,6 @@ public class gui {
 		btnVenderRayo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaComp.get(0).vender();
-				Inventario.verInventario();
 				actualizarTXTDinero();
 				actualizarTXTInvComp();
 			}
@@ -557,7 +550,6 @@ public class gui {
 		btnVenderCuerno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaComp.get(1).vender();
-				Inventario.verInventario();
 				actualizarTXTInvComp();
 				actualizarTXTDinero();
 			}
@@ -573,7 +565,6 @@ public class gui {
 		btnVenderLeche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaComp.get(2).vender();
-				Inventario.verInventario();
 				actualizarTXTInvComp();
 				actualizarTXTDinero();
 			}
@@ -781,7 +772,6 @@ public class gui {
 		btnVenderAndro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaMundos.get(0).vender();
-				Inventario.verInventario();
 				actualizarTXTInvMun();
 				actualizarTXTDinero();
 			}
@@ -797,7 +787,6 @@ public class gui {
 		btnVenderOrion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaMundos.get(1).vender();
-				Inventario.verInventario();
 				actualizarTXTInvMun();
 				actualizarTXTDinero();
 			}
@@ -813,7 +802,6 @@ public class gui {
 		btnVenderOsa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listaMundos.get(2).vender();
-				Inventario.verInventario();
 				actualizarTXTInvMun();
 				actualizarTXTDinero();
 			}
@@ -1195,6 +1183,26 @@ public class gui {
 					btnComprarOrion.setEnabled(true);
 					btnComprarOsa.setEnabled(true);
 					
+					rdbtnMj.setEnabled(!(listaJets.get(0).getEquipado()));
+					rdbtnMs.setEnabled(!(listaJets.get(1).getEquipado()));
+					rdbtnUj.setEnabled(!(listaJets.get(2).getEquipado()));
+					rdbtnLaser.setEnabled(!(listaComp.get(0).getEquipado()));
+					rdbtnCuerno.setEnabled(!(listaComp.get(1).getEquipado()));
+					rdbtnLeche.setEnabled(!(listaComp.get(2).getEquipado()));
+					rdbtnAndro.setEnabled(!(listaMundos.get(0).getEquipado()));
+					rdbtnOrion.setEnabled(!(listaMundos.get(1).getEquipado()));
+					rdbtnOsa.setEnabled(!(listaMundos.get(2).getEquipado()));
+					
+					if (listaJets.get(0).getEquipado())rdbtnMj.setSelected(true);
+					if (listaJets.get(1).getEquipado())rdbtnMs.setSelected(true);
+					if (listaJets.get(2).getEquipado())rdbtnUj.setSelected(true);
+					if (listaComp.get(0).getEquipado())rdbtnLaser.setSelected(true);
+					if (listaComp.get(1).getEquipado())rdbtnCuerno.setSelected(true);
+					if (listaComp.get(2).getEquipado())rdbtnLeche.setSelected(true);
+					if (listaMundos.get(0).getEquipado())rdbtnAndro.setSelected(true);
+					if (listaMundos.get(1).getEquipado())rdbtnOrion.setSelected(true);
+					if (listaMundos.get(2).getEquipado())rdbtnOsa.setSelected(true);
+					/*
 					rdbtnMj.setEnabled(true);
 					rdbtnMs.setEnabled(true);
 					rdbtnUj.setEnabled(true);
@@ -1213,7 +1221,7 @@ public class gui {
 					rdbtnLeche.setSelected(false);
 					rdbtnAndro.setSelected(false);
 					rdbtnOrion.setSelected(false);
-					rdbtnOsa.setSelected(false);
+					rdbtnOsa.setSelected(false);*/
 					
 					actualizarTXTPreStats();
 					actualizarTXTStatsStRes();
@@ -1899,6 +1907,26 @@ public class gui {
 					btnComprarOrion.setEnabled(true);
 					btnComprarOsa.setEnabled(true);
 					
+					rdbtnMj.setEnabled(!(listaJets.get(0).getEquipado()));
+					rdbtnMs.setEnabled(!(listaJets.get(1).getEquipado()));
+					rdbtnUj.setEnabled(!(listaJets.get(2).getEquipado()));
+					rdbtnLaser.setEnabled(!(listaComp.get(0).getEquipado()));
+					rdbtnCuerno.setEnabled(!(listaComp.get(1).getEquipado()));
+					rdbtnLeche.setEnabled(!(listaComp.get(2).getEquipado()));
+					rdbtnAndro.setEnabled(!(listaMundos.get(0).getEquipado()));
+					rdbtnOrion.setEnabled(!(listaMundos.get(1).getEquipado()));
+					rdbtnOsa.setEnabled(!(listaMundos.get(2).getEquipado()));
+					
+					if (listaJets.get(0).getEquipado())rdbtnMj.setSelected(true);
+					if (listaJets.get(1).getEquipado())rdbtnMs.setSelected(true);
+					if (listaJets.get(2).getEquipado())rdbtnUj.setSelected(true);
+					if (listaComp.get(0).getEquipado())rdbtnLaser.setSelected(true);
+					if (listaComp.get(1).getEquipado())rdbtnCuerno.setSelected(true);
+					if (listaComp.get(2).getEquipado())rdbtnLeche.setSelected(true);
+					if (listaMundos.get(0).getEquipado())rdbtnAndro.setSelected(true);
+					if (listaMundos.get(1).getEquipado())rdbtnOrion.setSelected(true);
+					if (listaMundos.get(2).getEquipado())rdbtnOsa.setSelected(true);
+					/*
 					rdbtnMj.setEnabled(true);
 					rdbtnMs.setEnabled(true);
 					rdbtnUj.setEnabled(true);
@@ -1917,7 +1945,7 @@ public class gui {
 					rdbtnLeche.setSelected(false);
 					rdbtnAndro.setSelected(false);
 					rdbtnOrion.setSelected(false);
-					rdbtnOsa.setSelected(false);
+					rdbtnOsa.setSelected(false);*/
 					
 					actualizarTXTPreStats();
 					actualizarTXTStatsStRes();
@@ -2226,7 +2254,26 @@ public class gui {
 					btnComprarAndro.setEnabled(true);
 					btnComprarOrion.setEnabled(true);
 					btnComprarOsa.setEnabled(true);
+					rdbtnMj.setEnabled(!(listaJets.get(0).getEquipado()));
+					rdbtnMs.setEnabled(!(listaJets.get(1).getEquipado()));
+					rdbtnUj.setEnabled(!(listaJets.get(2).getEquipado()));
+					rdbtnLaser.setEnabled(!(listaComp.get(0).getEquipado()));
+					rdbtnCuerno.setEnabled(!(listaComp.get(1).getEquipado()));
+					rdbtnLeche.setEnabled(!(listaComp.get(2).getEquipado()));
+					rdbtnAndro.setEnabled(!(listaMundos.get(0).getEquipado()));
+					rdbtnOrion.setEnabled(!(listaMundos.get(1).getEquipado()));
+					rdbtnOsa.setEnabled(!(listaMundos.get(2).getEquipado()));
 					
+					if (listaJets.get(0).getEquipado())rdbtnMj.setSelected(true);
+					if (listaJets.get(1).getEquipado())rdbtnMs.setSelected(true);
+					if (listaJets.get(2).getEquipado())rdbtnUj.setSelected(true);
+					if (listaComp.get(0).getEquipado())rdbtnLaser.setSelected(true);
+					if (listaComp.get(1).getEquipado())rdbtnCuerno.setSelected(true);
+					if (listaComp.get(2).getEquipado())rdbtnLeche.setSelected(true);
+					if (listaMundos.get(0).getEquipado())rdbtnAndro.setSelected(true);
+					if (listaMundos.get(1).getEquipado())rdbtnOrion.setSelected(true);
+					if (listaMundos.get(2).getEquipado())rdbtnOsa.setSelected(true);
+					/*
 					rdbtnMj.setEnabled(true);
 					rdbtnMs.setEnabled(true);
 					rdbtnUj.setEnabled(true);
@@ -2246,7 +2293,7 @@ public class gui {
 					rdbtnAndro.setSelected(false);
 					rdbtnOrion.setSelected(false);
 					rdbtnOsa.setSelected(false);
-					
+					*/
 					actualizarTXTPreStats();
 					actualizarTXTStatsStRes();
 				}
@@ -3008,15 +3055,19 @@ public class gui {
     public void equiparG(String categoria, int indice, JButton btnEquipar, JRadioButton rdbtn, JButton btnVender) {
     	
     	if (categoria=="JETS") {
-    		listaJets.get(indice).equipar();
-    		actualizarTXTInvJets();
+    		if (!(listaJets.get(indice).getEquipado())) {
+	    		listaJets.get(indice).equipar();
+	    		actualizarTXTInvJets();
+    		}
     		
     	}else if(categoria=="COMPLEMENTOS") {
-    		listaComp.get(indice).equipar();
-    		actualizarTXTInvComp();
+    		if (!(listaComp.get(indice).getEquipado())) {
+	    		listaComp.get(indice).equipar();
+	    		actualizarTXTInvComp();
+    		}
     		
     	}else {
-    		listaMundos.get(indice).equipar();
+    		if (!(listaMundos.get(indice).getEquipado())) listaMundos.get(indice).equipar();
     	}
     	
     	

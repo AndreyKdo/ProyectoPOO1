@@ -15,12 +15,7 @@ public class Inventario {
 			 }
 		 } return verProductos;
 	 	}
-	 public static void verInventario() {
-		 for (int i = 0; i < productosInv.size(); i = i + 1) {
-			 System.out.println("Producto #"+i+" Objeto:"+productosInv.get(i));
-			 productosInv.get(i).devolverAttr();
-		 }
-	 }
+
 	 public static int contarProductos(String nombre) {
 		 int contador = 0;
 		 for (int i = 0; i < productosInv.size(); i = i + 1) {

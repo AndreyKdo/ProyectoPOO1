@@ -1,5 +1,6 @@
 package pack.poo1;
 
+
 public class Producto {
     private int precio;
     private boolean equipado=false;
@@ -82,6 +83,65 @@ public class Producto {
     		}else;
     		equipado=false;
     	}
+    }
+    public void previsualizar() {
+    	if (tipo=="JETS") {
+    		Personaje.modificarVelocidad(multiplicador);
+    		Personaje.modificarAgilidad(multiplicador);
+    	}else if (tipo=="COMPLEMENTOS") {
+    		Personaje.modificarFuerza(multiplicador);
+    		Personaje.modificarPS(multiplicador);
+    		Personaje.modificarAtaque(multiplicador);
+    	}else;
+       	
+    }
+    
+    public void desprevisualizar() {
+    	if (tipo=="JETS") {
+    		Personaje.modificarVelocidad(-multiplicador);
+    		Personaje.modificarAgilidad(-multiplicador);
+    	}else if (tipo=="COMPLEMENTOS") {
+    		Personaje.modificarFuerza(-multiplicador);
+    		Personaje.modificarPS(-multiplicador);
+    		Personaje.modificarAtaque(-multiplicador);
+    	}else;
+       	
+    }
+   
+    public void previsualizarStats() {
+    	if (tipo=="JETS") {
+    		Personaje.modificarVelocidadSt(multiplicador);
+    		Personaje.modificarAgilidadSt(multiplicador);
+    	}else if (tipo=="COMPLEMENTOS") {
+    		Personaje.modificarFuerzaSt(multiplicador);
+    		Personaje.modificarPSSt(multiplicador);
+    		Personaje.modificarAtaqueSt(multiplicador);
+    	}else;
+       	
+    }
+    
+    public void desprevisualizarStats() {
+    	if (tipo=="JETS") {
+    		Personaje.modificarVelocidadSt(-(multiplicador*2));
+    		Personaje.modificarAgilidadSt(-(multiplicador*2));
+    	}else if (tipo=="COMPLEMENTOS") {
+    		Personaje.modificarFuerzaSt(-(multiplicador*2));
+    		Personaje.modificarPSSt(-(multiplicador*2));
+    		Personaje.modificarAtaqueSt(-(multiplicador*2));
+    	}else;
+       	
+    }
+    
+    public void resetearStats() {
+    	if (tipo=="JETS") {
+    		Personaje.resetearVelocidad(0);
+    		Personaje.resetearAgilidad(0);
+    	}else if (tipo=="COMPLEMENTOS") {
+    		Personaje.resetearFuerza(0);
+    		Personaje.resetearPS(0);
+    		Personaje.resetearAtaque(0);
+    	}else;
+       	
     }
     public boolean comprar() {
     	int dinero = Personaje.devolverDinero();

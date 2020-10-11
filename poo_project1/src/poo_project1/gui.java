@@ -76,14 +76,15 @@ public class gui {
 	private JTextField txtfVelocidadInvMun;
 	private JTextField txtfPtosSaludInvMun;
 	private JTextField txtfDineroInvJMun;
-	private JPanel inicio;
-	private JPanel tiendaJets;
-	private JPanel tiendaComplementos;
-	private JPanel tiendaMundos;
-	private JPanel inventarioJets;
-	private JPanel inventarioComplementos;
-	private JPanel inventarioMundos;
-	private JLabel lblPtosSaludInvComp;
+	private JRadioButton rdbtnMj;
+	private JRadioButton rdbtnMs;
+	private JRadioButton rdbtnUj;
+	private JRadioButton rdbtnLaser;
+	private JRadioButton rdbtnCuerno;
+	private JRadioButton rdbtnLeche;
+	private JRadioButton rdbtnAndro;
+	private JRadioButton rdbtnOrion;
+	private JRadioButton rdbtnOsa;
 	
 	/*
 	 * Declaración de botones que cambian el estado durante la ejecución
@@ -98,6 +99,7 @@ public class gui {
 	JButton btnVenderAndro = new JButton();
 	JButton btnVenderOrion = new JButton();
 	JButton btnVenderOsa = new JButton();
+	
 	//Botones de Equipar en el inventario
 	JButton btnEquiparMj = new JButton("Equipar");
 	JButton btnEquiparSj = new JButton("Equipar");
@@ -105,17 +107,50 @@ public class gui {
 	JButton btnEquiparLaser = new JButton("Equipar");
 	JButton btnEquiparCuerno = new JButton("Equipar");
 	JButton btnEquiparLeche = new JButton("Equipar");
-	JButton btnEquiparAndro = new JButton("Equipar");
-	JButton btnEquiparOsa = new JButton("Equipar");
-	JButton btnEquiparOrion = new JButton("Equipar");
+	JButton btnEquiparAndro = new JButton("Consumir");
+	JButton btnEquiparOsa = new JButton("Consumir");
+	JButton btnEquiparOrion = new JButton("Consumir");
 	
 	
 	//atributos de la clase gui
 	ArrayList<Integer> stats = Personaje.devolverStats();
+	ArrayList<Integer> statsModificados = Personaje.previewStats();
+	
 	//Las listas de los productos obtenidas del proceso del API son estáticas ya que no cambian.
 	static ArrayList<Producto> listaJets = new ArrayList<Producto>();
 	static ArrayList<Producto> listaMundos = new ArrayList<Producto>();
 	static ArrayList<Producto> listaComp = new ArrayList<Producto>();
+	
+	private JTextField txtfFuerzaTJetsPre;
+	private JTextField txtfAgilidadTJetsPre;
+	private JTextField txtfPtosSaludTJetsPre;
+	private JTextField txtfVelocidadTJetsPre;
+	private JTextField txtfAtaqueTJetsPre;
+	private JTextField txtfFuerzaTCompPre;
+	private JTextField txtfAgilidadTCompPre;
+	private JTextField txtfPtosSaludTCompPre;
+	private JTextField txtfVelocidadTCompPre;
+	private JTextField txtfAtaqueTCompPre;
+	private JTextField txtfFuerzaTMunPre;
+	private JTextField txtfAgilidadTMunPre;
+	private JTextField txtfPtosSaludTMunPre;
+	private JTextField txtfVelocidadTMunPre;
+	private JTextField txtfAtaqueTMunPre;
+	private JTextField txtfFuerzaTJetsSt;
+	private JTextField txtfFuerzaTMunSt;
+	private JTextField txtfAgilidadTMunSt;
+	private JTextField txtfPtosSaludTMunSt;
+	private JTextField txtfVelocidadTMunSt;
+	private JTextField txtfAtaqueTMunSt;
+	private JTextField txtfAgilidadTJetsSt;
+	private JTextField txtfPtosSaludTJetsSt;
+	private JTextField txtfVelocidadTJetsSt;
+	private JTextField txtfAtaqueTJetsSt;
+	private JTextField txtfFuerzaTCompSt;
+	private JTextField txtfAgilidadTCompSt;
+	private JTextField txtfPtosSaludTCompSt;
+	private JTextField txtfVelocidadTCompSt;
+	private JTextField txtfAtaqueTCompSt;
 	/**
 	 * Launch the application.
 	 */
@@ -135,6 +170,8 @@ public class gui {
 			}
 		});
 	}
+	
+	
 
 	/**
 	 * Create the application.
@@ -148,21 +185,6 @@ public class gui {
 	 * Initialize the contents of the frame.
 	 * @throws Exception 
 	 */
-	private void mostrarMensajeSinDinero(){
-		//Etiqueta con el texto del JOptionPane
-		JLabel lblSinDinero = new JLabel("Dinero Insuficiente");
-		lblSinDinero.setFont(new Font("Chiller", Font.BOLD, 30)); 
-			
-		//Etiqueta con la imagen del JOptionPane
-		JLabel lblImgSinDinero = new JLabel();
-			
-		Image alienTriste = new ImageIcon(this.getClass().getResource("/alienTriste.jpg")).getImage();
-		lblImgSinDinero.setIcon(new ImageIcon(alienTriste));
-			
-		//Arreglo que tiene las dos etiquetas: texto + imagen
-		JLabel[] imagenesAviso = {lblSinDinero, lblImgSinDinero};
-		JOptionPane.showMessageDialog(null, imagenesAviso);
-	}
 	private void llamarApi() throws Exception{
 		//conectar al otro proyecto Java Maven
 		/*
@@ -181,6 +203,9 @@ public class gui {
 		llamadaM.main("MUNDOS");
 		gui.listaMundos = llamadaM.devolverLista();		
 	}
+	
+	
+
 	private void initialize() throws Exception {
 		llamarApi();//llama al API al inicio *IMPORTANTE
 		frame = new JFrame();
@@ -188,17 +213,29 @@ public class gui {
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));	
+		
+		
+		
+		
+		
+		
+		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*********************************************		PANELES		************************************************
 		//**************************************************************************************************************
 		//**************************************************************************************************************
+		
+		
 		// ****************	INICIO
 		final JPanel inicio = new JPanel();
 		frame.getContentPane().add(inicio, "name_907429623456800");
 		inicio.setLayout(null);
 		Image img = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
 		inicio.setVisible(true);
+		String dineroInput = JOptionPane.showInputDialog(frame, "Introduzca la cantidad de dinero que desea: ");
+		// OJO que sólo acepta string, luego hay que hacer cast
+		
 		
 		// ****************	TIENDA JETS		
 		final JPanel tiendaJets = new JPanel();
@@ -223,76 +260,6 @@ public class gui {
 		inventarioJets.setLayout(null);
 		frame.getContentPane().add(inventarioJets, "name_927931963284500");
 		inventarioJets.setVisible(false);
-		//BOTONES DE VENDER
-		//MINI JET
-		btnVenderMj.setText("Vender por $"+String.valueOf(listaJets.get(0).getPrecioVender()));
-		btnVenderMj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaJets.get(0).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
-				Inventario.verInventario();
-				actualizarTXTInvJets();
-				actualizarTXTDinero();
-			}
-		});
-		btnVenderMj.setForeground(new Color(75, 0, 130));
-		btnVenderMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderMj.setBounds(720, 307, 254, 42);
-		btnVenderMj.setEnabled(Inventario.buscarObjeto(listaJets.get(0).getNombre()));
-		btnVenderMj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(0).getNombre()))+" de Mini Jet.");//mostrar la cantidad de minijets que hay al colocar arriba el cursor
-		inventarioJets.add(btnVenderMj);
-		//SUPER JET
-		btnVenderSj.setText("Vender por $"+String.valueOf(listaJets.get(1).getPrecioVender()));
-		btnVenderSj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaJets.get(1).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
-				Inventario.verInventario();
-				actualizarTXTInvJets();
-				actualizarTXTDinero();
-			}
-		});
-		btnVenderSj.setForeground(new Color(75, 0, 130));
-		btnVenderSj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderSj.setBounds(720, 381, 254, 42);
-		btnVenderSj.setEnabled(Inventario.buscarObjeto(listaJets.get(1).getNombre())); 
-		btnVenderSj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(1).getNombre()))+" de Súper Jet.");//mostrar la cantidad de superjets que hay al colocar arriba el cursor
-		inventarioJets.add(btnVenderSj);
-		//ULTRA JET
-		btnVenderUj.setText("Vender por $"+String.valueOf(listaJets.get(2).getPrecioVender()));
-		btnVenderUj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaJets.get(2).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
-				Inventario.verInventario();
-				actualizarTXTInvJets();
-				actualizarTXTDinero();
-			}
-		});
-		btnVenderUj.setForeground(new Color(75, 0, 130));
-		btnVenderUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnVenderUj.setBounds(720, 456, 254, 42);
-		btnVenderUj.setEnabled(Inventario.buscarObjeto(listaJets.get(2).getNombre()));
-		btnVenderUj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(2).getNombre()))+" de Ultra Jet.");//mostrar la cantidad de minijets que hay al colocar arriba el cursor
-		inventarioJets.add(btnVenderUj);
 		
 		//RADIO BUTTONS
 		final JRadioButton rdbtnMjInv = new JRadioButton("   Mini Jet"); //Radio mini jet
@@ -315,6 +282,143 @@ public class gui {
 		rdbtnUjInv.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnUjInv.setBounds(300, 448, 191, 58);
 		inventarioJets.add(rdbtnUjInv);
+		
+		//*********************RADIOS		
+		//Botón mini jet
+		final JRadioButton rdbtnMj = new JRadioButton("   Mini Jet");
+		rdbtnMj.setForeground(new Color(75, 0, 130));
+		rdbtnMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnMj.setBounds(283, 299, 191, 58);
+		tiendaJets.add(rdbtnMj);
+		
+		//Botón Super Jet
+		final JRadioButton rdbtnMs = new JRadioButton("   S\u00FAper Jet");
+		rdbtnMs.setForeground(new Color(75, 0, 130));
+		rdbtnMs.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnMs.setBounds(283, 372, 191, 58);
+		tiendaJets.add(rdbtnMs);
+		
+		//Botón Ultra Jet
+		final JRadioButton rdbtnUj = new JRadioButton("   Ultra Jet");
+		rdbtnUj.setForeground(new Color(75, 0, 130));
+		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnUj.setBounds(283, 445, 191, 58);
+		tiendaJets.add(rdbtnUj);
+		
+		
+		//BOTONES DE VENDER
+		//MINI JET
+		btnVenderMj.setText("Vender por $"+String.valueOf(listaJets.get(0).getPrecioVender()));
+		btnVenderMj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listaJets.get(0).vender();
+				Inventario.verInventario();
+				actualizarTXTInvJets();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderMj.setForeground(new Color(75, 0, 130));
+		btnVenderMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderMj.setBounds(720, 307, 254, 42);
+		btnVenderMj.setEnabled(Inventario.buscarObjeto(listaJets.get(0).getNombre()));
+		btnVenderMj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(0).getNombre()))+" de Mini Jet.");//mostrar la cantidad de minijets que hay al colocar arriba el cursor
+		inventarioJets.add(btnVenderMj);
+		
+		//SUPER JET
+		btnVenderSj.setText("Vender por $"+String.valueOf(listaJets.get(1).getPrecioVender()));
+		btnVenderSj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listaJets.get(1).vender();
+				Inventario.verInventario();
+				actualizarTXTInvJets();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderSj.setForeground(new Color(75, 0, 130));
+		btnVenderSj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderSj.setBounds(720, 381, 254, 42);
+		btnVenderSj.setEnabled(Inventario.buscarObjeto(listaJets.get(1).getNombre())); 
+		btnVenderSj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(1).getNombre()))+" de Súper Jet.");//mostrar la cantidad de superjets que hay al colocar arriba el cursor
+		inventarioJets.add(btnVenderSj);
+		//ULTRA JET
+		btnVenderUj.setText("Vender por $"+String.valueOf(listaJets.get(2).getPrecioVender()));
+		btnVenderUj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listaJets.get(2).vender();
+				Inventario.verInventario();
+				actualizarTXTInvJets();
+				actualizarTXTDinero();
+			}
+		});
+		btnVenderUj.setForeground(new Color(75, 0, 130));
+		btnVenderUj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnVenderUj.setBounds(720, 456, 254, 42);
+		btnVenderUj.setEnabled(Inventario.buscarObjeto(listaJets.get(2).getNombre()));
+		btnVenderUj.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaJets.get(2).getNombre()))+" de Ultra Jet.");//mostrar la cantidad de minijets que hay al colocar arriba el cursor
+		inventarioJets.add(btnVenderUj);
+		
+		final JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
+		btnComprarMj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+								
+				if (listaJets.get(0).comprar()) { 
+					//Comprar el miniJet
+					mostrarMensajeCompra("JETS", 0, btnEquiparMj, rdbtnMjInv, btnVenderMj);
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarMj.setForeground(new Color(75, 0, 130));
+		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarMj.setBounds(529, 307, 128, 42);
+		tiendaJets.add(btnComprarMj);
+		btnComprarMj.setToolTipText("");
+		
+		/*Botón precio super jet*/
+		final JButton btnComprarSj = new JButton("$"+String.valueOf(listaJets.get(1).getPrecio()));
+		btnComprarSj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (listaJets.get(1).comprar()) { //***
+					//Comprar el super jet
+					mostrarMensajeCompra("JETS", 1, btnEquiparSj, rdbtnSjInv, btnVenderSj);
+						
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+				
+			}
+		});
+		btnComprarSj.setForeground(new Color(75, 0, 130));
+		btnComprarSj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarSj.setBounds(529, 380, 125, 42);
+		tiendaJets.add(btnComprarSj);
+		
+		//Botón ultra jet
+		final JButton btnComprarUj = new JButton("$"+String.valueOf(listaJets.get(2).getPrecio()));
+		btnComprarUj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				if (listaJets.get(2).comprar()) { //***
+					//Comprar el super jet
+					mostrarMensajeCompra("JETS", 2, btnEquiparUj, rdbtnUjInv, btnVenderUj);
+								
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarUj.setForeground(new Color(75, 0, 130));
+		btnComprarUj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarUj.setBounds(529, 453, 125, 42);
+		tiendaJets.add(btnComprarUj);
+		
+		
+
 		
 		//Botones de equipar
 		btnEquiparMj.addActionListener(new ActionListener() {
@@ -400,19 +504,31 @@ public class gui {
 		rdbtnLecheInv.setBounds(299, 448, 243, 58);
 		inventarioComplementos.add(rdbtnLecheInv);
 		btnVenderRayo.setEnabled(false);
-
+		
+		//**************RADIOS
+		final JRadioButton rdbtnLaser = new JRadioButton("    Rayo L\u00E1ser");
+		rdbtnLaser.setForeground(new Color(75, 0, 130));
+		rdbtnLaser.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnLaser.setBounds(283, 299, 247, 58);
+		tiendaComplementos.add(rdbtnLaser);
+		
+		final JRadioButton rdbtnCuerno = new JRadioButton(" Cuerno de Taurus");
+		rdbtnCuerno.setForeground(new Color(75, 0, 130));
+		rdbtnCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnCuerno.setBounds(283, 372, 247, 58);
+		tiendaComplementos.add(rdbtnCuerno);
+		
+		final JRadioButton rdbtnLeche = new JRadioButton(" Leche de la V\u00EDa L\u00E1ctea");
+		rdbtnLeche.setForeground(new Color(75, 0, 130));
+		rdbtnLeche.setFont(new Font("Chiller", Font.BOLD, 28));
+		rdbtnLeche.setBounds(283, 445, 247, 58);
+		tiendaComplementos.add(rdbtnLeche);
+		
 		//BOTONES VENDER
 		btnVenderRayo.setText("Vender por $"+String.valueOf(listaComp.get(0).getPrecioVender()));
 		btnVenderRayo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaComp.get(0).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
+				listaComp.get(0).vender();
 				Inventario.verInventario();
 				actualizarTXTDinero();
 				actualizarTXTInvComp();
@@ -428,14 +544,7 @@ public class gui {
 		btnVenderCuerno.setText("Vender por $"+String.valueOf(listaComp.get(1).getPrecioVender()));
 		btnVenderCuerno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaComp.get(1).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
+				listaComp.get(1).vender();
 				Inventario.verInventario();
 				actualizarTXTInvComp();
 				actualizarTXTDinero();
@@ -451,14 +560,7 @@ public class gui {
 		btnVenderLeche.setText("Vender por $"+String.valueOf(listaComp.get(2).getPrecioVender()));
 		btnVenderLeche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaComp.get(2).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
+				listaComp.get(2).vender();
 				Inventario.verInventario();
 				actualizarTXTInvComp();
 				actualizarTXTDinero();
@@ -469,7 +571,67 @@ public class gui {
 		btnVenderLeche.setBounds(761, 456, 254, 42);
 		btnVenderLeche.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaComp.get(2).getNombre()))+" de Leche de Vía Láctea.");//mostrar la cantidad de leche de via lactea que hay al colocar arriba el cursor
 		inventarioComplementos.add(btnVenderLeche);
+		
+		
+		//Botones de comprar
+		
+		//Botón de rayo laser
+		final JButton btnComprarLaser = new JButton("$"+String.valueOf(listaComp.get(0).getPrecio()));
+		btnComprarLaser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaComp.get(0).comprar()) { 
+					//Comprar el rayo láser
+					mostrarMensajeCompra("COMPLEMENTOS", 0, btnEquiparLaser, rdbtnLaserInv, btnVenderRayo);
+											
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarLaser.setForeground(new Color(75, 0, 130));
+		btnComprarLaser.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarLaser.setBounds(572, 307, 128, 42);
+		tiendaComplementos.add(btnComprarLaser);
+				
+		final JButton btnComprarCuerno = new JButton("$"+String.valueOf(listaComp.get(1).getPrecio()));
+		btnComprarCuerno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaComp.get(1).comprar()) { 
+					//Comprar el cuerno de taurus
+					mostrarMensajeCompra("COMPLEMENTOS", 1, btnEquiparCuerno, rdbtnCuernoInv, btnVenderCuerno);
+											
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarCuerno.setForeground(new Color(75, 0, 130));
+		btnComprarCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarCuerno.setBounds(572, 380, 125, 42);
+		tiendaComplementos.add(btnComprarCuerno);
+				
+		final JButton btnComprarLeche = new JButton("$"+String.valueOf(listaComp.get(2).getPrecio()));
+		btnComprarLeche.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaComp.get(2).comprar()) { 
+					//Comprar el rayo láser
+					mostrarMensajeCompra("COMPLEMENTOS", 2, btnEquiparLeche, rdbtnLecheInv, btnVenderLeche);
+											
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarLeche.setForeground(new Color(75, 0, 130));
+		btnComprarLeche.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarLeche.setBounds(572, 453, 125, 42);
+		tiendaComplementos.add(btnComprarLeche);
+			
 		//Botones de equipar 
+		
 		//Botón equipar rayo laser
 		btnEquiparLaser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -555,6 +717,26 @@ public class gui {
 		rdbtnOsaInv.setFont(new Font("Chiller", Font.BOLD, 35));
 		rdbtnOsaInv.setBounds(299, 448, 195, 58);
 		inventarioMundos.add(rdbtnOsaInv);
+		
+		//**************RADIOS
+		final JRadioButton rdbtnAndro = new JRadioButton("  Andr\u00F3meda");
+		rdbtnAndro.setForeground(new Color(75, 0, 130));
+		rdbtnAndro.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnAndro.setBounds(283, 299, 179, 58);
+		tiendaMundos.add(rdbtnAndro);
+		
+		final JRadioButton rdbtnOrion = new JRadioButton("   Ori\u00F3n");
+		rdbtnOrion.setForeground(new Color(75, 0, 130));
+		rdbtnOrion.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnOrion.setBounds(283, 372, 179, 58);
+		tiendaMundos.add(rdbtnOrion);
+		
+		final JRadioButton rdbtnOsa = new JRadioButton("   Osa Mayor");
+		rdbtnOsa.setForeground(new Color(75, 0, 130));
+		rdbtnOsa.setFont(new Font("Chiller", Font.BOLD, 35));
+		rdbtnOsa.setBounds(283, 445, 179, 58);
+		tiendaMundos.add(rdbtnOsa);
+		
 		//**************BOTONES
 		//BOTONES PARA DESPLAZARSE ENTRE PANELES
 		JButton btnCompInvMun = new JButton("Complementos");
@@ -586,14 +768,7 @@ public class gui {
 		btnVenderAndro.setText("Vender por $"+String.valueOf(listaMundos.get(0).getPrecioVender()));
 		btnVenderAndro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaMundos.get(0).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
+				listaMundos.get(0).vender();
 				Inventario.verInventario();
 				actualizarTXTInvMun();
 				actualizarTXTDinero();
@@ -609,14 +784,7 @@ public class gui {
 		btnVenderOrion.setText("Vender por $"+String.valueOf(listaMundos.get(1).getPrecioVender()));
 		btnVenderOrion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaMundos.get(1).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
+				listaMundos.get(1).vender();
 				Inventario.verInventario();
 				actualizarTXTInvMun();
 				actualizarTXTDinero();
@@ -632,14 +800,7 @@ public class gui {
 		btnVenderOsa.setText("Vender por $"+String.valueOf(listaMundos.get(2).getPrecioVender()));
 		btnVenderOsa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Inventario antes");
-				Inventario.verInventario();
-				if (listaMundos.get(2).vender()) {
-					System.out.println("vendido");
-				}else {
-					System.out.println("no vendido");
-				}
-				System.out.println("Inventario ahora");
+				listaMundos.get(2).vender();
 				Inventario.verInventario();
 				actualizarTXTInvMun();
 				actualizarTXTDinero();
@@ -650,6 +811,66 @@ public class gui {
 		btnVenderOsa.setBounds(716, 456, 254, 42);
 		btnVenderOsa.setToolTipText("Tiene:"+String.valueOf(Inventario.contarProductos(listaMundos.get(2).getNombre()))+" de Osa Mayor." );//mostrar la cantidad de osa mayor que hay al colocar arriba el cursor
 		inventarioMundos.add(btnVenderOsa);
+		
+		//BOTONES COMPRAR
+		final JButton btnComprarAndro = new JButton("$"+String.valueOf(listaMundos.get(0).getPrecio()));
+		btnComprarAndro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaMundos.get(0).comprar()) { 
+					//Mundo Andrómeda
+					mostrarMensajeCompra("MUNDOS", 0, btnEquiparAndro, rdbtnAndroInv, btnVenderAndro);
+											
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+				
+				//Image orion = new ImageIcon(this.getClass().getResource("/orion.jpg")).getImage();
+				//lblBgInicio.setIcon(new ImageIcon(orion));
+				
+			}
+		});
+		btnComprarAndro.setForeground(new Color(75, 0, 130));
+		btnComprarAndro.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarAndro.setBounds(515, 307, 128, 42);
+		tiendaMundos.add(btnComprarAndro);
+				
+		final JButton btnComprarOrion = new JButton("$"+String.valueOf(listaMundos.get(1).getPrecio()));
+		btnComprarOrion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaMundos.get(1).comprar()) { 
+					//Mundo Orión
+					mostrarMensajeCompra("MUNDOS", 1, btnEquiparOrion, rdbtnOrionInv, btnVenderOrion);
+											
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarOrion.setForeground(new Color(75, 0, 130));
+		btnComprarOrion.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarOrion.setBounds(515, 380, 125, 42);
+		tiendaMundos.add(btnComprarOrion);
+				
+		final JButton btnComprarOsa = new JButton("$"+String.valueOf(listaMundos.get(2).getPrecio()));
+		btnComprarOsa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listaMundos.get(2).comprar()) { 
+					//Mundo Osa Mayor
+					mostrarMensajeCompra("MUNDOS", 2, btnEquiparOsa, rdbtnOsaInv, btnVenderOsa);
+											
+				}else { 
+					//Mostrar mensaje "Dinero Insuficiente" 
+					mostrarMensajeSinDinero();
+				}
+			}
+		});
+		btnComprarOsa.setForeground(new Color(75, 0, 130));
+		btnComprarOsa.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnComprarOsa.setBounds(515, 453, 125, 42);
+		tiendaMundos.add(btnComprarOsa);
+			
 			
 		//************Botones de equipar Mundos
 		//Botón equipar andrómeda
@@ -713,6 +934,21 @@ public class gui {
 		 * [4, 2, 15, 3, 5]
 		 * [fuerza;agilidad;ps;velocidad;ataque]
 		 */		
+		
+		JLabel lblNombreJuego = new JLabel("Alien Jeepeta");
+		lblNombreJuego.setForeground(new Color(255, 250, 250));
+		lblNombreJuego.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreJuego.setFont(new Font("Chiller", Font.BOLD, 99));
+		lblNombreJuego.setBounds(372, 281, 509, 220);
+		inicio.add(lblNombreJuego);
+		
+		
+		final JLabel lblFlag = new JLabel(".");
+		lblFlag.setForeground(new Color(255, 255, 255));
+		lblFlag.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 15));
+		lblFlag.setBounds(247, 552, 46, 14);
+		inventarioMundos.add(lblFlag);
+		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INICIO ******************************************************
@@ -772,6 +1008,8 @@ public class gui {
 		btnInventarioInicio.setForeground(new Color(0, 0, 128));
 		btnInventarioInicio.setBounds(1033, 403, 186, 42);
 		inicio.add(btnInventarioInicio);
+		
+		
 		JButton btnTiendaInicio = new JButton("Tienda");
 		btnTiendaInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -835,10 +1073,148 @@ public class gui {
 		txtfDineroInicio.setBounds(1033, 198, 186, 42);
 		inicio.add(txtfDineroInicio);
 		
-		JLabel lblBgInicio = new JLabel("");
+		final JLabel lblBgInicio = new JLabel("");
 		lblBgInicio.setIcon(new ImageIcon(img));
 		lblBgInicio.setBounds(0, 0, 1264, 681);
 		inicio.add(lblBgInicio);
+		
+		final JButton btnPreStatsJets = new JButton("Previsualizar");
+		btnPreStatsJets.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<JRadioButton> radiosJet = new ArrayList<JRadioButton>();
+				radiosJet.add(rdbtnMj);
+				radiosJet.add(rdbtnMs);
+				radiosJet.add(rdbtnUj);
+				
+				ArrayList<JRadioButton> radiosComp = new ArrayList<JRadioButton>();
+				radiosComp.add(rdbtnLaser);
+				radiosComp.add(rdbtnCuerno);
+				radiosComp.add(rdbtnLeche);
+				
+				ArrayList<JRadioButton> radiosMun = new ArrayList<JRadioButton>();
+				radiosMun.add(rdbtnAndro);
+				radiosMun.add(rdbtnOrion);
+				radiosMun.add(rdbtnOsa);
+				
+				if ((lblFlag.isEnabled()) && (e.getSource()== btnPreStatsJets)) {
+					
+					lblFlag.setEnabled(false);
+					
+					btnComprarMj.setEnabled(false);
+					btnComprarSj.setEnabled(false);
+					btnComprarUj.setEnabled(false);
+					btnComprarLaser.setEnabled(false);
+					btnComprarCuerno.setEnabled(false);
+					btnComprarLeche.setEnabled(false);
+					btnComprarAndro.setEnabled(false);
+					btnComprarOrion.setEnabled(false);
+					btnComprarOsa.setEnabled(false);
+					
+					rdbtnMj.setEnabled(false);
+					rdbtnMs.setEnabled(false);
+					rdbtnUj.setEnabled(false);
+					rdbtnLaser.setEnabled(false);
+					rdbtnCuerno.setEnabled(false);
+					rdbtnLeche.setEnabled(false);
+					rdbtnAndro.setEnabled(false);
+					rdbtnOrion.setEnabled(false);
+					rdbtnOsa.setEnabled(false);
+					
+					
+					actualizarTXTPreStats();	
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						listaJets.get(i).resetearStats();
+						listaComp.get(i).resetearStats();
+						listaMundos.get(i).resetearStats();
+					}
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).previsualizar();
+							listaJets.get(i).previsualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosComp.size()-1; i++) {
+						if ((radiosComp.get(i)).isSelected()) {
+							listaComp.get(i).previsualizar();	
+							listaComp.get(i).previsualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosMun.size()-1; i++) {
+						if ((radiosMun.get(i)).isSelected()) {
+							listaMundos.get(i).previsualizar();	
+							listaMundos.get(i).previsualizarStats();
+						}
+					}
+					
+					actualizarTXTPreStats();
+					actualizarTXTStatsStSum();
+					mostrarEtiquetasPre();		
+					mostrarEtiquetasSt();
+				}else {
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).desprevisualizar();
+							listaJets.get(i).desprevisualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosComp.size()-1; i++) {
+						if ((radiosComp.get(i)).isSelected()) {
+							listaComp.get(i).desprevisualizar();	
+							listaComp.get(i).desprevisualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosMun.size()-1; i++) {
+						if ((radiosMun.get(i)).isSelected()) {
+							listaMundos.get(i).desprevisualizar();		
+							listaMundos.get(i).desprevisualizarStats();
+						}
+					}
+					lblFlag.setEnabled(true);
+					
+					btnComprarMj.setEnabled(true);
+					btnComprarSj.setEnabled(true);
+					btnComprarUj.setEnabled(true);
+					btnComprarLaser.setEnabled(true);
+					btnComprarCuerno.setEnabled(true);
+					btnComprarLeche.setEnabled(true);
+					btnComprarAndro.setEnabled(true);
+					btnComprarOrion.setEnabled(true);
+					btnComprarOsa.setEnabled(true);
+					
+					rdbtnMj.setEnabled(true);
+					rdbtnMs.setEnabled(true);
+					rdbtnUj.setEnabled(true);
+					rdbtnLaser.setEnabled(true);
+					rdbtnCuerno.setEnabled(true);
+					rdbtnLeche.setEnabled(true);
+					rdbtnAndro.setEnabled(true);
+					rdbtnOrion.setEnabled(true);
+					rdbtnOsa.setEnabled(true);
+					
+					rdbtnMj.setSelected(false);
+					rdbtnMs.setSelected(false);
+					rdbtnUj.setSelected(false);
+					rdbtnLaser.setSelected(false);
+					rdbtnCuerno.setSelected(false);
+					rdbtnLeche.setSelected(false);
+					rdbtnAndro.setSelected(false);
+					rdbtnOrion.setSelected(false);
+					rdbtnOsa.setSelected(false);
+					
+					actualizarTXTPreStats();
+					actualizarTXTStatsStRes();
+				}
+			}
+		});
+		btnPreStatsJets.setToolTipText("Permite ver como se modificar\u00E1n los stats en caso de comprar el o los elementos");
+		btnPreStatsJets.setForeground(new Color(0, 0, 128));
+		btnPreStatsJets.setFont(new Font("Chiller", Font.BOLD, 30));
+		btnPreStatsJets.setBounds(1033, 264, 186, 42);
+		tiendaJets.add(btnPreStatsJets);
+		
+
 		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
@@ -894,27 +1270,7 @@ public class gui {
 		
 		/* Fondo de pantalla de tienda Jets */
 		
-		//*********************RADIOS		
-		//Botón mini jet
-		final JRadioButton rdbtnMj = new JRadioButton("   Mini Jet");
-		rdbtnMj.setForeground(new Color(75, 0, 130));
-		rdbtnMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnMj.setBounds(283, 299, 191, 58);
-		tiendaJets.add(rdbtnMj);
-		
-		//Botón Super Jet
-		JRadioButton rdbtnMs = new JRadioButton("   S\u00FAper Jet");
-		rdbtnMs.setForeground(new Color(75, 0, 130));
-		rdbtnMs.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnMs.setBounds(283, 372, 191, 58);
-		tiendaJets.add(rdbtnMs);
-		
-		//Botón Ultra Jet
-		JRadioButton rdbtnUj = new JRadioButton("   Ultra Jet");
-		rdbtnUj.setForeground(new Color(75, 0, 130));
-		rdbtnUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnUj.setBounds(283, 445, 191, 58);
-		tiendaJets.add(rdbtnUj);
+
 		
 		// Textos de En inventario de la tienda de Jets 
 		JLabel lblNewLabel = new JLabel(" En inventario:");
@@ -937,6 +1293,7 @@ public class gui {
 		lblNewLabel_2.setFont(new Font("Chiller", Font.BOLD, 35));
 		lblNewLabel_2.setBounds(708, 445, 170, 58);
 		tiendaJets.add(lblNewLabel_2);
+		
 		//**************BOTONES	
 		JButton btnSalirTJets = new JButton("Salir");
 		btnSalirTJets.addActionListener(new ActionListener() {
@@ -962,68 +1319,7 @@ public class gui {
 		btnCompTJets.setBounds(651, 596, 227, 42);
 		tiendaJets.add(btnCompTJets);		
 		
-		JButton btnComprarMj = new JButton("$"+String.valueOf(listaJets.get(0).getPrecio()));
-		btnComprarMj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaJets.get(0).comprar()) {
-					//Comprar el miniJet
-					Inventario.agregarProducto(listaJets.get(0));//agrega en inventario el mini jet
-					actualizarTXTDinero();
-					actualizarTXTInvJets();
-					btnEquiparMj.setEnabled(true);
-										
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarMj.setForeground(new Color(75, 0, 130));
-		btnComprarMj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarMj.setBounds(529, 307, 128, 42);
-		tiendaJets.add(btnComprarMj);
-		btnComprarMj.setToolTipText("Hola");
 		
-		/*Botón precio super jet*/
-		JButton btnComprarSj = new JButton("$"+String.valueOf(listaJets.get(1).getPrecio()));
-		btnComprarSj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaJets.get(1).comprar()) {
-					//Comprar el súper jet
-					Inventario.agregarProducto(listaJets.get(1));//agrega en inventario el super jet
-					actualizarTXTDinero();
-					actualizarTXTInvJets();
-					btnEquiparSj.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarSj.setForeground(new Color(75, 0, 130));
-		btnComprarSj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarSj.setBounds(529, 380, 125, 42);
-		tiendaJets.add(btnComprarSj);
-		//Botón ultra jet
-		JButton btnComprarUj = new JButton("$"+String.valueOf(listaJets.get(2).getPrecio()));
-		btnComprarUj.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaJets.get(2).comprar()) {
-					//Comprar el ultrajet
-					Inventario.agregarProducto(listaJets.get(2));//agrega en inventario el ultra jet
-					actualizarTXTDinero();
-					actualizarTXTInvJets();
-					btnEquiparUj.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarUj.setForeground(new Color(75, 0, 130));
-		btnComprarUj.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarUj.setBounds(529, 453, 125, 42);
-		tiendaJets.add(btnComprarUj);
 		
 		
 		//**************CAJAS DE TEXTO
@@ -1100,19 +1396,118 @@ public class gui {
 		txtfInventarioUj.setColumns(10);
 		txtfInventarioUj.setBounds(888, 445, 63, 58);
 		tiendaJets.add(txtfInventarioUj);
-		JLabel lblBgTJets = new JLabel();
-		lblBgTJets.setBackground(new Color(255, 250, 250));
-		lblBgTJets.setFont(new Font("Chiller", Font.BOLD, 35));
-		lblBgTJets.setForeground(new Color(75, 0, 130));
-		lblBgTJets.setIcon(new ImageIcon(img));
-		lblBgTJets.setBounds(0, 0, 1264, 681);
-		tiendaJets.add(lblBgTJets);
+		
+		
+		//labels del prewiew
+		txtfFuerzaTJetsPre =new JTextField(String.valueOf(stats.get(0)));
+		txtfFuerzaTJetsPre.setForeground(new Color(0, 0, 128));
+		txtfFuerzaTJetsPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfFuerzaTJetsPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfFuerzaTJetsPre.setEditable(false);
+		txtfFuerzaTJetsPre.setColumns(10);
+		txtfFuerzaTJetsPre.setBounds(243, 116, 56, 31);
+		txtfFuerzaTJetsPre.setVisible(false);
+		tiendaJets.add(txtfFuerzaTJetsPre);
+		
+		txtfAgilidadTJetsPre = new JTextField(String.valueOf(stats.get(0)));
+		txtfAgilidadTJetsPre.setForeground(new Color(0, 0, 128));
+		txtfAgilidadTJetsPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAgilidadTJetsPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfAgilidadTJetsPre.setEditable(false);
+		txtfAgilidadTJetsPre.setColumns(10);
+		txtfAgilidadTJetsPre.setBounds(391, 116, 56, 31);
+		txtfAgilidadTJetsPre.setVisible(false);
+		tiendaJets.add(txtfAgilidadTJetsPre);
+		
+		txtfPtosSaludTJetsPre = new JTextField("15");
+		txtfPtosSaludTJetsPre.setForeground(new Color(0, 0, 128));
+		txtfPtosSaludTJetsPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfPtosSaludTJetsPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfPtosSaludTJetsPre.setEditable(false);
+		txtfPtosSaludTJetsPre.setColumns(10);
+		txtfPtosSaludTJetsPre.setBounds(564, 116, 56, 31);
+		txtfPtosSaludTJetsPre.setVisible(false);
+		tiendaJets.add(txtfPtosSaludTJetsPre);
+		
+		txtfVelocidadTJetsPre = new JTextField("3");
+		txtfVelocidadTJetsPre.setForeground(new Color(0, 0, 128));
+		txtfVelocidadTJetsPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfVelocidadTJetsPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfVelocidadTJetsPre.setEditable(false);
+		txtfVelocidadTJetsPre.setColumns(10);
+		txtfVelocidadTJetsPre.setBounds(733, 116, 56, 31);
+		txtfVelocidadTJetsPre.setVisible(false);
+		tiendaJets.add(txtfVelocidadTJetsPre);
+		
+		txtfAtaqueTJetsPre = new JTextField("5");
+		txtfAtaqueTJetsPre.setForeground(new Color(0, 0, 128));
+		txtfAtaqueTJetsPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAtaqueTJetsPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfAtaqueTJetsPre.setEditable(false);
+		txtfAtaqueTJetsPre.setColumns(10);
+		txtfAtaqueTJetsPre.setBounds(872, 116, 56, 31);
+		txtfAtaqueTJetsPre.setVisible(false);
+		tiendaJets.add(txtfAtaqueTJetsPre);
+		
+		txtfFuerzaTJetsSt = new JTextField();
+		txtfFuerzaTJetsSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfFuerzaTJetsSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfFuerzaTJetsSt.setEditable(false);
+		txtfFuerzaTJetsSt.setColumns(10);
+		txtfFuerzaTJetsSt.setBounds(297, 116, 48, 31);
+		txtfFuerzaTJetsSt.setVisible(false);
+		tiendaJets.add(txtfFuerzaTJetsSt);
+		
+		txtfAgilidadTJetsSt = new JTextField();
+		txtfAgilidadTJetsSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAgilidadTJetsSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfAgilidadTJetsSt.setEditable(false);
+		txtfAgilidadTJetsSt.setColumns(10);
+		txtfAgilidadTJetsSt.setBounds(445, 116, 48, 31);
+		txtfAgilidadTJetsSt.setVisible(false);
+		tiendaJets.add(txtfAgilidadTJetsSt);
+		
+		txtfPtosSaludTJetsSt = new JTextField();
+		txtfPtosSaludTJetsSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfPtosSaludTJetsSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfPtosSaludTJetsSt.setEditable(false);
+		txtfPtosSaludTJetsSt.setColumns(10);
+		txtfPtosSaludTJetsSt.setBounds(618, 116, 48, 31);
+		txtfPtosSaludTJetsSt.setVisible(false);
+		tiendaJets.add(txtfPtosSaludTJetsSt);
+		
+		txtfVelocidadTJetsSt = new JTextField();
+		txtfVelocidadTJetsSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfVelocidadTJetsSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfVelocidadTJetsSt.setEditable(false);
+		txtfVelocidadTJetsSt.setColumns(10);
+		txtfVelocidadTJetsSt.setBounds(787, 116, 48, 31);
+		txtfVelocidadTJetsSt.setVisible(false);
+		tiendaJets.add(txtfVelocidadTJetsSt);
+		
+		txtfAtaqueTJetsSt = new JTextField();
+		txtfAtaqueTJetsSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAtaqueTJetsSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfAtaqueTJetsSt.setEditable(false);
+		txtfAtaqueTJetsSt.setColumns(10);
+		txtfAtaqueTJetsSt.setBounds(926, 116, 48, 31);
+		txtfAtaqueTJetsSt.setVisible(false);
+		tiendaJets.add(txtfAtaqueTJetsSt);
+		
+		JLabel btnPvMj = new JLabel();
+		btnPvMj.setBackground(new Color(255, 250, 250));
+		btnPvMj.setFont(new Font("Chiller", Font.BOLD, 35));
+		btnPvMj.setForeground(new Color(75, 0, 130));
+		btnPvMj.setIcon(new ImageIcon(img));
+		btnPvMj.setBounds(0, 0, 1264, 681);
+		tiendaJets.add(btnPvMj);
 				
 		//*****************************************************************************************************************
 		//*****************************************************************************************************************
 		//*************************************** PANEL DE TIENDA COMPLEMENTOS *********************************************
 		//*****************************************************************************************************************
 		//*****************************************************************************************************************
+		
 		
 		//**************ETIQUETAS 
 		
@@ -1255,6 +1650,7 @@ public class gui {
 		txtfPtosSaludTComp.setBounds(564, 74, 102, 31);
 		tiendaComplementos.add(txtfPtosSaludTComp);
 		
+
 		
 		//DINERO 
 		txtfDineroTComp = new JTextField(String.valueOf(Personaje.devolverDinero()));//campo de texto dinero
@@ -1290,90 +1686,240 @@ public class gui {
 		txtfInventarioLeche.setColumns(10);
 		txtfInventarioLeche.setBounds(931, 445, 63, 58);
 		tiendaComplementos.add(txtfInventarioLeche);
+			
+		txtfFuerzaTCompPre = new JTextField("4");
+		txtfFuerzaTCompPre.setForeground(new Color(0, 0, 128));
+		txtfFuerzaTCompPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfFuerzaTCompPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfFuerzaTCompPre.setEditable(false);
+		txtfFuerzaTCompPre.setColumns(10);
+		txtfFuerzaTCompPre.setBounds(243, 116, 56, 31);
+		txtfFuerzaTCompPre.setVisible(false);
+		tiendaComplementos.add(txtfFuerzaTCompPre);
 		
+		txtfAgilidadTCompPre = new JTextField("2");
+		txtfAgilidadTCompPre.setForeground(new Color(0, 0, 128));
+		txtfAgilidadTCompPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAgilidadTCompPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfAgilidadTCompPre.setEditable(false);
+		txtfAgilidadTCompPre.setColumns(10);
+		txtfAgilidadTCompPre.setBounds(391, 116, 56, 31);
+		txtfAgilidadTCompPre.setVisible(false);
+		tiendaComplementos.add(txtfAgilidadTCompPre);
 		
-		//**************RADIOS
-		JRadioButton rdbtnLaser = new JRadioButton("    Rayo L\u00E1ser");
-		rdbtnLaser.setForeground(new Color(75, 0, 130));
-		rdbtnLaser.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnLaser.setBounds(283, 299, 247, 58);
-		tiendaComplementos.add(rdbtnLaser);
+		txtfPtosSaludTCompPre = new JTextField("15");
+		txtfPtosSaludTCompPre.setForeground(new Color(0, 0, 128));
+		txtfPtosSaludTCompPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfPtosSaludTCompPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfPtosSaludTCompPre.setEditable(false);
+		txtfPtosSaludTCompPre.setColumns(10);
+		txtfPtosSaludTCompPre.setBounds(564, 116, 56, 31);
+		txtfPtosSaludTCompPre.setVisible(false);
+		tiendaComplementos.add(txtfPtosSaludTCompPre);
 		
-		JRadioButton rdbtnCuerno = new JRadioButton(" Cuerno de Taurus");
-		rdbtnCuerno.setForeground(new Color(75, 0, 130));
-		rdbtnCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnCuerno.setBounds(283, 372, 247, 58);
-		tiendaComplementos.add(rdbtnCuerno);
+		txtfVelocidadTCompPre = new JTextField("3");
+		txtfVelocidadTCompPre.setForeground(new Color(0, 0, 128));
+		txtfVelocidadTCompPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfVelocidadTCompPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfVelocidadTCompPre.setEditable(false);
+		txtfVelocidadTCompPre.setColumns(10);
+		txtfVelocidadTCompPre.setBounds(733, 116, 56, 31);
+		txtfVelocidadTCompPre.setVisible(false);
+		tiendaComplementos.add(txtfVelocidadTCompPre);
 		
-		JRadioButton rdbtnLeche = new JRadioButton(" Leche de la V\u00EDa L\u00E1ctea");
-		rdbtnLeche.setForeground(new Color(75, 0, 130));
-		rdbtnLeche.setFont(new Font("Chiller", Font.BOLD, 28));
-		rdbtnLeche.setBounds(283, 445, 247, 58);
-		tiendaComplementos.add(rdbtnLeche);
+		txtfAtaqueTCompPre = new JTextField("5");
+		txtfAtaqueTCompPre.setForeground(new Color(0, 0, 128));
+		txtfAtaqueTCompPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAtaqueTCompPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfAtaqueTCompPre.setEditable(false);
+		txtfAtaqueTCompPre.setColumns(10);
+		txtfAtaqueTCompPre.setBounds(872, 116, 56, 31);
+		txtfAtaqueTCompPre.setVisible(false);
+		tiendaComplementos.add(txtfAtaqueTCompPre);
 		
+		txtfFuerzaTCompSt = new JTextField();
+		txtfFuerzaTCompSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfFuerzaTCompSt.setEditable(false);
+		txtfFuerzaTCompSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfFuerzaTCompSt.setColumns(10);
+		txtfFuerzaTCompSt.setBounds(298, 116, 48, 31);
+		txtfFuerzaTCompSt.setVisible(false);
+		tiendaComplementos.add(txtfFuerzaTCompSt);
 		
-		//Botones de comprar
+		txtfAgilidadTCompSt = new JTextField();
+		txtfAgilidadTCompSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAgilidadTCompSt.setEditable(false);
+		txtfAgilidadTCompSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfAgilidadTCompSt.setColumns(10);
+		txtfAgilidadTCompSt.setBounds(445, 116, 48, 31);
+		txtfAgilidadTCompSt.setVisible(false);
+		tiendaComplementos.add(txtfAgilidadTCompSt);
 		
-		//Botón de rayo laser
-		JButton btnComprarLaser = new JButton("$"+String.valueOf(listaComp.get(0).getPrecio()));
-		btnComprarLaser.addActionListener(new ActionListener() {
+		txtfPtosSaludTCompSt = new JTextField();
+		txtfPtosSaludTCompSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfPtosSaludTCompSt.setEditable(false);
+		txtfPtosSaludTCompSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfPtosSaludTCompSt.setColumns(10);
+		txtfPtosSaludTCompSt.setBounds(618, 116, 48, 31);
+		txtfPtosSaludTCompSt.setVisible(false);
+		tiendaComplementos.add(txtfPtosSaludTCompSt);
+		
+		txtfVelocidadTCompSt = new JTextField();
+		txtfVelocidadTCompSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfVelocidadTCompSt.setEditable(false);
+		txtfVelocidadTCompSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfVelocidadTCompSt.setColumns(10);
+		txtfVelocidadTCompSt.setBounds(787, 116, 48, 31);
+		txtfVelocidadTCompSt.setVisible(false);
+		tiendaComplementos.add(txtfVelocidadTCompSt);
+		
+		txtfAtaqueTCompSt = new JTextField();
+		txtfAtaqueTCompSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAtaqueTCompSt.setEditable(false);
+		txtfAtaqueTCompSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfAtaqueTCompSt.setColumns(10);
+		txtfAtaqueTCompSt.setBounds(926, 116, 48, 31);
+		txtfAtaqueTCompSt.setVisible(false);
+		tiendaComplementos.add(txtfAtaqueTCompSt);
+		
+		final JButton btnPreStatsComp = new JButton("Previsualizar");
+		btnPreStatsComp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (listaComp.get(0).comprar()) {
-					//Comprar el rayo láser
-					actualizarTXTDinero();
-					Inventario.agregarProducto(listaComp.get(0));//agrega en inventario el rayo láser
-					actualizarTXTInvComp();
-					btnEquiparLaser.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
+				ArrayList<JRadioButton> radiosJet = new ArrayList<JRadioButton>();
+				radiosJet.add(rdbtnMj);
+				radiosJet.add(rdbtnMs);
+				radiosJet.add(rdbtnUj);
+				
+				ArrayList<JRadioButton> radiosComp = new ArrayList<JRadioButton>();
+				radiosComp.add(rdbtnLaser);
+				radiosComp.add(rdbtnCuerno);
+				radiosComp.add(rdbtnLeche);
+				
+				ArrayList<JRadioButton> radiosMun = new ArrayList<JRadioButton>();
+				radiosMun.add(rdbtnAndro);
+				radiosMun.add(rdbtnOrion);
+				radiosMun.add(rdbtnOsa);
+				
+				if ((lblFlag.isEnabled()) && (e.getSource()== btnPreStatsComp)) {
+					
+					lblFlag.setEnabled(false);
+					
+					btnComprarMj.setEnabled(false);
+					btnComprarSj.setEnabled(false);
+					btnComprarUj.setEnabled(false);
+					btnComprarLaser.setEnabled(false);
+					btnComprarCuerno.setEnabled(false);
+					btnComprarLeche.setEnabled(false);
+					btnComprarAndro.setEnabled(false);
+					btnComprarOrion.setEnabled(false);
+					btnComprarOsa.setEnabled(false);
+					
+					rdbtnMj.setEnabled(false);
+					rdbtnMs.setEnabled(false);
+					rdbtnUj.setEnabled(false);
+					rdbtnLaser.setEnabled(false);
+					rdbtnCuerno.setEnabled(false);
+					rdbtnLeche.setEnabled(false);
+					rdbtnAndro.setEnabled(false);
+					rdbtnOrion.setEnabled(false);
+					rdbtnOsa.setEnabled(false);
+					
+					
+					actualizarTXTPreStats();	
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						listaJets.get(i).resetearStats();
+						listaComp.get(i).resetearStats();
+						listaMundos.get(i).resetearStats();
+					}
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).previsualizar();
+							listaJets.get(i).previsualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosComp.size()-1; i++) {
+						if ((radiosComp.get(i)).isSelected()) {
+							listaComp.get(i).previsualizar();	
+							listaComp.get(i).previsualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosMun.size()-1; i++) {
+						if ((radiosMun.get(i)).isSelected()) {
+							listaMundos.get(i).previsualizar();	
+							listaMundos.get(i).previsualizarStats();
+						}
+					}
+					
+					actualizarTXTPreStats();
+					actualizarTXTStatsStSum();
+					mostrarEtiquetasPre();		
+					mostrarEtiquetasSt();
+				}else {
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).desprevisualizar();
+							listaJets.get(i).desprevisualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosComp.size()-1; i++) {
+						if ((radiosComp.get(i)).isSelected()) {
+							listaComp.get(i).desprevisualizar();	
+							listaComp.get(i).desprevisualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosMun.size()-1; i++) {
+						if ((radiosMun.get(i)).isSelected()) {
+							listaMundos.get(i).desprevisualizar();		
+							listaMundos.get(i).desprevisualizarStats();
+						}
+					}
+					lblFlag.setEnabled(true);
+					
+					btnComprarMj.setEnabled(true);
+					btnComprarSj.setEnabled(true);
+					btnComprarUj.setEnabled(true);
+					btnComprarLaser.setEnabled(true);
+					btnComprarCuerno.setEnabled(true);
+					btnComprarLeche.setEnabled(true);
+					btnComprarAndro.setEnabled(true);
+					btnComprarOrion.setEnabled(true);
+					btnComprarOsa.setEnabled(true);
+					
+					rdbtnMj.setEnabled(true);
+					rdbtnMs.setEnabled(true);
+					rdbtnUj.setEnabled(true);
+					rdbtnLaser.setEnabled(true);
+					rdbtnCuerno.setEnabled(true);
+					rdbtnLeche.setEnabled(true);
+					rdbtnAndro.setEnabled(true);
+					rdbtnOrion.setEnabled(true);
+					rdbtnOsa.setEnabled(true);
+					
+					rdbtnMj.setSelected(false);
+					rdbtnMs.setSelected(false);
+					rdbtnUj.setSelected(false);
+					rdbtnLaser.setSelected(false);
+					rdbtnCuerno.setSelected(false);
+					rdbtnLeche.setSelected(false);
+					rdbtnAndro.setSelected(false);
+					rdbtnOrion.setSelected(false);
+					rdbtnOsa.setSelected(false);
+					
+					actualizarTXTPreStats();
+					actualizarTXTStatsStRes();
 				}
 			}
 		});
-		btnComprarLaser.setForeground(new Color(75, 0, 130));
-		btnComprarLaser.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarLaser.setBounds(572, 307, 128, 42);
-		tiendaComplementos.add(btnComprarLaser);
+		btnPreStatsComp.setToolTipText("Permite ver como se modificar\u00E1n los stats en caso de comprar el o los elementos");
+		btnPreStatsComp.setForeground(new Color(0, 0, 128));
+		btnPreStatsComp.setFont(new Font("Chiller", Font.BOLD, 30));
+		btnPreStatsComp.setBounds(1033, 264, 186, 42);
+		tiendaComplementos.add(btnPreStatsComp);
 		
-		JButton btnComprarCuerno = new JButton("$"+String.valueOf(listaComp.get(1).getPrecio()));
-		btnComprarCuerno.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaComp.get(1).comprar()) {
-					//Comprar el cuerno de taurus
-					actualizarTXTDinero();
-					Inventario.agregarProducto(listaComp.get(1));//agrega en inventario el cuerno de taurus
-					actualizarTXTInvComp();
-					btnEquiparCuerno.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarCuerno.setForeground(new Color(75, 0, 130));
-		btnComprarCuerno.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarCuerno.setBounds(572, 380, 125, 42);
-		tiendaComplementos.add(btnComprarCuerno);
 		
-		JButton btnComprarLeche = new JButton("$"+String.valueOf(listaComp.get(2).getPrecio()));
-		btnComprarLeche.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaComp.get(2).comprar()) {
-					//Comprar la leche de la vía láctea
-					actualizarTXTDinero();
-					Inventario.agregarProducto(listaComp.get(2));//agrega en inventario la leche de la vía láctea
-					actualizarTXTInvComp();
-					btnEquiparLeche.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarLeche.setForeground(new Color(75, 0, 130));
-		btnComprarLeche.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarLeche.setBounds(572, 453, 125, 42);
-		tiendaComplementos.add(btnComprarLeche);
+		
 		JLabel lblBgTComp = new JLabel();
 		lblBgTComp.setIcon(new ImageIcon(img));
 		lblBgTComp.setForeground(new Color(75, 0, 130));
@@ -1534,87 +2080,10 @@ public class gui {
 		txtfInventarioOsa.setBounds(874, 445, 63, 58);
 		tiendaMundos.add(txtfInventarioOsa);
 		
-		//**************RADIOS
-		JRadioButton rdbtnAndro = new JRadioButton("  Andr\u00F3meda");
-		rdbtnAndro.setForeground(new Color(75, 0, 130));
-		rdbtnAndro.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnAndro.setBounds(283, 299, 179, 58);
-		tiendaMundos.add(rdbtnAndro);
-		
-		JRadioButton rdbtnOrion = new JRadioButton("   Ori\u00F3n");
-		rdbtnOrion.setForeground(new Color(75, 0, 130));
-		rdbtnOrion.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnOrion.setBounds(283, 372, 179, 58);
-		tiendaMundos.add(rdbtnOrion);
-		
-		JRadioButton rdbtnOsa = new JRadioButton("   Osa Mayor");
-		rdbtnOsa.setForeground(new Color(75, 0, 130));
-		rdbtnOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		rdbtnOsa.setBounds(283, 445, 179, 58);
-		tiendaMundos.add(rdbtnOsa);
+
 		
 		//********************BOTONES 
 		
-		//BOTONES COMPRAR
-		JButton btnComprarAndro = new JButton("$"+String.valueOf(listaMundos.get(0).getPrecio()));
-		btnComprarAndro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaMundos.get(0).comprar()) {
-					//Comprar Andrómeda
-					actualizarTXTDinero();
-					Inventario.agregarProducto(listaMundos.get(0));//agrega en inventario el mundo andrómeda
-					actualizarTXTInvMun();
-					btnEquiparAndro.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarAndro.setForeground(new Color(75, 0, 130));
-		btnComprarAndro.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarAndro.setBounds(515, 307, 128, 42);
-		tiendaMundos.add(btnComprarAndro);
-		
-		JButton btnComprarOrion = new JButton("$"+String.valueOf(listaMundos.get(1).getPrecio()));
-		btnComprarOrion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaMundos.get(1).comprar()) {
-					//Comprar Orión
-					actualizarTXTDinero();
-					Inventario.agregarProducto(listaMundos.get(1));//agrega en inventario el mundo orión
-					actualizarTXTInvMun();
-					btnEquiparOrion.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarOrion.setForeground(new Color(75, 0, 130));
-		btnComprarOrion.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarOrion.setBounds(515, 380, 125, 42);
-		tiendaMundos.add(btnComprarOrion);
-		
-		JButton btnComprarOsa = new JButton("$"+String.valueOf(listaMundos.get(2).getPrecio()));
-		btnComprarOsa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (listaMundos.get(2).comprar()) {
-					//Comprar Osa Mayor
-					actualizarTXTDinero();
-					Inventario.agregarProducto(listaMundos.get(2));//agrega en inventario el mundo Osa Mayor
-					actualizarTXTInvMun();
-					btnEquiparOsa.setEnabled(true);
-				}else { 
-					//Mostrar mensaje "Dinero Insuficiente" 
-					mostrarMensajeSinDinero();
-				}
-			}
-		});
-		btnComprarOsa.setForeground(new Color(75, 0, 130));
-		btnComprarOsa.setFont(new Font("Chiller", Font.BOLD, 35));
-		btnComprarOsa.setBounds(515, 453, 125, 42);
-		tiendaMundos.add(btnComprarOsa);
 		
 		//BOTONES PARA DESPLAZARSE ENTRE PANELES
 		JButton btnCompTMun = new JButton("Complementos");
@@ -1629,7 +2098,7 @@ public class gui {
 		btnCompTMun.setBounds(374, 597, 224, 42);
 		tiendaMundos.add(btnCompTMun);
 		
-		JButton btnSalirTMun = new JButton("Salir");
+		final JButton btnSalirTMun = new JButton("Salir");
 		btnSalirTMun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tiendaMundos.setVisible(false);
@@ -1640,6 +2109,239 @@ public class gui {
 		btnSalirTMun.setFont(new Font("Chiller", Font.BOLD, 40));
 		btnSalirTMun.setBounds(716, 596, 158, 42);
 		tiendaMundos.add(btnSalirTMun);
+		
+		final JButton btnPreStatsJetsMun = new JButton("Previsualizar");	
+		btnPreStatsJetsMun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<JRadioButton> radiosJet = new ArrayList<JRadioButton>();
+				radiosJet.add(rdbtnMj);
+				radiosJet.add(rdbtnMs);
+				radiosJet.add(rdbtnUj);
+				
+				ArrayList<JRadioButton> radiosComp = new ArrayList<JRadioButton>();
+				radiosComp.add(rdbtnLaser);
+				radiosComp.add(rdbtnCuerno);
+				radiosComp.add(rdbtnLeche);
+				
+				ArrayList<JRadioButton> radiosMun = new ArrayList<JRadioButton>();
+				radiosMun.add(rdbtnAndro);
+				radiosMun.add(rdbtnOrion);
+				radiosMun.add(rdbtnOsa);
+				
+				if ((lblFlag.isEnabled()) && (e.getSource()== btnPreStatsJetsMun)) {
+					
+					lblFlag.setEnabled(false);
+					
+					btnComprarMj.setEnabled(false);
+					btnComprarSj.setEnabled(false);
+					btnComprarUj.setEnabled(false);
+					btnComprarLaser.setEnabled(false);
+					btnComprarCuerno.setEnabled(false);
+					btnComprarLeche.setEnabled(false);
+					btnComprarAndro.setEnabled(false);
+					btnComprarOrion.setEnabled(false);
+					btnComprarOsa.setEnabled(false);
+					
+					rdbtnMj.setEnabled(false);
+					rdbtnMs.setEnabled(false);
+					rdbtnUj.setEnabled(false);
+					rdbtnLaser.setEnabled(false);
+					rdbtnCuerno.setEnabled(false);
+					rdbtnLeche.setEnabled(false);
+					rdbtnAndro.setEnabled(false);
+					rdbtnOrion.setEnabled(false);
+					rdbtnOsa.setEnabled(false);
+					
+					
+					actualizarTXTPreStats();	
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						listaJets.get(i).resetearStats();
+						listaComp.get(i).resetearStats();
+						listaMundos.get(i).resetearStats();
+					}
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).previsualizar();
+							listaJets.get(i).previsualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosComp.size()-1; i++) {
+						if ((radiosComp.get(i)).isSelected()) {
+							listaComp.get(i).previsualizar();	
+							listaComp.get(i).previsualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosMun.size()-1; i++) {
+						if ((radiosMun.get(i)).isSelected()) {
+							listaMundos.get(i).previsualizar();	
+							listaMundos.get(i).previsualizarStats();
+						}
+					}
+					
+					actualizarTXTPreStats();
+					actualizarTXTStatsStSum();
+					mostrarEtiquetasPre();		
+					mostrarEtiquetasSt();
+				}else {
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).desprevisualizar();
+							listaJets.get(i).desprevisualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosComp.size()-1; i++) {
+						if ((radiosComp.get(i)).isSelected()) {
+							listaComp.get(i).desprevisualizar();	
+							listaComp.get(i).desprevisualizarStats();
+						}
+					}
+					for (int i = 0; i <= radiosMun.size()-1; i++) {
+						if ((radiosMun.get(i)).isSelected()) {
+							listaMundos.get(i).desprevisualizar();		
+							listaMundos.get(i).desprevisualizarStats();
+						}
+					}
+					lblFlag.setEnabled(true);
+					
+					btnComprarMj.setEnabled(true);
+					btnComprarSj.setEnabled(true);
+					btnComprarUj.setEnabled(true);
+					btnComprarLaser.setEnabled(true);
+					btnComprarCuerno.setEnabled(true);
+					btnComprarLeche.setEnabled(true);
+					btnComprarAndro.setEnabled(true);
+					btnComprarOrion.setEnabled(true);
+					btnComprarOsa.setEnabled(true);
+					
+					rdbtnMj.setEnabled(true);
+					rdbtnMs.setEnabled(true);
+					rdbtnUj.setEnabled(true);
+					rdbtnLaser.setEnabled(true);
+					rdbtnCuerno.setEnabled(true);
+					rdbtnLeche.setEnabled(true);
+					rdbtnAndro.setEnabled(true);
+					rdbtnOrion.setEnabled(true);
+					rdbtnOsa.setEnabled(true);
+					
+					rdbtnMj.setSelected(false);
+					rdbtnMs.setSelected(false);
+					rdbtnUj.setSelected(false);
+					rdbtnLaser.setSelected(false);
+					rdbtnCuerno.setSelected(false);
+					rdbtnLeche.setSelected(false);
+					rdbtnAndro.setSelected(false);
+					rdbtnOrion.setSelected(false);
+					rdbtnOsa.setSelected(false);
+					
+					actualizarTXTPreStats();
+					actualizarTXTStatsStRes();
+				}
+			}
+		});
+		btnPreStatsJetsMun.setToolTipText("Permite ver como se modificar\u00E1n los stats en caso de comprar el o los elementos");
+		btnPreStatsJetsMun.setForeground(new Color(0, 0, 128));
+		btnPreStatsJetsMun.setFont(new Font("Chiller", Font.BOLD, 30));
+		btnPreStatsJetsMun.setBounds(1033, 264, 186, 42);
+		tiendaMundos.add(btnPreStatsJetsMun);
+		
+		txtfFuerzaTMunPre = new JTextField("4");
+		txtfFuerzaTMunPre.setForeground(new Color(0, 0, 128));
+		txtfFuerzaTMunPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfFuerzaTMunPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfFuerzaTMunPre.setEditable(false);
+		txtfFuerzaTMunPre.setColumns(10);
+		txtfFuerzaTMunPre.setBounds(243, 116, 56, 31);
+		txtfFuerzaTMunPre.setVisible(false);
+		tiendaMundos.add(txtfFuerzaTMunPre);
+		
+		txtfAgilidadTMunPre = new JTextField("2");
+		txtfAgilidadTMunPre.setForeground(new Color(0, 0, 128));
+		txtfAgilidadTMunPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAgilidadTMunPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfAgilidadTMunPre.setEditable(false);
+		txtfAgilidadTMunPre.setColumns(10);
+		txtfAgilidadTMunPre.setBounds(391, 116, 56, 31);
+		txtfAgilidadTMunPre.setVisible(false);
+		tiendaMundos.add(txtfAgilidadTMunPre);
+		
+		txtfPtosSaludTMunPre = new JTextField("15");
+		txtfPtosSaludTMunPre.setForeground(new Color(0, 0, 128));
+		txtfPtosSaludTMunPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfPtosSaludTMunPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfPtosSaludTMunPre.setEditable(false);
+		txtfPtosSaludTMunPre.setColumns(10);
+		txtfPtosSaludTMunPre.setBounds(564, 116, 56, 31);
+		txtfPtosSaludTMunPre.setVisible(false);
+		tiendaMundos.add(txtfPtosSaludTMunPre);
+		
+		txtfVelocidadTMunPre = new JTextField("3");
+		txtfVelocidadTMunPre.setForeground(new Color(0, 0, 128));
+		txtfVelocidadTMunPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfVelocidadTMunPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfVelocidadTMunPre.setEditable(false);
+		txtfVelocidadTMunPre.setColumns(10);
+		txtfVelocidadTMunPre.setBounds(733, 116, 56, 31);
+		txtfVelocidadTMunPre.setVisible(false);
+		tiendaMundos.add(txtfVelocidadTMunPre);
+		
+		txtfAtaqueTMunPre = new JTextField("5");
+		txtfAtaqueTMunPre.setForeground(new Color(0, 0, 128));
+		txtfAtaqueTMunPre.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAtaqueTMunPre.setFont(new Font("Chiller", Font.BOLD | Font.ITALIC, 35));
+		txtfAtaqueTMunPre.setEditable(false);
+		txtfAtaqueTMunPre.setColumns(10);
+		txtfAtaqueTMunPre.setBounds(872, 116, 56, 31);
+		txtfAtaqueTMunPre.setVisible(false);
+		tiendaMundos.add(txtfAtaqueTMunPre);
+		
+		txtfFuerzaTMunSt = new JTextField();
+		txtfFuerzaTMunSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfFuerzaTMunSt.setEditable(false);
+		txtfFuerzaTMunSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfFuerzaTMunSt.setColumns(10);
+		txtfFuerzaTMunSt.setBounds(297, 116, 48, 31);
+		txtfFuerzaTMunSt.setVisible(false);
+		tiendaMundos.add(txtfFuerzaTMunSt);
+		
+		txtfAgilidadTMunSt = new JTextField();
+		txtfAgilidadTMunSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAgilidadTMunSt.setEditable(false);
+		txtfAgilidadTMunSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfAgilidadTMunSt.setColumns(10);
+		txtfAgilidadTMunSt.setBounds(443, 116, 48, 31);
+		txtfAgilidadTMunSt.setVisible(false);
+		tiendaMundos.add(txtfAgilidadTMunSt);
+		
+		txtfPtosSaludTMunSt = new JTextField();
+		txtfPtosSaludTMunSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfPtosSaludTMunSt.setEditable(false);
+		txtfPtosSaludTMunSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfPtosSaludTMunSt.setColumns(10);
+		txtfPtosSaludTMunSt.setBounds(616, 116, 48, 31);
+		txtfPtosSaludTMunSt.setVisible(false);
+		tiendaMundos.add(txtfPtosSaludTMunSt);
+		
+		txtfVelocidadTMunSt = new JTextField();
+		txtfVelocidadTMunSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfVelocidadTMunSt.setEditable(false);
+		txtfVelocidadTMunSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfVelocidadTMunSt.setColumns(10);
+		txtfVelocidadTMunSt.setBounds(787, 116, 48, 31);
+		txtfVelocidadTMunSt.setVisible(false);
+		tiendaMundos.add(txtfVelocidadTMunSt);
+		
+		txtfAtaqueTMunSt = new JTextField();
+		txtfAtaqueTMunSt.setHorizontalAlignment(SwingConstants.CENTER);
+		txtfAtaqueTMunSt.setEditable(false);
+		txtfAtaqueTMunSt.setFont(new Font("Chiller", Font.BOLD, 30));
+		txtfAtaqueTMunSt.setColumns(10);
+		txtfAtaqueTMunSt.setBounds(926, 116, 48, 31);
+		txtfAtaqueTMunSt.setVisible(false);
+		tiendaMundos.add(txtfAtaqueTMunSt);
+		
+		
 		JLabel lblBgTMun = new JLabel();//
 		lblBgTMun.setIcon(new ImageIcon(img));
 		lblBgTMun.setForeground(new Color(75, 0, 130));
@@ -1647,8 +2349,8 @@ public class gui {
 		lblBgTMun.setBackground(new Color(255, 250, 250));
 		lblBgTMun.setBounds(0, 0, 1264, 681);
 		tiendaMundos.add(lblBgTMun);
-	
-
+		
+		
 		//**************************************************************************************************************
 		//**************************************************************************************************************
 		//*************************************** PANEL DE INVENTARIO JETS *********************************************
@@ -2047,6 +2749,8 @@ public class gui {
 		lblBgInvMun.setBounds(0, 0, 1264, 681);
 		inventarioMundos.add(lblBgInvMun);
 		
+		
+		
 	}
 
 	//método para actualizar el dinero
@@ -2107,6 +2811,8 @@ public class gui {
 			btnVenderOrion.setEnabled(Inventario.buscarObjeto(listaMundos.get(1).getNombre()) && !(listaMundos.get(1).getEquipado()));
 			btnVenderOsa.setEnabled(Inventario.buscarObjeto(listaMundos.get(2).getNombre()) && !(listaMundos.get(2).getEquipado())); 
 		}
+		
+
 	public void actualizarTXTStats() {
 		
 		stats = Personaje.devolverStats();
@@ -2153,11 +2859,109 @@ public class gui {
 		txtfVelocidadInvMun.setText(String.valueOf(String.valueOf(stats.get(3))));
 		txtfPtosSaludInvMun.setText(String.valueOf(String.valueOf(stats.get(2))));
 	}
+	public void actualizarTXTPreStats() {
+		
+		stats = Personaje.devolverStats();
+				
+		txtfFuerzaTJetsPre.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTJetsPre.setText(String.valueOf(stats.get(1)));;
+		txtfAtaqueTJetsPre.setText(String.valueOf(String.valueOf(stats.get(4))));;
+		txtfVelocidadTJetsPre.setText(String.valueOf(String.valueOf(stats.get(3))));;
+		txtfPtosSaludTJetsPre.setText(String.valueOf(String.valueOf(stats.get(2))));;
+		
+		txtfFuerzaTCompPre.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTCompPre.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueTCompPre.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadTCompPre.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludTCompPre.setText(String.valueOf(String.valueOf(stats.get(2))));
+		
+		txtfFuerzaTMunPre.setText(String.valueOf(stats.get(0)));
+		txtfAgilidadTMunPre.setText(String.valueOf(stats.get(1)));
+		txtfAtaqueTMunPre.setText(String.valueOf(String.valueOf(stats.get(4))));
+		txtfVelocidadTMunPre.setText(String.valueOf(String.valueOf(stats.get(3))));
+		txtfPtosSaludTMunPre.setText(String.valueOf(String.valueOf(stats.get(2))));
+	
+	}
+	
+	public void actualizarTXTStatsStSum() {
+		statsModificados = Personaje.previewStats();
+				
+		txtfFuerzaTJetsSt.setText(String.valueOf("+" + statsModificados.get(0)));	
+		txtfFuerzaTJetsSt.setForeground(new Color(0,128,0));
+		txtfAgilidadTJetsSt.setText(String.valueOf("+" +statsModificados.get(1)));;
+		txtfAgilidadTJetsSt.setForeground(new Color(0,128,0));
+		txtfAtaqueTJetsSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(4))));;
+		txtfAtaqueTJetsSt.setForeground(new Color(0,128,0));
+		txtfVelocidadTJetsSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(3))));;
+		txtfVelocidadTJetsSt.setForeground(new Color(0,128,0));
+		txtfPtosSaludTJetsSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(2))));;
+		txtfPtosSaludTJetsSt.setForeground(new Color(0,128,0));
+		
+		txtfFuerzaTCompSt.setText(String.valueOf("+" + statsModificados.get(0)));	
+		txtfFuerzaTCompSt.setForeground(new Color(0,128,0));
+		txtfAgilidadTCompSt.setText(String.valueOf("+" +statsModificados.get(1)));
+		txtfAgilidadTCompSt.setForeground(new Color(0,128,0));
+		txtfAtaqueTCompSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(4))));
+		txtfAtaqueTCompSt.setForeground(new Color(0,128,0));
+		txtfVelocidadTCompSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(3))));
+		txtfVelocidadTCompSt.setForeground(new Color(0,128,0));
+		txtfPtosSaludTCompSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(2))));
+		txtfPtosSaludTCompSt.setForeground(new Color(0,128,0));
+		
+		txtfFuerzaTMunSt.setText(String.valueOf("+" + statsModificados.get(0)));	
+		txtfFuerzaTMunSt.setForeground(new Color(0,128,0));
+		txtfAgilidadTMunSt.setText(String.valueOf("+" +statsModificados.get(1)));
+		txtfAgilidadTMunSt.setForeground(new Color(0,128,0));
+		txtfAtaqueTMunSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(4))));
+		txtfAtaqueTMunSt.setForeground(new Color(0,128,0));
+		txtfVelocidadTMunSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(3))));
+		txtfVelocidadTMunSt.setForeground(new Color(0,128,0));
+		txtfPtosSaludTMunSt.setText(String.valueOf(String.valueOf("+" +statsModificados.get(2))));
+		txtfPtosSaludTMunSt.setForeground(new Color(0,128,0));
+	}
+	
+	public void actualizarTXTStatsStRes() {
+		statsModificados = Personaje.previewStats();
+				
+		txtfFuerzaTJetsSt.setText(String.valueOf(statsModificados.get(0)));	
+		txtfFuerzaTJetsSt.setForeground(new Color(255, 0, 0));
+		txtfAgilidadTJetsSt.setText(String.valueOf(statsModificados.get(1)));;
+		txtfAgilidadTJetsSt.setForeground(new Color(255, 0, 0));
+		txtfAtaqueTJetsSt.setText(String.valueOf(String.valueOf(statsModificados.get(4))));;
+		txtfAtaqueTJetsSt.setForeground(new Color(255, 0, 0));
+		txtfVelocidadTJetsSt.setText(String.valueOf(String.valueOf(statsModificados.get(3))));;
+		txtfVelocidadTJetsSt.setForeground(new Color(255, 0, 0));
+		txtfPtosSaludTJetsSt.setText(String.valueOf(String.valueOf(statsModificados.get(2))));;
+		txtfPtosSaludTJetsSt.setForeground(new Color(255, 0, 0));
+		
+		txtfFuerzaTCompSt.setText(String.valueOf(statsModificados.get(0)));
+		txtfFuerzaTCompSt.setForeground(new Color(255, 0, 0));
+		txtfAgilidadTCompSt.setText(String.valueOf(statsModificados.get(1)));
+		txtfAgilidadTCompSt.setForeground(new Color(255, 0, 0));
+		txtfAtaqueTCompSt.setText(String.valueOf(String.valueOf(statsModificados.get(4))));
+		txtfAtaqueTCompSt.setForeground(new Color(255, 0, 0));
+		txtfVelocidadTCompSt.setText(String.valueOf(String.valueOf(statsModificados.get(3))));
+		txtfVelocidadTCompSt.setForeground(new Color(255, 0, 0));
+		txtfPtosSaludTCompSt.setText(String.valueOf(String.valueOf(statsModificados.get(2))));
+		txtfPtosSaludTCompSt.setForeground(new Color(255, 0, 0));
+		
+		txtfFuerzaTMunSt.setText(String.valueOf(statsModificados.get(0)));
+		txtfFuerzaTMunSt.setForeground(new Color(255, 0, 0));
+		txtfAgilidadTMunSt.setText(String.valueOf(statsModificados.get(1)));
+		txtfAgilidadTMunSt.setForeground(new Color(255, 0, 0));
+		txtfAtaqueTMunSt.setText(String.valueOf(String.valueOf(statsModificados.get(4))));
+		txtfAtaqueTMunSt.setForeground(new Color(255, 0, 0));
+		txtfVelocidadTMunSt.setText(String.valueOf(String.valueOf(statsModificados.get(3))));
+		txtfVelocidadTMunSt.setForeground(new Color(255, 0, 0));
+		txtfPtosSaludTMunSt.setText(String.valueOf(String.valueOf(statsModificados.get(2))));
+		txtfPtosSaludTMunSt.setForeground(new Color(255, 0, 0));
+	}
 	
     public void equiparObjeto(JButton btn, JRadioButton rdbtn) {
     	rdbtn.setSelected(true);
 		btn.setText("Desequipar");
 		actualizarTXTStats();
+		actualizarTXTPreStats();
 		//Cambiar stats	++
     }
     
@@ -2165,7 +2969,258 @@ public class gui {
     	rdbtn.setSelected(false);
 		btn.setText("Equipar");
 		actualizarTXTStats();
+		actualizarTXTPreStats();
 		//Cambiar stats	--
     }
     
+    public void comprarG(String categoria, int indice, JButton btn) {
+    	
+		if (categoria=="JETS") {
+    		Inventario.agregarProducto(listaJets.get(indice));
+    		actualizarTXTInvJets();
+    		
+    	}else if(categoria=="COMPLEMENTOS") {
+    		Inventario.agregarProducto(listaComp.get(indice));
+    		actualizarTXTInvComp();
+    		
+    	}else {
+    		Inventario.agregarProducto(listaMundos.get(indice));
+    		actualizarTXTInvMun();
+    	}
+		
+    	actualizarTXTDinero();
+		btn.setEnabled(true);
+    	
+    }
+    
+    public void equiparG(String categoria, int indice, JButton btnEquipar, JRadioButton rdbtn, JButton btnVender) {
+    	
+    	if (categoria=="JETS") {
+    		listaJets.get(indice).equipar();
+    		actualizarTXTInvJets();
+    		
+    	}else if(categoria=="COMPLEMENTOS") {
+    		listaComp.get(indice).equipar();
+    		actualizarTXTInvComp();
+    		
+    	}else {
+    		listaMundos.get(indice).equipar();
+    	}
+    	
+    	
+    	if (!rdbtn.isSelected()) {
+    		equiparObjeto(btnEquipar, rdbtn);
+    		btnVender.setEnabled(false);
+    		
+    	}else {
+    		 JOptionPane.showMessageDialog(null, "Este elemento ya está equipado");
+    	}
+
+    }
+
+    public void mostrarMensajeCompra(String categoria, int indice, JButton btnEquipar, JRadioButton rdbtn, JButton btnVender) {
+        String[] opciones = {"Comprar y Equipar", "Comprar", "Cancelar"};
+        int opcionEscogida = JOptionPane.showOptionDialog(null, "¿Está seguro que desea comprar este elemento?",
+                "Compra",0, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[2]);
+        
+        if (opcionEscogida==0) { //Comprar y equipar
+        	comprarG(categoria, indice, btnEquipar);
+        	equiparG(categoria, indice, btnEquipar, rdbtn, btnVender);
+        	
+        }else if (opcionEscogida==1){ //solo comprar
+        	comprarG(categoria, indice, btnEquipar);  
+        	
+        }else; //opción cancelar   
+        
+    }
+    
+	private void mostrarMensajeSinDinero(){
+		//Etiqueta con el texto del JOptionPane
+		JLabel lblSinDinero = new JLabel("Dinero Insuficiente");
+		lblSinDinero.setFont(new Font("Chiller", Font.BOLD, 30)); 
+			
+		//Etiqueta con la imagen del JOptionPane
+		JLabel lblImgSinDinero = new JLabel();
+			
+		Image alienTriste = new ImageIcon(this.getClass().getResource("/alienTriste.jpg")).getImage();
+		lblImgSinDinero.setIcon(new ImageIcon(alienTriste));
+			
+		//Arreglo que tiene las dos etiquetas: texto + imagen
+		JLabel[] imagenesAviso = {lblSinDinero, lblImgSinDinero};
+		JOptionPane.showMessageDialog(null, imagenesAviso);
+	}
+	
+/*
+	public int buscarRadiosActivados() {
+		ArrayList<JRadioButton> radios = new ArrayList<JRadioButton>();
+		radios.add(rdbtnMj);
+		radios.add(rdbtnMs);
+		radios.add(rdbtnUj);
+		radios.add(rdbtnLaser);
+		radios.add(rdbtnCuerno);
+		radios.add(rdbtnLeche);
+		radios.add(rdbtnAndro);
+		radios.add(rdbtnOrion);
+		radios.add(rdbtnOsa);
+		
+		for (int i = 0; i <= radios.size()-1; i++) {
+			if ((radios.get(i)).isSelected()) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+*/
+	
+	public void mostrarEtiquetasPre() {
+		txtfFuerzaTJetsPre.setVisible(true);
+		txtfAgilidadTJetsPre.setVisible(true);
+		txtfPtosSaludTJetsPre.setVisible(true);
+		txtfVelocidadTJetsPre.setVisible(true);
+		txtfAtaqueTJetsPre.setVisible(true);
+		
+		txtfFuerzaTCompPre.setVisible(true);
+		txtfAgilidadTCompPre.setVisible(true);
+		txtfPtosSaludTCompPre.setVisible(true);
+		txtfVelocidadTCompPre.setVisible(true);
+		txtfAtaqueTCompPre.setVisible(true);
+		
+		txtfFuerzaTMunPre.setVisible(true);
+		txtfAgilidadTMunPre.setVisible(true);
+		txtfPtosSaludTMunPre.setVisible(true);
+		txtfVelocidadTMunPre.setVisible(true);
+		txtfAtaqueTMunPre.setVisible(true);
+		
+	}
+	
+	public void mostrarEtiquetasSt() {
+		
+		txtfFuerzaTJetsSt.setVisible(true);
+		txtfAgilidadTJetsSt.setVisible(true);
+		txtfPtosSaludTJetsSt.setVisible(true);
+		txtfVelocidadTJetsSt.setVisible(true);
+		txtfAtaqueTJetsSt.setVisible(true);		
+		
+		txtfFuerzaTCompSt.setVisible(true);
+		txtfAgilidadTCompSt.setVisible(true);
+		txtfPtosSaludTCompSt.setVisible(true);
+		txtfVelocidadTCompSt.setVisible(true);
+		txtfAtaqueTCompSt.setVisible(true);
+		
+		txtfFuerzaTMunSt.setVisible(true);
+		txtfAgilidadTMunSt.setVisible(true);
+		txtfPtosSaludTMunSt.setVisible(true);
+		txtfVelocidadTMunSt.setVisible(true);
+		txtfAtaqueTMunSt.setVisible(true);
+	}
+	
+	public void ocultarEtiquetasPre() {
+		
+		txtfFuerzaTJetsPre.setVisible(false);
+		txtfAgilidadTJetsPre.setVisible(false);
+		txtfPtosSaludTJetsPre.setVisible(false);
+		txtfVelocidadTJetsPre.setVisible(false);
+		txtfAtaqueTJetsPre.setVisible(false);		
+		
+		txtfFuerzaTCompPre.setVisible(false);
+		txtfAgilidadTCompPre.setVisible(false);
+		txtfPtosSaludTCompPre.setVisible(false);
+		txtfVelocidadTCompPre.setVisible(false);
+		txtfAtaqueTCompPre.setVisible(false);
+		
+		txtfFuerzaTMunPre.setVisible(false);
+		txtfAgilidadTMunPre.setVisible(false);
+		txtfPtosSaludTMunPre.setVisible(false);
+		txtfVelocidadTMunPre.setVisible(false);
+		txtfAtaqueTMunPre.setVisible(false);
+	}
+	
+	public void actualizarTXTSt() {
+		txtfFuerzaTJetsSt.setVisible(false);
+		txtfAgilidadTJetsSt.setVisible(false);
+		txtfPtosSaludTJetsSt.setVisible(false);
+		txtfVelocidadTJetsSt.setVisible(false);
+		txtfAtaqueTJetsSt.setVisible(false);		
+		
+		txtfFuerzaTCompSt.setVisible(false);
+		txtfAgilidadTCompSt.setVisible(false);
+		txtfPtosSaludTCompSt.setVisible(false);
+		txtfVelocidadTCompSt.setVisible(false);
+		txtfAtaqueTCompSt.setVisible(false);
+		
+		txtfFuerzaTMunSt.setVisible(false);
+		txtfAgilidadTMunSt.setVisible(false);
+		txtfPtosSaludTMunSt.setVisible(false);
+		txtfVelocidadTMunSt.setVisible(false);
+		txtfAtaqueTMunSt.setVisible(false);
+	}
+	
+	public void desSeleccionarRadios() {
+		rdbtnMj.setSelected(false);
+		rdbtnMs.setSelected(false);
+		rdbtnUj.setSelected(false);
+		rdbtnLaser.setSelected(false);
+		rdbtnCuerno.setSelected(false);
+		rdbtnLeche.setSelected(false);
+		rdbtnAndro.setSelected(false);
+		rdbtnOrion.setSelected(false);
+		rdbtnOsa.setSelected(false);
+		
+	}
+	
+	
+	
+	public void desHabilitarRadios() {
+		rdbtnMj.setEnabled(false);
+		rdbtnMs.setEnabled(false);
+		rdbtnUj.setEnabled(false);
+		rdbtnLaser.setEnabled(false);
+		rdbtnCuerno.setEnabled(false);
+		rdbtnLeche.setEnabled(false);
+		rdbtnAndro.setEnabled(false);
+		rdbtnOrion.setEnabled(false);
+		rdbtnOsa.setEnabled(false);
+		
+	}
+	
+	
+	
+}	
+/*
+listaJets.get(0).equipar();
+if (rdbtnMjInv.isSelected()==false) {
+	equiparObjeto(btnEquiparMj, rdbtnMjInv);
+	btnVenderMj.setEnabled(false);
+}else {
+	desequiparObjeto(btnEquiparMj, rdbtnMjInv);
+	btnVenderMj.setEnabled(true);
 }
+
+
+	if (listaJets.get(0).comprar()) { //***
+		//Comprar el miniJet
+		Inventario.agregarProducto(listaJets.get(0));//agrega en inventario el mini jet ****
+		actualizarTXTDinero();
+		actualizarTXTInvJets(); //******!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		btnEquiparMj.setEnabled(true);
+							
+	}else { 
+		//Mostrar mensaje "Dinero Insuficiente" 
+		mostrarMensajeSinDinero();
+	}
+}
+
+					ArrayList<JRadioButton> radiosJet = new ArrayList<JRadioButton>();
+					radiosJet.add(rdbtnMj);
+					radiosJet.add(rdbtnMs);
+					radiosJet.add(rdbtnUj);
+					
+					for (int i = 0; i <= radiosJet.size()-1; i++) {
+						if ((radiosJet.get(i)).isSelected()) {
+							listaJets.get(i).previsualizar();
+							previsualizarTXTStats();		
+						}
+					}
+
+*/
+

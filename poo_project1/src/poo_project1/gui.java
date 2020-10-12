@@ -107,9 +107,9 @@ public class gui {
 	JButton btnEquiparLaser = new JButton("Equipar");
 	JButton btnEquiparCuerno = new JButton("Equipar");
 	JButton btnEquiparLeche = new JButton("Equipar");
-	JButton btnEquiparAndro = new JButton("Consumir");
-	JButton btnEquiparOsa = new JButton("Consumir");
-	JButton btnEquiparOrion = new JButton("Consumir");
+	JButton btnEquiparAndro = new JButton("Usar");
+	JButton btnEquiparOsa = new JButton("Usar");
+	JButton btnEquiparOrion = new JButton("Usar");
 	
 	
 	//atributos de la clase gui
@@ -431,10 +431,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaJets.get(0).equipar();
 				if (rdbtnMjInv.isSelected()==false) {
-					equiparObjeto(btnEquiparMj, rdbtnMjInv);
+					equiparObjeto(btnEquiparMj, rdbtnMjInv,false);
 					btnVenderMj.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparMj, rdbtnMjInv);
+					desequiparObjeto(btnEquiparMj, rdbtnMjInv,false);
 					btnVenderMj.setEnabled(true);
 				}
 			}
@@ -449,10 +449,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaJets.get(1).equipar();
 				if (rdbtnSjInv.isSelected()==false) {
-					equiparObjeto(btnEquiparSj, rdbtnSjInv);
+					equiparObjeto(btnEquiparSj, rdbtnSjInv,false);
 					btnVenderSj.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparSj, rdbtnSjInv);
+					desequiparObjeto(btnEquiparSj, rdbtnSjInv,false);
 					btnVenderSj.setEnabled(true);
 				}
 			}
@@ -467,10 +467,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaJets.get(2).equipar();
 				if (rdbtnUjInv.isSelected()==false) {
-					equiparObjeto(btnEquiparUj, rdbtnUjInv);
+					equiparObjeto(btnEquiparUj, rdbtnUjInv,false);
 					btnVenderUj.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparUj, rdbtnUjInv);
+					desequiparObjeto(btnEquiparUj, rdbtnUjInv,false);
 					btnVenderUj.setEnabled(true);
 				}
 			}
@@ -640,10 +640,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaComp.get(0).equipar();
 				if (rdbtnLaserInv.isSelected()==false) {
-					equiparObjeto(btnEquiparLaser, rdbtnLaserInv);
+					equiparObjeto(btnEquiparLaser, rdbtnLaserInv,false);
 					btnVenderRayo.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparLaser, rdbtnLaserInv);
+					desequiparObjeto(btnEquiparLaser, rdbtnLaserInv,false);
 					btnVenderRayo.setEnabled(true);
 				}
 			}
@@ -659,10 +659,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaComp.get(1).equipar();
 				if (rdbtnCuernoInv.isSelected()==false) {
-					equiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);
+					equiparObjeto(btnEquiparCuerno, rdbtnCuernoInv,false);
 					btnVenderCuerno.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparCuerno, rdbtnCuernoInv);
+					desequiparObjeto(btnEquiparCuerno, rdbtnCuernoInv,false);
 					btnVenderCuerno.setEnabled(true);
 				}
 			}
@@ -678,10 +678,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaComp.get(2).equipar();
 				if (rdbtnLecheInv.isSelected()==false) {
-					equiparObjeto(btnEquiparLeche, rdbtnLecheInv);
+					equiparObjeto(btnEquiparLeche, rdbtnLecheInv,false);
 					btnVenderLeche.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparLeche, rdbtnLecheInv);
+					desequiparObjeto(btnEquiparLeche, rdbtnLecheInv,false);
 					btnVenderLeche.setEnabled(true);
 				}
 			}
@@ -879,10 +879,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaMundos.get(0).equipar();
 				if (rdbtnAndroInv.isSelected()==false) {
-					equiparObjeto(btnEquiparAndro, rdbtnAndroInv);
+					equiparObjeto(btnEquiparAndro, rdbtnAndroInv,true);
 					btnVenderAndro.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparAndro, rdbtnAndroInv);
+					desequiparObjeto(btnEquiparAndro, rdbtnAndroInv,true);
 					btnVenderAndro.setEnabled(true);
 				}
 			}
@@ -897,10 +897,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaMundos.get(1).equipar();
 				if (rdbtnOrionInv.isSelected()==false) {
-					equiparObjeto(btnEquiparOrion, rdbtnOrionInv);	
+					equiparObjeto(btnEquiparOrion, rdbtnOrionInv,true);	
 					btnVenderOrion.setEnabled(false);
 				}else {
-					desequiparObjeto(btnEquiparOrion, rdbtnOrionInv);
+					desequiparObjeto(btnEquiparOrion, rdbtnOrionInv,true);
 					btnVenderOrion.setEnabled(true);
 				}				
 			}
@@ -916,10 +916,10 @@ public class gui {
 			public void actionPerformed(ActionEvent e) {
 				listaMundos.get(2).equipar();
 				if (rdbtnOsaInv.isSelected()==false) {
-					equiparObjeto(btnEquiparOsa, rdbtnOsaInv);
+					equiparObjeto(btnEquiparOsa, rdbtnOsaInv,true);
 					btnVenderOsa.setEnabled(false);		
 				}else {
-					desequiparObjeto(btnEquiparOsa, rdbtnOsaInv);
+					desequiparObjeto(btnEquiparOsa, rdbtnOsaInv,true);
 					btnVenderOsa.setEnabled(true);
 				}
 			}
@@ -3016,17 +3016,19 @@ public class gui {
 		txtfPtosSaludTMunSt.setForeground(new Color(255, 0, 0));
 	}
 	
-    public void equiparObjeto(JButton btn, JRadioButton rdbtn) {
+    public void equiparObjeto(JButton btn, JRadioButton rdbtn, boolean mundos) {
     	rdbtn.setSelected(true);
-		btn.setText("Desequipar");
+    	if(mundos) btn.setText("Almacenar");
+    	else btn.setText("Desequipar");
 		actualizarTXTStats();
 		actualizarTXTPreStats();
 		//Cambiar stats	++
     }
     
-    public void desequiparObjeto(JButton btn, JRadioButton rdbtn) {
+    public void desequiparObjeto(JButton btn, JRadioButton rdbtn, boolean mundos) {
     	rdbtn.setSelected(false);
-		btn.setText("Equipar");
+    	if(mundos) btn.setText("Usar");
+    	else btn.setText("Equipar");
 		actualizarTXTStats();
 		actualizarTXTPreStats();
 		//Cambiar stats	--
@@ -3068,11 +3070,13 @@ public class gui {
     		
     	}else {
     		if (!(listaMundos.get(indice).getEquipado())) listaMundos.get(indice).equipar();
+    		categoria = "MUNDOS";
     	}
     	
     	
     	if (!rdbtn.isSelected()) {
-    		equiparObjeto(btnEquipar, rdbtn);
+    		if(categoria=="MUNDOS")equiparObjeto(btnEquipar, rdbtn,true);
+    		else equiparObjeto(btnEquipar, rdbtn,false);
     		btnVender.setEnabled(false);
     		
     	}else {
@@ -3082,7 +3086,10 @@ public class gui {
     }
 
     public void mostrarMensajeCompra(String categoria, int indice, JButton btnEquipar, JRadioButton rdbtn, JButton btnVender) {
-        String[] opciones = {"Comprar y Equipar", "Comprar", "Cancelar"};
+    	String accion;
+    	if (categoria=="MUNDOS") accion = "Comprar y Usar";
+    	else accion = "Comprar y Equipar";
+        String[] opciones = {accion, "Comprar", "Cancelar"};
         int opcionEscogida = JOptionPane.showOptionDialog(null, "¿Está seguro que desea comprar este elemento?",
                 "Compra",0, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[2]);
         
